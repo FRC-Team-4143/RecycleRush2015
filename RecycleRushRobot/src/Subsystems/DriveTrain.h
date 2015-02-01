@@ -52,70 +52,68 @@ private:
 	double FROffset;
 	double RLOffset;
 	double RROffset;
-	
+
 	//Crab & Pivot Variables
 	double position; //Input position for crab
 	double AP;
 	double BP;
 	double CP;
 	double DP;
-	
-	
+
 	//Inversion Variabls
 	int FLInv;
 	int FRInv;
 	int RLInv;
 	int RRInv;
-	
-	
+
 	//Pivot Variables
 	double radius; //distance from center to each wheel
 	double velocity; //robot speed
 	double angularvelocity; //input from OI
 	double robotangle; //current robot angle from Gyro
 	double inverserobotangle; //2pi-robotangle
-	
+
 	//Wheel position in angle relative to robot
 	double FLWP;
 	double FRWP;
 	double RLWP;
 	double RRWP;
-	
+
 	//Wheel velocities in X direction
 	double FLXVel;
 	double FRXVel;
 	double RLXVel;
 	double RRXVel;
-	
+
 	//Wheel velocities in Y direction
 	double FLYVel;
 	double FRYVel;
 	double RLYVel;
 	double RRYVel;
-	
+
 	//
 	double FLPos;
 	double FRPos;
 	double RRPos;
 	double RLPos;
-	
+
 	//Wheel velocities
 	double FLVel;
 	double FRVel;
 	double RLVel;
 	double RRVel;
-	
+
 	//Wheel angle differences from robot angle
 	double deltaFL;
 	double deltaFR;
 	double deltaRL;
 	double deltaRR;
-	
+
 	double CorrectSteerSetpoint(double setpoint);
 	void SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint);
 	void SetDriveSpeed(float FLSpeed, float FRSpeed, float RLSpeed, float RRSpeed);
 	void CurrentLimit();
-	
+
 	float FLSOTimer;
 	float FRSOTimer;
 	float RLSOTimer;

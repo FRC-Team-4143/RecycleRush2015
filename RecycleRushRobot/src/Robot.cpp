@@ -9,12 +9,15 @@ DriveTrain* Robot::driveTrain = nullptr;
 void Robot::RobotInit() {
 	std::cout << "Robot::RobotInit" << std::endl;
 
+	PreferencesInit();
+
 	RobotMap::Init();
 
 	// -----------------------
 	// Initialize subsystems.
 	// -----------------------
 	gyroSub = new GyroSub();
+	driveTrain = new DriveTrain();
 
 	// ------------------------------------------------------------
 	// Initialize OI *AFTER* all subsystems have been initialized.
@@ -26,6 +29,26 @@ void Robot::RobotInit() {
 	// Initialize the command used for autonomous mode.
 	// -------------------------------------------------
 	autonomousCommand = new AutonomousCommand();
+
+	driveTrain->SetWheelbase(21.5 / 2, 21.5 / 2, 21.5 / 2);
+
+	auto prefs = Preferences::GetInstance();
+	auto FLOffset = prefs->GetDouble("FLOff");
+	auto FROffset = prefs->GetDouble("FROff");
+	auto RLOffset = prefs->GetDouble("RLOff");
+	auto RROffset = prefs->GetDouble("RROff");
+	std::cout << "Offsets(FL " << FLOffset << ", FR " << FROffset << ", RL " << RLOffset << ", RR " << RROffset << std::endl;
+	driveTrain->SetOffsets(FLOffset, FROffset, RLOffset, RROffset);
+
+	driveTrain->frontLeftPos->Start();
+	driveTrain->frontRightPos->Start();
+	driveTrain->rearLeftPos->Start();
+	driveTrain->rearRightPos->Start();
+
+	driveTrain->frontLeft->Enable();
+	driveTrain->frontRight->Enable();
+	driveTrain->rearLeft->Enable();
+	driveTrain->rearRight->Enable();
 }
 
 // ---------------------------------------------------------
@@ -33,6 +56,8 @@ void Robot::RobotInit() {
 // You can use it to reset subsystems before shutting down.
 // ---------------------------------------------------------
 void Robot::DisabledInit(){
+	std::cout << "Robot::DisabledInit" << std::endl;
+	RobotMap::i2c->Write(1, 0);
 }
 
 void Robot::DisabledPeriodic() {
@@ -40,6 +65,7 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+	std::cout << "Robot::AutonomousInit" << std::endl;
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
 }
@@ -49,12 +75,15 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
+	std::cout << "Robot::TeleopInit" << std::endl;
 	// This makes sure the autonomous command stops running when
 	// teleop starts running. To let autonomous continue until
 	// interrupted by another command, remove the following
 	// lines.
 	if (autonomousCommand != NULL)
 		autonomousCommand->Cancel();
+
+	Robot::driveTrain->outputLED();
 }
 
 void Robot::TeleopPeriodic() {
@@ -63,6 +92,7 @@ void Robot::TeleopPeriodic() {
 
 void Robot::TestInit() {
 	std::cout << "Robot::TestInit" << std::endl;
+	DriverStation::ReportError("Robot:TestInit -> Hello, DriverStation!");
 }
 
 void Robot::TestPeriodic() {
@@ -78,9 +108,7 @@ void Robot::CameraInit() {
 
 void Robot::PreferencesInit() {
 	std::cout << "Robot::PreferencesInit" << std::endl;
-	std::cout << "Robot::PreferencesInit - Getting Preferences instance" << std::endl;
 	Preferences::GetInstance();
-	std::cout << "Robot::PreferencesInit - Got Preferences instance" << std::endl;
 }
 
 START_ROBOT_CLASS(Robot);

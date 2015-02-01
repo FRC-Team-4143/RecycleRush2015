@@ -3,6 +3,7 @@
 
 #include <WPILib.h>
 #include <Commands/Subsystem.h>
+#include <PIDSource.h>
 #include "../Modules/IMUAdvanced.h"
 #include "../RobotMap.h"
 
@@ -11,7 +12,7 @@
 //
 // @author JKSalmon
 //
-class GyroSub: public Subsystem {
+class GyroSub: public Subsystem, public PIDSource {
 private:
 	// Put everything in private except methods that implement subsystem capabilities.
 	IMUAdvanced* theGyro() { return RobotMap::imu; }
@@ -20,7 +21,9 @@ public:
 	GyroSub();
 	void InitDefaultCommand();
 	double GetHeading();
-	std::string GetStatus();
+
+	// PIDSource methods
+	virtual double PIDGet();
 };
 
 #endif

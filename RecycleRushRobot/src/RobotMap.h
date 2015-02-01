@@ -12,7 +12,7 @@
 
 class RobotMap {
 public:
-    static SerialPort* serial_port;
+    static SerialPort* serialPort;
 	static IMUAdvanced* imu;
     static PowerDistributionPanel* pdp;
     static I2C* i2c;
