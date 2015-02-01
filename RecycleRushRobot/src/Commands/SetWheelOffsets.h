@@ -18,7 +18,6 @@ public:
 	double FROffset;
 	double RLOffset;
 	double RROffset;
-	bool complete;
 };
 
 #endif

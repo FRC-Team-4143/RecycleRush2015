@@ -5,8 +5,8 @@
 // ==========================================================================
 // 2015-01-10 JKSalmon - Initial development
 // ==========================================================================
-#ifndef SRC_CONSTANTS_H_
-#define SRC_CONSTANTS_H_
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 class Constants {
 public:
@@ -22,4 +22,4 @@ public:
 	static const double SERVO_POS_RIGHT_DEFAULT;
 };
 
-#endif /* SRC_CONSTANTS_H_ */
+#endif

@@ -13,17 +13,20 @@
 // @author JKSalmon
 //
 class GyroSub: public Subsystem, public PIDSource {
-private:
-	// Put everything in private except methods that implement subsystem capabilities.
-	IMUAdvanced* theGyro() { return RobotMap::imu; }
-
 public:
 	GyroSub();
-	void InitDefaultCommand();
-	double GetHeading();
+
+	// Subsystem methods
+	virtual void InitDefaultCommand();
 
 	// PIDSource methods
 	virtual double PIDGet();
+
+	double GetHeading();
+
+private:
+	// Put everything in private except methods that implement subsystem capabilities.
+	IMUAdvanced* theGyro() { return RobotMap::imu; }
 };
 
 #endif

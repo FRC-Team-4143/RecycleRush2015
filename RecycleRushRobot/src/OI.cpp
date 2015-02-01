@@ -31,7 +31,6 @@ OI::OI() {
 //	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(rotateRight90);
 
 	// Add SmartDashboard controls
-	// TODO
 	SmartDashboard::PutData("SchedulerData", Scheduler::GetInstance());
 	SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
 	SmartDashboard::PutData("UpdateSmartDashboard", new UpdateSmartDashboard());
