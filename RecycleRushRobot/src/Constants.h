@@ -3,23 +3,24 @@
 //
 // FRC 4143 "MARS WARS"
 // ==========================================================================
-// 2015-01-10 JKSalmon - Initial development
+// 2015-02-01 JKSalmon - Initial development
 // ==========================================================================
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
 class Constants {
 public:
-	Constants();
-	virtual ~Constants();
+	Constants() {}
 
-	static const char* SERVO_POS_LEFT_NAME;
-	static const char* SERVO_POS_MIDDLE_NAME;
-	static const char* SERVO_POS_RIGHT_NAME;
+	static const char* FL_POS_NAME;
+	static const char* FR_POS_NAME;
+	static const char* RL_POS_NAME;
+	static const char* RR_POS_NAME;
 
-	static const double SERVO_POS_LEFT_DEFAULT;
-	static const double SERVO_POS_MIDDLE_DEFAULT;
-	static const double SERVO_POS_RIGHT_DEFAULT;
+	static const double FL_POS_DEFAULT;
+	static const double FR_POS_DEFAULT;
+	static const double RL_POS_DEFAULT;
+	static const double RR_POS_DEFAULT;
 };
 
 #endif

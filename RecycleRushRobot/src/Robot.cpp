@@ -1,13 +1,15 @@
+#include "Logger.h"
 #include "Robot.h"
 #include "RobotMap.h"
 #include "Commands/AutonomousCommand.h"
+#include "Modules/DriveTrainSettings.h"
 
 OI* Robot::oi = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
 
 void Robot::RobotInit() {
-	std::cout << "Robot::RobotInit" << std::endl;
+	LOG("Robot::RobotInit")
 
 	PreferencesInit();
 
@@ -32,6 +34,7 @@ void Robot::RobotInit() {
 
 	driveTrain->SetWheelbase(21.5 / 2, 21.5 / 2, 21.5 / 2);
 
+/*
 	auto prefs = Preferences::GetInstance();
 	auto FLOffset = prefs->GetDouble("FLOff");
 	auto FROffset = prefs->GetDouble("FROff");
@@ -39,6 +42,8 @@ void Robot::RobotInit() {
 	auto RROffset = prefs->GetDouble("RROff");
 	std::cout << "Offsets(FL " << FLOffset << ", FR " << FROffset << ", RL " << RLOffset << ", RR " << RROffset << std::endl;
 	driveTrain->SetOffsets(FLOffset, FROffset, RLOffset, RROffset);
+*/
+	DriveTrainSettings::LoadSettings();
 
 	driveTrain->frontLeftPos->Start();
 	driveTrain->frontRightPos->Start();
@@ -56,7 +61,7 @@ void Robot::RobotInit() {
 // You can use it to reset subsystems before shutting down.
 // ---------------------------------------------------------
 void Robot::DisabledInit(){
-	std::cout << "Robot::DisabledInit" << std::endl;
+	LOG("Robot::DisabledInit")
 	RobotMap::i2c->Write(1, 0);
 }
 
@@ -65,7 +70,7 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-	std::cout << "Robot::AutonomousInit" << std::endl;
+	LOG("Robot::AutonomousInit")
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
 }
@@ -75,7 +80,7 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
-	std::cout << "Robot::TeleopInit" << std::endl;
+	LOG("Robot::TeleopInit")
 	// This makes sure the autonomous command stops running when
 	// teleop starts running. To let autonomous continue until
 	// interrupted by another command, remove the following
@@ -91,8 +96,7 @@ void Robot::TeleopPeriodic() {
 }
 
 void Robot::TestInit() {
-	std::cout << "Robot::TestInit" << std::endl;
-	DriverStation::ReportError("Robot:TestInit -> Hello, DriverStation!");
+	LOG("Robot::TestInit")
 }
 
 void Robot::TestPeriodic() {
@@ -100,14 +104,14 @@ void Robot::TestPeriodic() {
 }
 
 void Robot::CameraInit() {
-	std::cout << "Robot::CameraInit" << std::endl;
+	LOG("Robot::CameraInit")
 	auto cam = CameraServer::GetInstance();
 	cam->SetQuality(50);
 	cam->StartAutomaticCapture("cam0");
 }
 
 void Robot::PreferencesInit() {
-	std::cout << "Robot::PreferencesInit" << std::endl;
+	LOG("Robot::PreferencesInit")
 	Preferences::GetInstance();
 }
 

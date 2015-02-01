@@ -1,11 +1,11 @@
-#ifndef SETWHEELOFFSETS_H
-#define SETWHEELOFFSETS_H
+#ifndef SAVETWHEELPOSITIONS_H
+#define SAVETWHEELPOSITIONS_H
 
 #include <Commands/Command.h>
 
-class SetWheelOffsets: public Command {
+class SaveWheelPositions: public Command {
 public:
-	SetWheelOffsets();
+	SaveWheelPositions();
 
 	// Command methods
 	virtual void Initialize();
@@ -13,11 +13,6 @@ public:
 	virtual bool IsFinished();
 	virtual void End();
 	virtual void Interrupted();
-
-	double FLOffset;
-	double FROffset;
-	double RLOffset;
-	double RROffset;
 };
 
 #endif

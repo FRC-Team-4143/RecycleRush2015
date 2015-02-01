@@ -1,3 +1,4 @@
+#include "Logger.h"
 #include "RobotMap.h"
 #include <LiveWindow/LiveWindow.h>
 
@@ -74,7 +75,7 @@ SpeedController*   RobotMap::driveTrainRearRightSteer = nullptr;
 #endif
 
 void RobotMap::Init() {
-	std::cout << "RobotMap::Init" << std::endl;
+	LOG("RobotMap::Init")
 
 	LiveWindow* lw = LiveWindow::GetInstance();
 

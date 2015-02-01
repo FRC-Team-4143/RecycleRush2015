@@ -1,4 +1,5 @@
 #include "ElevatorSub.h"
+#include "../Logger.h"
 
 // ==========================================================================
 
@@ -15,7 +16,7 @@ ElevatorSub::ElevatorSub(const char* name, SpeedController* motor, Encoder* enco
 // ==========================================================================
 
 void ElevatorSub::InitDefaultCommand() {
-	std::cout << "ElevatorSub::InitDefaultCommand" << std::endl;
+	LOG("ElevatorSub::InitDefaultCommand");
 	// Set the default command for a subsystem here.
 	//SetDefaultCommand(new MyCommand());
 }

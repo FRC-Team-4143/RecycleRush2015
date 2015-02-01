@@ -1,6 +1,7 @@
+#include "Commands/SaveWheelPositions.h"
+#include "Logger.h"
 #include "OI.h"
 #include "Commands/RotateBy.h"
-#include "Commands/SetWheelOffsets.h"
 #include "Commands/UpdateSmartDashboard.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
@@ -16,15 +17,15 @@ const uint32_t JOYSTICK_BUTTON_LB = 4;
 const uint32_t JOYSTICK_BUTTON_RB = 5;
 
 OI::OI() {
-	std::cout << "OI::OI" << std::endl;
+	LOG("OI::OI")
 
 	// Define joysticks
 	driverJoystick = new Joystick(JOYSTICK_PORT_DRIVER);
 	pickerJoystick = new Joystick(JOYSTICK_PORT_PICKER);
 
 	// Define commands
-//	rotateLeft90 = new RotateBy("Rotate Left 90", -90);
-//	rotateRight90 = new RotateBy("Rotate Right 90", 90);
+	rotateLeft90 = nullptr; //new RotateBy("Rotate Left 90", -90);
+	rotateRight90 = nullptr; //new RotateBy("Rotate Right 90", 90);
 
 	// Define joystick button mappings
 //	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(rotateLeft90);
@@ -32,7 +33,7 @@ OI::OI() {
 
 	// Add SmartDashboard controls
 	SmartDashboard::PutData("SchedulerData", Scheduler::GetInstance());
-	SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
+	SmartDashboard::PutData("SaveWheelPositions", new SaveWheelPositions());
 	SmartDashboard::PutData("UpdateSmartDashboard", new UpdateSmartDashboard());
 //	SmartDashboard::PutData("Rotate Left 90", rotateLeft90);
 //	SmartDashboard::PutData("Rotate Right 90", rotateRight90);

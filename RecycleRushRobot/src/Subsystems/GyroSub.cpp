@@ -1,15 +1,16 @@
 #include "GyroSub.h"
+#include "../Logger.h"
 
 // ==========================================================================
 
 GyroSub::GyroSub() : Subsystem("GyroSub") {
-	std::cout << "GyroSub::GyroSub" << std::endl;
+	LOG("GyroSub::GyroSub");
 }
 
 // ==========================================================================
 
 void GyroSub::InitDefaultCommand() {
-	std::cout << "GyroSub::InitDefaultCommand" << std::endl;
+	LOG("GyroSub::InitDefaultCommand");
 	// Set the default command for a subsystem here.
 	//SetDefaultCommand(new MyCommand());
 }

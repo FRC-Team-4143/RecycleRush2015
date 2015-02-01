@@ -1,4 +1,5 @@
 #include "DriveTrain.h"
+#include "../Logger.h"
 #include "../RobotMap.h"
 #include "../Commands/CrabDrive.h"
 
@@ -9,7 +10,7 @@
 #endif
 
 DriveTrain::DriveTrain(): Subsystem("DriveTrain") {
-	std::cout << "DriveTrain::DriveTrain" << std::endl;
+	LOG("DriveTrain::DriveTrain");
 
 	frontLeft       = RobotMap::driveTrainFrontLeft;
 	frontLeftDrive  = RobotMap::driveTrainFrontLeftDrive;

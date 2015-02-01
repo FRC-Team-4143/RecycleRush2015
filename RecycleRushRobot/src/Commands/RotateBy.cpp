@@ -6,6 +6,7 @@
 // 2015-02-01 JKSalmon - Initial development
 // ==========================================================================
 #include "RotateBy.h"
+#include "../Logger.h"
 #include "../Robot.h"
 #include <string>
 
@@ -46,7 +47,7 @@ RotateBy::RotateBy(const char* name, double rotateByDegrees)
 // Called just before this Command runs the first time
 
 void RotateBy::Initialize() {
-	std::cout << GetName() << "::Initialize" << std::endl;
+	LOG(GetName().append("::Initialize"))
 	SetTimeout(TIMEOUT_SECONDS);
 	_pidCtrl->SetSetpoint(CalculateSetpoint());
 	_pidCtrl->Enable();
@@ -63,11 +64,11 @@ void RotateBy::Execute() {
 
 bool RotateBy::IsFinished() {
 	if (IsTimedOut()) {
-		std::cout << GetName() << "::IsFinished -> IsTimedOut" << std::endl;
+		LOG(GetName().append("::IsFinished -> IsTimedOut"))
 		return true;
 	}
 	if (_pidCtrl->OnTarget()) {
-		std::cout << GetName() << "::IsFinished -> OnTarget" << std::endl;
+		LOG(GetName().append("::IsFinished -> OnTarget"))
 		return true;
 	}
 	return false;
@@ -77,7 +78,7 @@ bool RotateBy::IsFinished() {
 // Called once after IsFinished returns true
 
 void RotateBy::End() {
-	std::cout << GetName() << "::End" << std::endl;
+	LOG(GetName().append("::End"))
 	_pidCtrl->Disable();
 }
 
@@ -85,7 +86,7 @@ void RotateBy::End() {
 // Called when another command which requires this subsystem is scheduled to run
 
 void RotateBy::Interrupted() {
-	std::cout << GetName() << "::Interrupted" << std::endl;
+	LOG(GetName().append("::Interrupted"))
 	_pidCtrl->Disable();
 }
 
