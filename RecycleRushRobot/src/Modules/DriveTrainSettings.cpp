@@ -22,7 +22,7 @@ DriveTrainSettings::DriveTrainSettings() {
 // ==========================================================================
 
 void DriveTrainSettings::LoadSettings() {
-	LOG("DriveTrainSettings::LoadSettings")
+	LOG("DriveTrainSettings::LoadSettings");
 
 	// Load the positions from Preferences.
 	auto prefs = Preferences::GetInstance();
@@ -37,8 +37,10 @@ void DriveTrainSettings::LoadSettings() {
 	Robot::driveTrain->SetOffsets(FLPosition, FRPosition, RLPosition, RRPosition);
 }
 
+// ==========================================================================
+
 void DriveTrainSettings::SaveSettings() {
-	LOG("DriveTrainSettings::LoadSettings")
+	LOG("DriveTrainSettings::SaveSettings");
 
 	// Get the current steering positions from the drive train.
 	auto FLPosition = Robot::driveTrain->frontLeftPos->GetAverageVoltage() - AVERAGE_VOLTAGE_BASE;
@@ -60,8 +62,12 @@ void DriveTrainSettings::SaveSettings() {
 	Robot::driveTrain->SetOffsets(FLPosition, FRPosition, RLPosition, RRPosition);
 }
 
+// ==========================================================================
+
 void DriveTrainSettings::LogSettings(double fl, double fr, double rl, double rr) {
 	char sz[256];
 	sprintf(sz, "Wheel Positions: FL %f, FR %f, RL %f, RR %f", fl, fr, rl, rr);
 	LOG(sz);
 }
+
+// ==========================================================================

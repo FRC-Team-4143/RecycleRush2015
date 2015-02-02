@@ -1,7 +1,7 @@
 #include "CrabDrive.h"
 #include "../Robot.h"
 
-CrabDrive::CrabDrive() {
+CrabDrive::CrabDrive() : Command("Crab Drive") {
 	std::cout << "CrabDrive::CrabDrive" << std::endl;
 
 	Requires(Robot::driveTrain);

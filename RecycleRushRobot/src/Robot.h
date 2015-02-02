@@ -6,6 +6,7 @@
 #include <LiveWindow/LiveWindow.h>
 #include "Commands/AutonomousCommand.h"
 #include "Subsystems/DriveTrain.h"
+#include "Subsystems/ElevatorSub.h"
 #include "Subsystems/GyroSub.h"
 #include "OI.h"
 
@@ -17,6 +18,7 @@ public:
 	static OI *oi;
 	static DriveTrain* driveTrain;
 	static GyroSub* gyroSub;
+	static ElevatorSub* toteElevator1;
 
 	virtual void RobotInit();
 

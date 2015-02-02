@@ -6,7 +6,7 @@
 
 // ==========================================================================
 
-SaveWheelPositions::SaveWheelPositions() {
+SaveWheelPositions::SaveWheelPositions() : Command("Save Wheel Positions") {
 	SetRunWhenDisabled(true);
 }
 

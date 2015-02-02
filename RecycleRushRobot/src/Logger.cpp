@@ -12,5 +12,6 @@ Logger::Logger() {
 }
 
 void Logger::Log(std::string msg) {
-	DriverStation::ReportError(msg.append("\r\n"));
+	//DriverStation::ReportError(msg.append("\r\n"));
+	std::cout << msg << std::endl;
 }

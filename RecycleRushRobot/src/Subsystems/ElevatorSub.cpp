@@ -3,11 +3,11 @@
 
 // ==========================================================================
 
-ElevatorSub::ElevatorSub(const char* name, SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams, double unitDelta, double bottomPosition, double topPosition)
+ElevatorSub::ElevatorSub(const char* name, SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams)
 : PIDSubsystem(name, pidParams.P, pidParams.I, pidParams.D, pidParams.F),
   _motor(motor), _encoder(encoder),
   _lowerNeighbor(nullptr), _upperNeighbor(nullptr),
-  _unitDelta(unitDelta), _bottomPosition(bottomPosition), _topPosition(topPosition) {
+  _bottomPosition(0), _loadPosition(0), _deltaPosition(0), _topPosition(0) {
 	std::cout << "ElevatorSub::ElevatorSub(" << name << ")" << std::endl;
 }
 
@@ -26,14 +26,24 @@ void ElevatorSub::InitDefaultCommand() {
 // ==========================================================================
 
 double ElevatorSub::ReturnPIDInput() {
-	// TODO
-	return 0;
+	return myEncoder()->PIDGet();
 }
 
 // ==========================================================================
 
 void ElevatorSub::UsePIDOutput(double output) {
-	// TODO
+	myMotor()->Set(output);
+}
+
+// ==========================================================================
+// Methods for configuring the elevator
+// ==========================================================================
+
+void ElevatorSub::SetPositions(double bottomPosition, double loadPosition, double deltaPosition, double topPosition) {
+	_bottomPosition = bottomPosition;
+	_loadPosition   = loadPosition;
+	_deltaPosition  = deltaPosition;
+	_topPosition    = topPosition;
 }
 
 // ==========================================================================

@@ -9,6 +9,7 @@
 #include "../Logger.h"
 #include "../Robot.h"
 #include <string>
+#include <sstream>
 
 // ==========================================================================
 
@@ -47,7 +48,7 @@ RotateBy::RotateBy(const char* name, double rotateByDegrees)
 // Called just before this Command runs the first time
 
 void RotateBy::Initialize() {
-	LOG(GetName().append("::Initialize"))
+	LOG(GetName().append("::Initialize"));
 	SetTimeout(TIMEOUT_SECONDS);
 	_pidCtrl->SetSetpoint(CalculateSetpoint());
 	_pidCtrl->Enable();
@@ -64,11 +65,11 @@ void RotateBy::Execute() {
 
 bool RotateBy::IsFinished() {
 	if (IsTimedOut()) {
-		LOG(GetName().append("::IsFinished -> IsTimedOut"))
+		LOG(GetName().append("::IsFinished -> IsTimedOut"));
 		return true;
 	}
 	if (_pidCtrl->OnTarget()) {
-		LOG(GetName().append("::IsFinished -> OnTarget"))
+		LOG(GetName().append("::IsFinished -> OnTarget"));
 		return true;
 	}
 	return false;
@@ -78,7 +79,7 @@ bool RotateBy::IsFinished() {
 // Called once after IsFinished returns true
 
 void RotateBy::End() {
-	LOG(GetName().append("::End"))
+	LOG(GetName().append("::End"));
 	_pidCtrl->Disable();
 }
 
@@ -86,7 +87,7 @@ void RotateBy::End() {
 // Called when another command which requires this subsystem is scheduled to run
 
 void RotateBy::Interrupted() {
-	LOG(GetName().append("::Interrupted"))
+	LOG(GetName().append("::Interrupted"));
 	_pidCtrl->Disable();
 }
 
@@ -95,7 +96,9 @@ void RotateBy::Interrupted() {
 // ==========================================================================
 
 void RotateBy::PIDWrite(float output) {
-	std::cout << GetName() << ": PIDWrite(" << output << ")" << std::endl;
+	std::ostringstream ss;
+	ss << GetName() << ": PIDWrite(" << output << ")";
+	LOG(ss.str());
 	Robot::driveTrain->Crab(output, 0.0, 0.0);
 }
 

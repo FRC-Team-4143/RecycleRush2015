@@ -13,7 +13,7 @@
 //
 class ElevatorSub: public PIDSubsystem {
 public:
-	ElevatorSub(const char* name, SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams, double unitDelta, double bottomPosition, double topPosition);
+	ElevatorSub(const char* name, SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams);
 
 	// Subsystem methods
 	virtual void InitDefaultCommand();
@@ -22,6 +22,7 @@ public:
 	virtual double ReturnPIDInput();
 	virtual void UsePIDOutput(double output);
 
+	void SetPositions(double bottomPosition, double loadPosition, double deltaPosition, double topPosition);
 	void SetLowerNeighbor(ElevatorSub* lowerNeighbor) { _lowerNeighbor = lowerNeighbor; }
 	void SetUpperNeighbor(ElevatorSub* upperNeighbor) { _upperNeighbor = upperNeighbor; }
 
@@ -43,8 +44,9 @@ private:
 	ElevatorSub* _lowerNeighbor;
 	ElevatorSub* _upperNeighbor;
 
-	double _unitDelta;
 	double _bottomPosition;
+	double _loadPosition;
+	double _deltaPosition;
 	double _topPosition;
 };
 

@@ -27,6 +27,9 @@ SpeedController*   RobotMap::driveTrainRearRightDrive = nullptr;
 AnalogChannelVolt* RobotMap::driveTrainRearRightPos = nullptr;
 SpeedController*   RobotMap::driveTrainRearRightSteer = nullptr;
 
+SpeedController* RobotMap::toteElevator1Motor = nullptr;
+Encoder*         RobotMap::toteElevator1Pos = nullptr;
+
 #define CONTINUOUS true
 #define P 0.5
 #define I 0.0
@@ -56,6 +59,10 @@ SpeedController*   RobotMap::driveTrainRearRightSteer = nullptr;
 	#define RRD 0
 	#define RRP 1
 	#define RRS 4
+
+	#define TOTE1_MOTOR 8
+	#define TOTE1_POS_A 0
+	#define TOTE1_POS_B 1
 #else
 	#define FLD 2
 	#define FLP 2
@@ -72,10 +79,14 @@ SpeedController*   RobotMap::driveTrainRearRightSteer = nullptr;
 	#define RRD 0
 	#define RRP 1
 	#define RRS 4
+
+	#define TOTE1_MOTOR 8
+	#define TOTE1_POS_A 0
+	#define TOTE1_POS_B 1
 #endif
 
 void RobotMap::Init() {
-	LOG("RobotMap::Init")
+	LOG("RobotMap::Init");
 
 	LiveWindow* lw = LiveWindow::GetInstance();
 
@@ -121,4 +132,7 @@ void RobotMap::Init() {
 	driveTrainRearRight->SetAbsoluteTolerance(TOLERANCE);
 	driveTrainRearRight->SetInputRange(POTMIN, POTMAX);
 	driveTrainRearRight->SetOutputRange(-STEERPOW, STEERPOW);
+
+	toteElevator1Motor = new Talon(TOTE1_MOTOR);
+	toteElevator1Pos = new Encoder(TOTE1_POS_A, TOTE1_POS_B);
 }

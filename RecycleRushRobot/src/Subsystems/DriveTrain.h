@@ -4,7 +4,6 @@
 #include <WPILib.h>
 #include <math.h>
 #include "../Modules/AnalogChannelVolt.h"
-//#include "../Modules/RAWCConstants.h"
 
 class DriveTrain: public Subsystem {
 private:
@@ -47,7 +46,6 @@ private:
 	double RRRatio;	//Ratio of Speed of Rear Right wheel
 	double RLRatio;	//Ratio of Speed of Rear Left wheel
 
-	//RAWCConstants* File;
 	double FLOffset;
 	double FROffset;
 	double RLOffset;

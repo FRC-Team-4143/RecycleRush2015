@@ -17,7 +17,7 @@ const uint32_t JOYSTICK_BUTTON_LB = 4;
 const uint32_t JOYSTICK_BUTTON_RB = 5;
 
 OI::OI() {
-	LOG("OI::OI")
+	LOG("OI::OI");
 
 	// Define joysticks
 	driverJoystick = new Joystick(JOYSTICK_PORT_DRIVER);
@@ -32,7 +32,6 @@ OI::OI() {
 //	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(rotateRight90);
 
 	// Add SmartDashboard controls
-	SmartDashboard::PutData("SchedulerData", Scheduler::GetInstance());
 	SmartDashboard::PutData("SaveWheelPositions", new SaveWheelPositions());
 	SmartDashboard::PutData("UpdateSmartDashboard", new UpdateSmartDashboard());
 //	SmartDashboard::PutData("Rotate Left 90", rotateLeft90);

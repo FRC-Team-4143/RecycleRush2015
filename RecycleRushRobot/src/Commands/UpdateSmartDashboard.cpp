@@ -4,7 +4,7 @@
 
 // ==========================================================================
 
-UpdateSmartDashboard::UpdateSmartDashboard() {
+UpdateSmartDashboard::UpdateSmartDashboard() : Command("Update SmartDashboard") {
 	SetRunWhenDisabled(true);
 }
 
@@ -18,35 +18,41 @@ void UpdateSmartDashboard::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 
 void UpdateSmartDashboard::Execute() {
-	SmartDashboard::PutNumber("FLoutputDrive", Robot::driveTrain->frontLeftDrive->Get());
-	SmartDashboard::PutNumber("FRoutputDrive", Robot::driveTrain->frontRightDrive->Get());
-	SmartDashboard::PutNumber("RLoutputDrive", Robot::driveTrain->rearLeftDrive->Get());
-	SmartDashboard::PutNumber("RRoutputDrive", Robot::driveTrain->rearRightDrive->Get());
-	SmartDashboard::PutNumber("FrontLeftVolt", Robot::driveTrain->frontLeftPos->GetVoltage());
-	SmartDashboard::PutNumber("FrontRightVolt", Robot::driveTrain->frontRightPos->GetVoltage());
-	SmartDashboard::PutNumber("RearLeftVolt", Robot::driveTrain->rearLeftPos->GetVoltage());
-	SmartDashboard::PutNumber("RearRightVolt", Robot::driveTrain->rearRightPos->GetVoltage());
-	SmartDashboard::PutNumber("FrontLeftturns", Robot::driveTrain->frontLeftPos->getturns());
-	SmartDashboard::PutNumber("FrontRightturns", Robot::driveTrain->frontRightPos->getturns());
-	SmartDashboard::PutNumber("RearLeftturns", Robot::driveTrain->rearLeftPos->getturns());
-	SmartDashboard::PutNumber("RearRightturns", Robot::driveTrain->rearRightPos->getturns());
+	SmartDashboard::PutData("SchedulerData", Scheduler::GetInstance());
 
-	SmartDashboard::PutNumber("StickX", Robot::oi->GetJoystickX());
-	SmartDashboard::PutNumber("StickY", Robot::oi->GetJoystickY());
-	SmartDashboard::PutNumber("StickZ", Robot::oi->GetJoystickZ());
+	SmartDashboard::PutNumber("FL-Drive-Output", Robot::driveTrain->frontLeftDrive->Get());
+	SmartDashboard::PutNumber("FR-Drive-Output", Robot::driveTrain->frontRightDrive->Get());
+	SmartDashboard::PutNumber("RL-Drive-Output", Robot::driveTrain->rearLeftDrive->Get());
+	SmartDashboard::PutNumber("RR-Drive-Output", Robot::driveTrain->rearRightDrive->Get());
 
-	SmartDashboard::PutData("FLpid", Robot::driveTrain->frontLeft);
-	SmartDashboard::PutNumber("FLError", Robot::driveTrain->frontLeft->GetError());
-	SmartDashboard::PutNumber("FLoutput", Robot::driveTrain->frontLeft->Get());
-	SmartDashboard::PutData("FRpid", Robot::driveTrain->frontRight);
-	SmartDashboard::PutNumber("FRError", Robot::driveTrain->frontRight->GetError());
-	SmartDashboard::PutNumber("FRoutput", Robot::driveTrain->frontRight->Get());
-	SmartDashboard::PutData("RLpid", Robot::driveTrain->rearLeft);
-	SmartDashboard::PutNumber("RLError", Robot::driveTrain->rearLeft->GetError());
-	SmartDashboard::PutNumber("RLoutput", Robot::driveTrain->rearLeft->Get());
-	SmartDashboard::PutData("RRpid", Robot::driveTrain->rearRight);
-	SmartDashboard::PutNumber("RRError", Robot::driveTrain->rearRight->GetError());
-	SmartDashboard::PutNumber("RRoutput", Robot::driveTrain->rearRight->Get());
+	SmartDashboard::PutNumber("FL-Pos-Voltage", Robot::driveTrain->frontLeftPos->GetVoltage());
+	SmartDashboard::PutNumber("FR-Pos-Voltage", Robot::driveTrain->frontRightPos->GetVoltage());
+	SmartDashboard::PutNumber("RL-Pos-Voltage", Robot::driveTrain->rearLeftPos->GetVoltage());
+	SmartDashboard::PutNumber("RR-Pos-Voltage", Robot::driveTrain->rearRightPos->GetVoltage());
+
+	SmartDashboard::PutNumber("FL-Pos-Turns", Robot::driveTrain->frontLeftPos->getturns());
+	SmartDashboard::PutNumber("FR-Pos-Turns", Robot::driveTrain->frontRightPos->getturns());
+	SmartDashboard::PutNumber("RL-Pos-Turns", Robot::driveTrain->rearLeftPos->getturns());
+	SmartDashboard::PutNumber("RR-Pos-Turns", Robot::driveTrain->rearRightPos->getturns());
+
+	SmartDashboard::PutData("FL-PID", Robot::driveTrain->frontLeft);
+	SmartDashboard::PutData("FR-PID", Robot::driveTrain->frontRight);
+	SmartDashboard::PutData("RL-PID", Robot::driveTrain->rearLeft);
+	SmartDashboard::PutData("RR-PID", Robot::driveTrain->rearRight);
+
+	SmartDashboard::PutNumber("FL-PID-Error", Robot::driveTrain->frontLeft->GetError());
+	SmartDashboard::PutNumber("FR-PID-Error", Robot::driveTrain->frontRight->GetError());
+	SmartDashboard::PutNumber("RL-PID-Error", Robot::driveTrain->rearLeft->GetError());
+	SmartDashboard::PutNumber("RR-PID-Error", Robot::driveTrain->rearRight->GetError());
+
+	SmartDashboard::PutNumber("FL-PID-Output", Robot::driveTrain->frontLeft->Get());
+	SmartDashboard::PutNumber("FR-PID-Output", Robot::driveTrain->frontRight->Get());
+	SmartDashboard::PutNumber("RL-PID-Output", Robot::driveTrain->rearLeft->Get());
+	SmartDashboard::PutNumber("RR-PID-Output", Robot::driveTrain->rearRight->Get());
+
+	SmartDashboard::PutNumber("Driver-X", Robot::oi->GetJoystickX());
+	SmartDashboard::PutNumber("Driver-Y", Robot::oi->GetJoystickY());
+	SmartDashboard::PutNumber("Driver-Z", Robot::oi->GetJoystickZ());
 }
 
 // ==========================================================================
