@@ -20,6 +20,13 @@ void UpdateSmartDashboard::Initialize() {
 void UpdateSmartDashboard::Execute() {
 	SmartDashboard::PutData("SchedulerData", Scheduler::GetInstance());
 
+	SmartDashboard::PutNumber("Gyro-Calibrating", Robot::gyroSub->IsCalibrating());
+	SmartDashboard::PutNumber("Gyro-Yaw", Robot::gyroSub->PIDGet());
+
+	SmartDashboard::PutNumber("Driver-X", Robot::oi->GetJoystickX());
+	SmartDashboard::PutNumber("Driver-Y", Robot::oi->GetJoystickY());
+	SmartDashboard::PutNumber("Driver-Z", Robot::oi->GetJoystickZ());
+
 	SmartDashboard::PutNumber("FL-Drive-Output", Robot::driveTrain->frontLeftDrive->Get());
 	SmartDashboard::PutNumber("FR-Drive-Output", Robot::driveTrain->frontRightDrive->Get());
 	SmartDashboard::PutNumber("RL-Drive-Output", Robot::driveTrain->rearLeftDrive->Get());
@@ -49,10 +56,6 @@ void UpdateSmartDashboard::Execute() {
 	SmartDashboard::PutNumber("FR-PID-Output", Robot::driveTrain->frontRight->Get());
 	SmartDashboard::PutNumber("RL-PID-Output", Robot::driveTrain->rearLeft->Get());
 	SmartDashboard::PutNumber("RR-PID-Output", Robot::driveTrain->rearRight->Get());
-
-	SmartDashboard::PutNumber("Driver-X", Robot::oi->GetJoystickX());
-	SmartDashboard::PutNumber("Driver-Y", Robot::oi->GetJoystickY());
-	SmartDashboard::PutNumber("Driver-Z", Robot::oi->GetJoystickZ());
 }
 
 // ==========================================================================

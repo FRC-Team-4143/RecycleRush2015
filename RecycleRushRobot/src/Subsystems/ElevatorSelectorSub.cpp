@@ -1,26 +1,30 @@
-#include "GyroSub.h"
+#include "ElevatorSelectorSub.h"
 #include "../Logger.h"
 
 // ==========================================================================
 
-GyroSub::GyroSub() : Subsystem("GyroSub") {
-	LOG("GyroSub::GyroSub");
+ElevatorSelectorSub::ElevatorSelectorSub()
+: Subsystem("ElevatorSelector"),
+  _elevators(), _selectedIndex(-1) {
+	std::cout << GetName() << std::endl;
 }
 
 // ==========================================================================
+// Subsystem methods
+// ==========================================================================
 
-void GyroSub::InitDefaultCommand() {
-	LOG("GyroSub::InitDefaultCommand");
+void ElevatorSelectorSub::InitDefaultCommand() {
+	LOG("ElevatorSelectorSub::InitDefaultCommand");
 	// Set the default command for a subsystem here.
 	//SetDefaultCommand(new MyCommand());
 }
 
 // ==========================================================================
-// PIDSource methods
+// Methods for configuring the elevator selector
 // ==========================================================================
 
-double GyroSub::PIDGet() {
-	return theGyro()->GetYaw();
+void ElevatorSelectorSub::AddElevator(ElevatorSub* elevator) {
+	_elevators.push_back(elevator);
 }
 
 // ==========================================================================
@@ -28,14 +32,4 @@ double GyroSub::PIDGet() {
 // Call these from Commands.
 // ==========================================================================
 
-double GyroSub::GetHeading() {
-	return theGyro()->GetCompassHeading();
-}
-
-// ==========================================================================
-
-bool GyroSub::IsCalibrating() {
-	return theGyro()->IsCalibrating();
-}
-
-// ==========================================================================
+// TODO

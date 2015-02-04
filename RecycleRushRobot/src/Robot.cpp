@@ -9,6 +9,7 @@ OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
 ElevatorSub* Robot::toteElevator1 = nullptr;
+ElevatorSelectorSub* Robot::elevatorSelector = nullptr;
 
 void Robot::RobotInit() {
 	LOG("Robot::RobotInit");
@@ -34,6 +35,9 @@ void Robot::RobotInit() {
 
 	PIDParameters pidParams(0.1, 0.05, 0.0125, 0); // TODO - Get parameters from Preferences
 	toteElevator1 = new ElevatorSub("ToteElevator1", RobotMap::toteElevator1Motor, RobotMap::toteElevator1Pos, pidParams);
+
+	elevatorSelector = new ElevatorSelectorSub();
+	// TODO - Add elevators to selector
 
 	// ------------------------------------------------------------
 	// Initialize OI *AFTER* all subsystems have been initialized.

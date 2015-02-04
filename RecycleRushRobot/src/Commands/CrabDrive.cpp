@@ -16,7 +16,7 @@ void CrabDrive::Execute() {
 	float x = Robot::oi->GetJoystickX();
 	float y = Robot::oi->GetJoystickY();
 	float z = Robot::oi->GetJoystickZ();
-	std::cout << "X " << x << ", Y " << y << ", Z " << z << std::endl;
+	//std::cout << "X " << x << ", Y " << y << ", Z " << z << std::endl;
 	Robot::driveTrain->Crab(z, -y, x);
 }
 

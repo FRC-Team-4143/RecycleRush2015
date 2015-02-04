@@ -13,18 +13,31 @@
 
 // ==========================================================================
 
-#define P 0.05
-#define I (P/2.0)
-#define D (P/8.0)
-#define F 0.0
+#if 1
+	#define P 0.05
+	#define I (P/2.0)
+	#define D (P/8.0)
+	#define F 0.0
 
-#define INPUT_MIN -180
-#define INPUT_MAX  180
+	#define INPUT_MIN -180
+	#define INPUT_MAX  180
 
-#define OUTPUT_MIN -1.0
-#define OUTPUT_MAX  1.0
+	#define OUTPUT_MIN -0.5
+	#define OUTPUT_MAX  0.5
+#else
+	#define P 0.1
+	#define I 0
+	#define D 0
+	#define F 0.0
 
-#define ABSOLUTE_TOLERANCE 3.0
+	#define INPUT_MIN 0
+	#define INPUT_MAX 360
+
+	#define OUTPUT_MIN -0.5
+	#define OUTPUT_MAX  0.5
+#endif
+
+#define ABSOLUTE_TOLERANCE 2.0
 
 #define TIMEOUT_SECONDS 2.0
 
@@ -41,7 +54,8 @@ RotateBy::RotateBy(const char* name, double rotateByDegrees)
 	_pidCtrl->SetOutputRange(OUTPUT_MIN, OUTPUT_MAX);
 	_pidCtrl->SetContinuous(true);
 	_pidCtrl->SetAbsoluteTolerance(ABSOLUTE_TOLERANCE); // degrees
-	_pidCtrl->Disable();
+//	_pidCtrl->SetTolerance(2); // percent
+	//_pidCtrl->Disable();
 }
 
 // ==========================================================================
@@ -50,7 +64,9 @@ RotateBy::RotateBy(const char* name, double rotateByDegrees)
 void RotateBy::Initialize() {
 	LOG(GetName().append("::Initialize"));
 	SetTimeout(TIMEOUT_SECONDS);
-	_pidCtrl->SetSetpoint(CalculateSetpoint());
+	auto setpoint = CalculateSetpoint();
+	std::cout << "Setpoint: " << setpoint << std::endl;
+	_pidCtrl->SetSetpoint(setpoint);
 	_pidCtrl->Enable();
 }
 
@@ -66,10 +82,12 @@ void RotateBy::Execute() {
 bool RotateBy::IsFinished() {
 	if (IsTimedOut()) {
 		LOG(GetName().append("::IsFinished -> IsTimedOut"));
+		std::cout << "Current Position: " << GetCurrentPosition() << std::endl;
 		return true;
 	}
 	if (_pidCtrl->OnTarget()) {
 		LOG(GetName().append("::IsFinished -> OnTarget"));
+		std::cout << "Current Position: " << GetCurrentPosition() << std::endl;
 		return true;
 	}
 	return false;

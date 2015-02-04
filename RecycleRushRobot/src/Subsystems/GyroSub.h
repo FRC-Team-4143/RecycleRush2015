@@ -23,6 +23,7 @@ public:
 	virtual double PIDGet();
 
 	double GetHeading();
+	bool IsCalibrating();
 
 private:
 	// Put everything in private except methods that implement subsystem capabilities.
