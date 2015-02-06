@@ -22,7 +22,8 @@ public:
 	virtual double ReturnPIDInput();
 	virtual void UsePIDOutput(double output);
 
-	void SetPositions(double bottomPosition, double loadPosition, double topPosition, double upDownDelta, double neighborGapDelta);
+	void SetDimensions(int countsPerRotation, double inchesPerRotation);
+	void SetPositions(double bottomPosition, double loadPosition, double topPosition, double upDownDelta, double lowerMargin, double upperMargin);
 	void SetLowerNeighbor(ElevatorSub* lowerNeighbor) { _lowerNeighbor = lowerNeighbor; }
 	void SetUpperNeighbor(ElevatorSub* upperNeighbor) { _upperNeighbor = upperNeighbor; }
 
@@ -32,6 +33,7 @@ public:
 	void GoToLoad();
 	void GoToTop();
 	void GoToPosition(double position);
+	void HoldPosition();
 
 private:
 	SpeedController* myMotor() { return _motor; }
@@ -44,11 +46,14 @@ private:
 	ElevatorSub* _lowerNeighbor;
 	ElevatorSub* _upperNeighbor;
 
+	int _countsPerRotation;
+	double _inchesPerRotation;
 	double _bottomPosition;
 	double _loadPosition;
 	double _topPosition;
 	double _upDownDelta;
-	double _neighborGapDelta;
+	double _lowerMargin;
+	double _upperMargin;
 };
 
 #endif
