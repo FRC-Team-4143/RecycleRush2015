@@ -44,23 +44,46 @@ void Robot::RobotInit() {
 	#define EL1_BOTMARGIN  2
 	#define EL1_TOPMARGIN  2
 
-	PIDParameters pidParams(0.1, 0.05, 0.0125, 0); // TODO - Get parameters from Preferences
+	#define EL2_BOTTOM     0
+	#define EL2_LOAD       4
+	#define EL2_TOP       60
+	#define EL2_DELTA     14
+	#define EL2_BOTMARGIN  2
+	#define EL2_TOPMARGIN  2
+
+	#define EL3_BOTTOM     0
+	#define EL3_LOAD       4
+	#define EL3_TOP       60
+	#define EL3_DELTA     14
+	#define EL3_BOTMARGIN  2
+	#define EL3_TOPMARGIN  2
+
+	#define EL4_BOTTOM     0
+	#define EL4_LOAD       4
+	#define EL4_TOP       60
+	#define EL4_DELTA     14
+	#define EL4_BOTMARGIN  2
+	#define EL4_TOPMARGIN  2
+
+	PIDParameters pidParams(0.1, 0.05, 0.0125, 0); // TODO - Get parameters from Preferences? From SmartDashboard?
 
 	toteElevator1 = new ElevatorSub("ToteElevator1", RobotMap::toteElevator1Motor, RobotMap::toteElevator1Pos, pidParams);
 	toteElevator2 = new ElevatorSub("ToteElevator2", RobotMap::toteElevator2Motor, RobotMap::toteElevator2Pos, pidParams);
 	toteElevator3 = new ElevatorSub("ToteElevator3", RobotMap::toteElevator3Motor, RobotMap::toteElevator3Pos, pidParams);
 
 	toteElevator1->SetPositions(EL1_BOTTOM, EL1_LOAD, EL1_TOP, EL1_DELTA, EL1_BOTMARGIN, EL1_TOPMARGIN);
+	toteElevator2->SetPositions(EL2_BOTTOM, EL2_LOAD, EL2_TOP, EL2_DELTA, EL2_BOTMARGIN, EL2_TOPMARGIN);
+	toteElevator3->SetPositions(EL3_BOTTOM, EL3_LOAD, EL3_TOP, EL3_DELTA, EL3_BOTMARGIN, EL3_TOPMARGIN);
 
 	binElevator = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams);
+
+	binElevator->SetPositions(EL4_BOTTOM, EL4_LOAD, EL4_TOP, EL4_DELTA, EL4_BOTMARGIN, EL4_TOPMARGIN);
 
 	elevatorSelector = new ElevatorSelectorSub();
 	elevatorSelector->AddElevator(toteElevator1);
 	elevatorSelector->AddElevator(toteElevator2);
 	elevatorSelector->AddElevator(toteElevator3);
 	elevatorSelector->AddElevator(binElevator);
-
-	// TODO - Add more elevators to selector
 
 	elevatorSelector->SelectTop();
 
