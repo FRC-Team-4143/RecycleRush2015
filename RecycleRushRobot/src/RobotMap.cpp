@@ -30,6 +30,15 @@ SpeedController*   RobotMap::driveTrainRearRightSteer = nullptr;
 SpeedController* RobotMap::toteElevator1Motor = nullptr;
 Encoder*         RobotMap::toteElevator1Pos = nullptr;
 
+SpeedController* RobotMap::toteElevator2Motor = nullptr;
+Encoder*         RobotMap::toteElevator2Pos = nullptr;
+
+SpeedController* RobotMap::toteElevator3Motor = nullptr;
+Encoder*         RobotMap::toteElevator3Pos = nullptr;
+
+SpeedController* RobotMap::binElevatorMotor = nullptr;
+Encoder*         RobotMap::binElevatorPos = nullptr;
+
 #define CONTINUOUS true
 #define P 0.5
 #define I 0.0
@@ -63,6 +72,18 @@ Encoder*         RobotMap::toteElevator1Pos = nullptr;
 	#define TOTE1_MOTOR 8
 	#define TOTE1_POS_A 0
 	#define TOTE1_POS_B 1
+
+	#define TOTE2_MOTOR 9
+	#define TOTE2_POS_A 2
+	#define TOTE2_POS_B 3
+
+	#define TOTE3_MOTOR 10
+	#define TOTE3_POS_A 4
+	#define TOTE3_POS_B 5
+
+	#define BIN_MOTOR 11
+	#define BIN_POS_A 6
+	#define BIN_POS_B 7
 #else
 	#define FLD 2
 	#define FLP 2
@@ -83,6 +104,18 @@ Encoder*         RobotMap::toteElevator1Pos = nullptr;
 	#define TOTE1_MOTOR 8
 	#define TOTE1_POS_A 0
 	#define TOTE1_POS_B 1
+
+	#define TOTE2_MOTOR 9
+	#define TOTE2_POS_A 2
+	#define TOTE2_POS_B 3
+
+	#define TOTE3_MOTOR 10
+	#define TOTE3_POS_A 4
+	#define TOTE3_POS_B 5
+
+	#define BIN_MOTOR 11
+	#define BIN_POS_A 6
+	#define BIN_POS_B 7
 #endif
 
 void RobotMap::Init() {
@@ -135,4 +168,13 @@ void RobotMap::Init() {
 
 	toteElevator1Motor = new Talon(TOTE1_MOTOR);
 	toteElevator1Pos = new Encoder(TOTE1_POS_A, TOTE1_POS_B);
+
+	toteElevator1Motor = new Talon(TOTE2_MOTOR);
+	toteElevator1Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B);
+
+	toteElevator1Motor = new Talon(TOTE3_MOTOR);
+	toteElevator1Pos = new Encoder(TOTE3_POS_A, TOTE3_POS_B);
+
+	toteElevator1Motor = new Talon(BIN_MOTOR);
+	toteElevator1Pos = new Encoder(BIN_POS_A, BIN_POS_B);
 }

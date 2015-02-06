@@ -49,6 +49,9 @@ OI::OI() {
 	SmartDashboard::PutData("UpdateSmartDashboard", new UpdateSmartDashboard());
 	SmartDashboard::PutData("Rotate Left 90", rotateLeft90);
 	SmartDashboard::PutData("Rotate Right 90", rotateRight90);
+
+	SmartDashboard::PutNumber("Auto-Drive-Speed", 0.5);
+	SmartDashboard::PutNumber("Auto-Drive-Time", 1.0);
 }
 
 float OI::GetJoystickX() {
