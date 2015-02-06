@@ -4,11 +4,15 @@
 #include "Commands/AutonomousCommand.h"
 #include "Modules/DriveTrainSettings.h"
 #include "Modules/PIDParameters.h"
+#include "Commands/GyroSquare.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
 ElevatorSub* Robot::toteElevator1 = nullptr;
+ElevatorSub* Robot::toteElevator2 = nullptr;
+ElevatorSub* Robot::toteElevator3 = nullptr;
+ElevatorSub* Robot::binElevator = nullptr;
 ElevatorSelectorSub* Robot::elevatorSelector = nullptr;
 
 void Robot::RobotInit() {
@@ -35,6 +39,9 @@ void Robot::RobotInit() {
 
 	PIDParameters pidParams(0.1, 0.05, 0.0125, 0); // TODO - Get parameters from Preferences
 	toteElevator1 = new ElevatorSub("ToteElevator1", RobotMap::toteElevator1Motor, RobotMap::toteElevator1Pos, pidParams);
+	toteElevator1 = new ElevatorSub("ToteElevator2", RobotMap::toteElevator2Motor, RobotMap::toteElevator2Pos, pidParams);
+	toteElevator1 = new ElevatorSub("ToteElevator3", RobotMap::toteElevator3Motor, RobotMap::toteElevator3Pos, pidParams);
+	toteElevator1 = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams);
 
 	elevatorSelector = new ElevatorSelectorSub();
 	// TODO - Add elevators to selector
@@ -89,6 +96,7 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	LOG("Robot::AutonomousInit");
+	autonomousCommand = new GyroSquare();
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
 }

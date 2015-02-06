@@ -40,6 +40,15 @@ public:
 	static SpeedController* toteElevator1Motor;
 	static Encoder*         toteElevator1Pos;
 
+	static SpeedController* toteElevator2Motor;
+	static Encoder*         toteElevator2Pos;
+
+	static SpeedController* toteElevator3Motor;
+	static Encoder*         toteElevator3Pos;
+
+	static SpeedController* binElevatorMotor;
+	static Encoder*         binElevatorPos;
+
     static void Init();
 };
 

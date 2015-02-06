@@ -20,6 +20,9 @@ public:
 	static DriveTrain* driveTrain;
 	static GyroSub* gyroSub;
 	static ElevatorSub* toteElevator1;
+	static ElevatorSub* toteElevator2;
+	static ElevatorSub* toteElevator3;
+	static ElevatorSub* binElevator;
 	static ElevatorSelectorSub* elevatorSelector;
 
 	virtual void RobotInit();
