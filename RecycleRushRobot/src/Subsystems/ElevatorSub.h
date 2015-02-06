@@ -23,7 +23,7 @@ public:
 	virtual void UsePIDOutput(double output);
 
 	void SetDimensions(int countsPerRotation, double inchesPerRotation);
-	void SetPositions(double bottomPosition, double loadPosition, double topPosition, double upDownDelta, double lowerMargin, double upperMargin);
+	void SetPositions(double bottomInches, double loadInches, double topInches, double deltaInches, double lowerMarginInches, double upperMarginInches);
 	void SetLowerNeighbor(ElevatorSub* lowerNeighbor) { _lowerNeighbor = lowerNeighbor; }
 	void SetUpperNeighbor(ElevatorSub* upperNeighbor) { _upperNeighbor = upperNeighbor; }
 
@@ -32,15 +32,20 @@ public:
 	void GoToBottom();
 	void GoToLoad();
 	void GoToTop();
-	void GoToPosition(double position);
+	void GoToHeight(double inches);
 	void HoldPosition();
 
-private:
+protected:
 	SpeedController* myMotor() { return _motor; }
 	Encoder* myEncoder() { return _encoder; }
 	ElevatorSub* myLowerNeighbor() { return _lowerNeighbor; }
 	ElevatorSub* myUpperNeighbor() { return _upperNeighbor; }
 
+	void GoToPosition(double position);
+	double CountToInches(double count) const;
+	double InchesToCount(double inches) const;
+
+private:
 	SpeedController* _motor;
 	Encoder* _encoder;
 	ElevatorSub* _lowerNeighbor;
@@ -48,12 +53,12 @@ private:
 
 	int _countsPerRotation;
 	double _inchesPerRotation;
-	double _bottomPosition;
-	double _loadPosition;
-	double _topPosition;
-	double _upDownDelta;
-	double _lowerMargin;
-	double _upperMargin;
+	double _bottomInches;
+	double _loadInches;
+	double _topInches;
+	double _deltaInches;
+	double _lowerMarginInches;
+	double _upperMarginInches;
 };
 
 #endif

@@ -33,16 +33,16 @@ void Robot::RobotInit() {
 	driveTrain = new DriveTrain();
 	gyroSub = new GyroSub();
 
-	#define TEL1_BOT     0
-	#define TEL1_LOAD   30
-	#define TEL1_TOP   200
-	#define TEL1_DELTA  60
-	#define TEL1_BOTMARGIN  20
-	#define TEL1_TOPMARGIN  20
+	#define EL1_BOTTOM     0
+	#define EL1_LOAD       4
+	#define EL1_TOP       60
+	#define EL1_DELTA     14
+	#define EL1_BOTMARGIN  2
+	#define EL1_TOPMARGIN  2
 
 	PIDParameters pidParams(0.1, 0.05, 0.0125, 0); // TODO - Get parameters from Preferences
 	toteElevator1 = new ElevatorSub("ToteElevator1", RobotMap::toteElevator1Motor, RobotMap::toteElevator1Pos, pidParams);
-	toteElevator1->SetPositions(TEL1_BOT, TEL1_LOAD, TEL1_TOP, TEL1_DELTA, TEL1_BOTMARGIN, TEL1_TOPMARGIN);
+	toteElevator1->SetPositions(EL1_BOTTOM, EL1_LOAD, EL1_TOP, EL1_DELTA, EL1_BOTMARGIN, EL1_TOPMARGIN);
 
 	// TODO - Define additional elevators
 
