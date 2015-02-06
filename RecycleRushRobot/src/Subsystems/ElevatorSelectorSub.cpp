@@ -32,4 +32,42 @@ void ElevatorSelectorSub::AddElevator(ElevatorSub* elevator) {
 // Call these from Commands.
 // ==========================================================================
 
-// TODO
+ElevatorSub* ElevatorSelectorSub::SelectTop() {
+	_selectedIndex = NumElevators() - 1;
+	return Selected();
+}
+
+ElevatorSub* ElevatorSelectorSub::SelectBottom() {
+	if (NumElevators() > 0) {
+		_selectedIndex = 0;
+	}
+	return Selected();
+}
+
+ElevatorSub* ElevatorSelectorSub::SelectNextUpper() {
+	if (_selectedIndex < (NumElevators() - 1)) {
+		_selectedIndex++;
+	}
+	return Selected();
+}
+
+ElevatorSub* ElevatorSelectorSub::SelectNextLower() {
+	if (_selectedIndex > 0) {
+		_selectedIndex--;
+	}
+	return Selected();
+}
+
+ElevatorSub* ElevatorSelectorSub::SelectIndex(int index) {
+	if (index >= 0 && index < NumElevators()) {
+		_selectedIndex = index;
+	}
+	return Selected();
+}
+
+ElevatorSub* ElevatorSelectorSub::Selected() const {
+	if (_selectedIndex >= 0 && _selectedIndex < NumElevators()) {
+		return _elevators[_selectedIndex];
+	}
+	return nullptr;
+}

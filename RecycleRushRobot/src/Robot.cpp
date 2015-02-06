@@ -37,14 +37,32 @@ void Robot::RobotInit() {
 	driveTrain = new DriveTrain();
 	gyroSub = new GyroSub();
 
+	#define EL1_BOTTOM     0
+	#define EL1_LOAD       4
+	#define EL1_TOP       60
+	#define EL1_DELTA     14
+	#define EL1_BOTMARGIN  2
+	#define EL1_TOPMARGIN  2
+
 	PIDParameters pidParams(0.1, 0.05, 0.0125, 0); // TODO - Get parameters from Preferences
+
 	toteElevator1 = new ElevatorSub("ToteElevator1", RobotMap::toteElevator1Motor, RobotMap::toteElevator1Pos, pidParams);
-	toteElevator1 = new ElevatorSub("ToteElevator2", RobotMap::toteElevator2Motor, RobotMap::toteElevator2Pos, pidParams);
-	toteElevator1 = new ElevatorSub("ToteElevator3", RobotMap::toteElevator3Motor, RobotMap::toteElevator3Pos, pidParams);
-	toteElevator1 = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams);
+	toteElevator2 = new ElevatorSub("ToteElevator2", RobotMap::toteElevator2Motor, RobotMap::toteElevator2Pos, pidParams);
+	toteElevator3 = new ElevatorSub("ToteElevator3", RobotMap::toteElevator3Motor, RobotMap::toteElevator3Pos, pidParams);
+
+	toteElevator1->SetPositions(EL1_BOTTOM, EL1_LOAD, EL1_TOP, EL1_DELTA, EL1_BOTMARGIN, EL1_TOPMARGIN);
+
+	binElevator = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams);
 
 	elevatorSelector = new ElevatorSelectorSub();
-	// TODO - Add elevators to selector
+	elevatorSelector->AddElevator(toteElevator1);
+	elevatorSelector->AddElevator(toteElevator2);
+	elevatorSelector->AddElevator(toteElevator3);
+	elevatorSelector->AddElevator(binElevator);
+
+	// TODO - Add more elevators to selector
+
+	elevatorSelector->SelectTop();
 
 	// ------------------------------------------------------------
 	// Initialize OI *AFTER* all subsystems have been initialized.

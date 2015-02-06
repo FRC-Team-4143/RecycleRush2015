@@ -9,7 +9,7 @@
 // The ElevatorSub subsystem represents an elevator for picking up totes or
 // bins. Other elevators may exist above or below it on the same housing.
 //
-// @author JKSalmon
+// @author FRC 4143
 //
 class ElevatorSub: public PIDSubsystem {
 public:
@@ -22,34 +22,43 @@ public:
 	virtual double ReturnPIDInput();
 	virtual void UsePIDOutput(double output);
 
-	void SetPositions(double bottomPosition, double loadPosition, double topPosition, double upDownDelta, double neighborGapDelta);
+	void SetDimensions(int countsPerRotation, double inchesPerRotation);
+	void SetPositions(double bottomInches, double loadInches, double topInches, double deltaInches, double lowerMarginInches, double upperMarginInches);
 	void SetLowerNeighbor(ElevatorSub* lowerNeighbor) { _lowerNeighbor = lowerNeighbor; }
 	void SetUpperNeighbor(ElevatorSub* upperNeighbor) { _upperNeighbor = upperNeighbor; }
 
-	double GetPosition();
 	void GoDown();
 	void GoUp();
 	void GoToBottom();
 	void GoToLoad();
 	void GoToTop();
-	void GoToPosition(double position);
+	void GoToHeight(double inches);
+	void HoldPosition();
 
-private:
+protected:
 	SpeedController* myMotor() { return _motor; }
 	Encoder* myEncoder() { return _encoder; }
 	ElevatorSub* myLowerNeighbor() { return _lowerNeighbor; }
 	ElevatorSub* myUpperNeighbor() { return _upperNeighbor; }
 
+	void GoToPosition(double position);
+	double CountToInches(double count) const;
+	double InchesToCount(double inches) const;
+
+private:
 	SpeedController* _motor;
 	Encoder* _encoder;
 	ElevatorSub* _lowerNeighbor;
 	ElevatorSub* _upperNeighbor;
 
-	double _bottomPosition;
-	double _loadPosition;
-	double _topPosition;
-	double _upDownDelta;
-	double _neighborGapDelta;
+	int _countsPerRotation;
+	double _inchesPerRotation;
+	double _bottomInches;
+	double _loadInches;
+	double _topInches;
+	double _deltaInches;
+	double _lowerMarginInches;
+	double _upperMarginInches;
 };
 
 #endif

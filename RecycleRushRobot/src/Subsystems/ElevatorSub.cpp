@@ -7,7 +7,8 @@ ElevatorSub::ElevatorSub(const char* name, SpeedController* motor, Encoder* enco
 : PIDSubsystem(name, pidParams.P, pidParams.I, pidParams.D, pidParams.F),
   _motor(motor), _encoder(encoder),
   _lowerNeighbor(nullptr), _upperNeighbor(nullptr),
-  _bottomPosition(0), _loadPosition(0), _topPosition(0), _upDownDelta(0), _neighborGapDelta(0) {
+  _countsPerRotation(0), _inchesPerRotation(0),
+  _bottomInches(0), _loadInches(0), _topInches(0), _deltaInches(0), _lowerMarginInches(0), _upperMarginInches(0) {
 	std::cout << "ElevatorSub::ElevatorSub(" << name << ")" << std::endl;
 }
 
@@ -39,12 +40,18 @@ void ElevatorSub::UsePIDOutput(double output) {
 // Methods for configuring the elevator
 // ==========================================================================
 
-void ElevatorSub::SetPositions(double bottomPosition, double loadPosition, double topPosition, double upDownDelta, double neighborGapDelta) {
-	_bottomPosition   = bottomPosition;
-	_loadPosition     = loadPosition;
-	_topPosition      = topPosition;
-	_upDownDelta      = upDownDelta;
-	_neighborGapDelta = neighborGapDelta;
+void ElevatorSub::SetDimensions(int countsPerRotation, double inchesPerRotation) {
+	_countsPerRotation = countsPerRotation;
+	_inchesPerRotation = inchesPerRotation;
+}
+
+void ElevatorSub::SetPositions(double bottomInches, double loadInches, double topInches, double deltaInches, double lowerMarginInches, double upperMarginInches) {
+	_bottomInches      = bottomInches;
+	_loadInches        = loadInches;
+	_topInches         = topInches;
+	_deltaInches       = deltaInches;
+	_lowerMarginInches = lowerMarginInches;
+	_upperMarginInches = upperMarginInches;
 }
 
 // ==========================================================================
@@ -52,30 +59,53 @@ void ElevatorSub::SetPositions(double bottomPosition, double loadPosition, doubl
 // Call these from Commands.
 // ==========================================================================
 
-double ElevatorSub::GetPosition() {
-	return ReturnPIDInput();
-}
-
 void ElevatorSub::GoDown() {
-	GoToPosition(GetPosition() - _upDownDelta);
+	GoToPosition(GetPosition() - InchesToCount(_deltaInches));
 }
 
 void ElevatorSub::GoUp() {
-	GoToPosition(GetPosition() + _upDownDelta);
+	GoToPosition(GetPosition() + InchesToCount(_deltaInches));
 }
 
 void ElevatorSub::GoToBottom() {
-	GoToPosition(_bottomPosition);
+	GoToHeight(_bottomInches);
 }
 
 void ElevatorSub::GoToLoad() {
-	GoToPosition(_loadPosition);
+	GoToHeight(_loadInches);
 }
 
 void ElevatorSub::GoToTop() {
-	GoToPosition(_topPosition);
+	GoToHeight(_topInches);
 }
 
+void ElevatorSub::GoToHeight(double inches) {
+	GoToPosition(InchesToCount(inches));
+}
+
+void ElevatorSub::HoldPosition() {
+	GoToPosition(GetPosition());
+}
+
+// ==========================================================================
+// Internal methods
+// ==========================================================================
+
 void ElevatorSub::GoToPosition(double position) {
-	// TODO
+	if (position < InchesToCount(_bottomInches)) {
+		position = InchesToCount(_bottomInches);
+	}
+	else if (position > InchesToCount(_topInches)) {
+		position = InchesToCount(_topInches);
+	}
+	// TODO - Add neighbor checking
+	SetSetpoint(position);
+}
+
+double ElevatorSub::CountToInches(double count) const {
+	return count / _countsPerRotation * _inchesPerRotation;
+}
+
+double ElevatorSub::InchesToCount(double inches) const {
+	return inches / _inchesPerRotation * _countsPerRotation;
 }
