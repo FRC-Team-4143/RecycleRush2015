@@ -52,10 +52,6 @@ void ElevatorSub::SetPositions(double bottomPosition, double loadPosition, doubl
 // Call these from Commands.
 // ==========================================================================
 
-double ElevatorSub::GetPosition() {
-	return ReturnPIDInput();
-}
-
 void ElevatorSub::GoDown() {
 	GoToPosition(GetPosition() - _upDownDelta);
 }

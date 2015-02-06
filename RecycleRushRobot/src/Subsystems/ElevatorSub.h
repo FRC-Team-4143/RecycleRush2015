@@ -9,7 +9,7 @@
 // The ElevatorSub subsystem represents an elevator for picking up totes or
 // bins. Other elevators may exist above or below it on the same housing.
 //
-// @author JKSalmon
+// @author FRC 4143
 //
 class ElevatorSub: public PIDSubsystem {
 public:
@@ -26,7 +26,6 @@ public:
 	void SetLowerNeighbor(ElevatorSub* lowerNeighbor) { _lowerNeighbor = lowerNeighbor; }
 	void SetUpperNeighbor(ElevatorSub* upperNeighbor) { _upperNeighbor = upperNeighbor; }
 
-	double GetPosition();
 	void GoDown();
 	void GoUp();
 	void GoToBottom();

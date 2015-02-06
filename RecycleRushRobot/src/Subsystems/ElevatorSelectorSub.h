@@ -7,7 +7,7 @@
 //
 // The ElevatorSelectorSub subsystem manages the selection of an active elevator.
 //
-// @author JKSalmon
+// @author FRC 4143
 //
 class ElevatorSelectorSub: public Subsystem {
 public:
@@ -18,13 +18,15 @@ public:
 
 	void AddElevator(ElevatorSub* elevator); // Add them bottom to top
 
-	void SelectTop();
-	void SelectBottom();
-	void SelectNextUpper();
-	void SelectNextLower();
-	void SelectIndex(int index);
-
+	ElevatorSub* SelectTop();
+	ElevatorSub* SelectBottom();
+	ElevatorSub* SelectNextUpper();
+	ElevatorSub* SelectNextLower();
+	ElevatorSub* SelectIndex(int index);
 	ElevatorSub* Selected() const;
+
+protected:
+	int NumElevators() const { return _elevators.size(); }
 
 private:
 	std::vector<ElevatorSub*> _elevators;
