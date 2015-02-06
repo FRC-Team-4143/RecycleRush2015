@@ -22,14 +22,15 @@ public:
 	virtual double ReturnPIDInput();
 	virtual void UsePIDOutput(double output);
 
-	void SetPositions(double bottomPosition, double loadPosition, double deltaPosition, double topPosition);
+	void SetPositions(double bottomPosition, double loadPosition, double topPosition, double upDownDelta, double neighborGapDelta);
 	void SetLowerNeighbor(ElevatorSub* lowerNeighbor) { _lowerNeighbor = lowerNeighbor; }
 	void SetUpperNeighbor(ElevatorSub* upperNeighbor) { _upperNeighbor = upperNeighbor; }
 
-	double GetPosition() const;
+	double GetPosition();
 	void GoDown();
 	void GoUp();
 	void GoToBottom();
+	void GoToLoad();
 	void GoToTop();
 	void GoToPosition(double position);
 
@@ -46,8 +47,9 @@ private:
 
 	double _bottomPosition;
 	double _loadPosition;
-	double _deltaPosition;
 	double _topPosition;
+	double _upDownDelta;
+	double _neighborGapDelta;
 };
 
 #endif

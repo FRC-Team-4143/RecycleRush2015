@@ -54,8 +54,6 @@ RotateBy::RotateBy(const char* name, double rotateByDegrees)
 	_pidCtrl->SetOutputRange(OUTPUT_MIN, OUTPUT_MAX);
 	_pidCtrl->SetContinuous(true);
 	_pidCtrl->SetAbsoluteTolerance(ABSOLUTE_TOLERANCE); // degrees
-//	_pidCtrl->SetTolerance(2); // percent
-	//_pidCtrl->Disable();
 }
 
 // ==========================================================================

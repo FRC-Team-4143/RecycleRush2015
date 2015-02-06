@@ -11,12 +11,21 @@ const uint32_t JOYSTICK_PORT_PICKER = 1;
 
 const float JOYSTICK_DEAD_ZONE = 0.15;
 
-const uint32_t JOYSTICK_X_AXIS = 0;
-const uint32_t JOYSTICK_Y_AXIS = 1;
-const uint32_t JOYSTICK_Z_AXIS = 4;
+const uint32_t JOYSTICK_LX_AXIS    = 0;
+const uint32_t JOYSTICK_LY_AXIS    = 1;
+const uint32_t JOYSTICK_LTRIG_AXIS = 2;
+const uint32_t JOYSTICK_RTRIG_AXIS = 3;
+const uint32_t JOYSTICK_RX_AXIS    = 4;
+const uint32_t JOYSTICK_RY_AXIS    = 5;
 
-const uint32_t JOYSTICK_BUTTON_LB = 5;
-const uint32_t JOYSTICK_BUTTON_RB = 6;
+const uint32_t JOYSTICK_BUTTON_A     = 1;
+const uint32_t JOYSTICK_BUTTON_B     = 2;
+const uint32_t JOYSTICK_BUTTON_X     = 3;
+const uint32_t JOYSTICK_BUTTON_Y     = 4;
+const uint32_t JOYSTICK_BUTTON_LB    = 5;
+const uint32_t JOYSTICK_BUTTON_RB    = 6;
+const uint32_t JOYSTICK_BUTTON_BACK  = 7;
+const uint32_t JOYSTICK_BUTTON_START = 8;
 
 OI::OI() {
 	LOG("OI::OI");
@@ -43,16 +52,16 @@ OI::OI() {
 }
 
 float OI::GetJoystickX() {
-	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_X_AXIS);
+	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_LX_AXIS);
 	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
 
 float OI::GetJoystickY() {
-	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_Y_AXIS);
+	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_LY_AXIS);
 	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
 
 float OI::GetJoystickZ() {
-	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_Z_AXIS);
+	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_RX_AXIS);
 	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }

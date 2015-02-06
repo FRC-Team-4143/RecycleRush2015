@@ -7,7 +7,7 @@ ElevatorSub::ElevatorSub(const char* name, SpeedController* motor, Encoder* enco
 : PIDSubsystem(name, pidParams.P, pidParams.I, pidParams.D, pidParams.F),
   _motor(motor), _encoder(encoder),
   _lowerNeighbor(nullptr), _upperNeighbor(nullptr),
-  _bottomPosition(0), _loadPosition(0), _deltaPosition(0), _topPosition(0) {
+  _bottomPosition(0), _loadPosition(0), _topPosition(0), _upDownDelta(0), _neighborGapDelta(0) {
 	std::cout << "ElevatorSub::ElevatorSub(" << name << ")" << std::endl;
 }
 
@@ -39,11 +39,12 @@ void ElevatorSub::UsePIDOutput(double output) {
 // Methods for configuring the elevator
 // ==========================================================================
 
-void ElevatorSub::SetPositions(double bottomPosition, double loadPosition, double deltaPosition, double topPosition) {
-	_bottomPosition = bottomPosition;
-	_loadPosition   = loadPosition;
-	_deltaPosition  = deltaPosition;
-	_topPosition    = topPosition;
+void ElevatorSub::SetPositions(double bottomPosition, double loadPosition, double topPosition, double upDownDelta, double neighborGapDelta) {
+	_bottomPosition   = bottomPosition;
+	_loadPosition     = loadPosition;
+	_topPosition      = topPosition;
+	_upDownDelta      = upDownDelta;
+	_neighborGapDelta = neighborGapDelta;
 }
 
 // ==========================================================================
@@ -51,4 +52,30 @@ void ElevatorSub::SetPositions(double bottomPosition, double loadPosition, doubl
 // Call these from Commands.
 // ==========================================================================
 
-// TODO
+double ElevatorSub::GetPosition() {
+	return ReturnPIDInput();
+}
+
+void ElevatorSub::GoDown() {
+	GoToPosition(GetPosition() - _upDownDelta);
+}
+
+void ElevatorSub::GoUp() {
+	GoToPosition(GetPosition() + _upDownDelta);
+}
+
+void ElevatorSub::GoToBottom() {
+	GoToPosition(_bottomPosition);
+}
+
+void ElevatorSub::GoToLoad() {
+	GoToPosition(_loadPosition);
+}
+
+void ElevatorSub::GoToTop() {
+	GoToPosition(_topPosition);
+}
+
+void ElevatorSub::GoToPosition(double position) {
+	// TODO
+}
