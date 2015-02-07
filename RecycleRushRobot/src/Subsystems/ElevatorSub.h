@@ -3,6 +3,7 @@
 
 #include <WPILib.h>
 #include <Commands/PIDSubsystem.h>
+#include "Modules/ICommandFactory.h"
 #include "Modules/PIDParameters.h"
 
 //
@@ -13,7 +14,7 @@
 //
 class ElevatorSub: public PIDSubsystem {
 public:
-	ElevatorSub(const char* name, SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams);
+	ElevatorSub(const char* name, SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams, ICommandFactory* defaultCommandFactory = nullptr);
 
 	// Subsystem methods
 	virtual void InitDefaultCommand();
@@ -46,6 +47,7 @@ protected:
 	double InchesToCount(double inches) const;
 
 private:
+	ICommandFactory* _defaultCommandFactory;
 	SpeedController* _motor;
 	Encoder* _encoder;
 	ElevatorSub* _lowerNeighbor;

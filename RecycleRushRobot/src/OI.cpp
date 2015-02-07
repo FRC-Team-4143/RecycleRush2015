@@ -70,3 +70,8 @@ float OI::GetJoystickZ() {
 	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_RX_AXIS);
 	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
+
+float OI::GetBinElevatorAxisValue() {
+	auto value = GetPickerJoystick()->GetRawAxis(JOYSTICK_RY_AXIS);
+	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : -value;
+}

@@ -2,6 +2,7 @@
 #include "Robot.h"
 #include "RobotMap.h"
 #include "Commands/AutonomousCommand.h"
+#include "Modules/BinElevatorMoveFactory.h"
 #include "Modules/DriveTrainSettings.h"
 #include "Modules/PIDParameters.h"
 #include "Commands/GyroSquare.h"
@@ -75,7 +76,8 @@ void Robot::RobotInit() {
 	toteElevator2->SetPositions(EL2_BOTTOM, EL2_LOAD, EL2_TOP, EL2_DELTA, EL2_BOTMARGIN, EL2_TOPMARGIN);
 	toteElevator3->SetPositions(EL3_BOTTOM, EL3_LOAD, EL3_TOP, EL3_DELTA, EL3_BOTMARGIN, EL3_TOPMARGIN);
 
-	binElevator = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams);
+	auto binElevatorDefaultCommandFactory = new BinElevatorMoveFactory();
+	binElevator = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams, binElevatorDefaultCommandFactory);
 
 	binElevator->SetPositions(EL4_BOTTOM, EL4_LOAD, EL4_TOP, EL4_DELTA, EL4_BOTMARGIN, EL4_TOPMARGIN);
 
