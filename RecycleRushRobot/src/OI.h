@@ -19,6 +19,8 @@ private:
 	// Declare commands
 	Command* rotateLeft90;
 	Command* rotateRight90;
+	Command* goUp;
+	Command* goDown;
 
 	// Declare joystick buttons
 	// TODO

@@ -51,7 +51,7 @@ Encoder*         RobotMap::binElevatorPos = nullptr;
 #define PERIOD .02
 #define RATIO 1
 
-#define TESTSWERVE 1
+#define TESTSWERVE 0
 #if TESTSWERVE
 	#define FLD 2
 	#define FLP 2
@@ -87,33 +87,33 @@ Encoder*         RobotMap::binElevatorPos = nullptr;
 #else
 	#define FLD 2
 	#define FLP 2
-	#define FLS 6
+	#define FLS 2
 
-	#define FRD 3
+	#define FRD 1
 	#define FRP 0
-	#define FRS 5
+	#define FRS 4
 
-	#define RLD 1
+	#define RLD 3
 	#define RLP 3
-	#define RLS 7
+	#define RLS 1
 
 	#define RRD 0
 	#define RRP 1
-	#define RRS 4
+	#define RRS 3
 
-	#define TOTE1_MOTOR 8
+	#define TOTE1_MOTOR 5
 	#define TOTE1_POS_A 0
 	#define TOTE1_POS_B 1
 
-	#define TOTE2_MOTOR 9
+	#define TOTE2_MOTOR 6
 	#define TOTE2_POS_A 2
 	#define TOTE2_POS_B 3
 
-	#define TOTE3_MOTOR 10
+	#define TOTE3_MOTOR 7
 	#define TOTE3_POS_A 4
 	#define TOTE3_POS_B 5
 
-	#define BIN_MOTOR 11
+	#define BIN_MOTOR 4
 	#define BIN_POS_A 6
 	#define BIN_POS_B 7
 #endif
@@ -132,7 +132,7 @@ void RobotMap::Init() {
 
 	driveTrainFrontLeftDrive = new Talon(FLD);
 	driveTrainFrontLeftPos   = new AnalogChannelVolt(FLP, true, RATIO);
-	driveTrainFrontLeftSteer = new Talon(FLS);
+	driveTrainFrontLeftSteer = new CANTalon(FLS);
 	driveTrainFrontLeft      = new PIDController(P, I, D, F, driveTrainFrontLeftPos, driveTrainFrontLeftSteer, PERIOD);
 	driveTrainFrontLeft->SetContinuous(CONTINUOUS);
 	driveTrainFrontLeft->SetAbsoluteTolerance(TOLERANCE);
@@ -141,7 +141,7 @@ void RobotMap::Init() {
 
 	driveTrainFrontRightDrive = new Talon(FRD);
 	driveTrainFrontRightPos   = new AnalogChannelVolt(FRP, true, RATIO);
-	driveTrainFrontRightSteer = new Talon(FRS);
+	driveTrainFrontRightSteer = new CANTalon(FRS);
 	driveTrainFrontRight      = new PIDController(P, I, D, F, driveTrainFrontRightPos, driveTrainFrontRightSteer, PERIOD);
 	driveTrainFrontRight->SetContinuous(CONTINUOUS);
 	driveTrainFrontRight->SetAbsoluteTolerance(TOLERANCE);
@@ -150,7 +150,7 @@ void RobotMap::Init() {
 
 	driveTrainRearLeftDrive = new Talon(RLD);
 	driveTrainRearLeftPos   = new AnalogChannelVolt(RLP, true, RATIO);
-	driveTrainRearLeftSteer = new Talon(RLS);
+	driveTrainRearLeftSteer = new CANTalon(RLS);
 	driveTrainRearLeft      = new PIDController(P, I, D, F, driveTrainRearLeftPos, driveTrainRearLeftSteer, PERIOD);
 	driveTrainRearLeft->SetContinuous(CONTINUOUS);
 	driveTrainRearLeft->SetAbsoluteTolerance(TOLERANCE);
@@ -159,7 +159,7 @@ void RobotMap::Init() {
 
 	driveTrainRearRightDrive = new Talon(RRD);
 	driveTrainRearRightPos   = new AnalogChannelVolt(RRP, true, RATIO);
-	driveTrainRearRightSteer = new Talon(RRS);
+	driveTrainRearRightSteer = new CANTalon(RRS);
 	driveTrainRearRight      = new PIDController(P, I, D, F, driveTrainRearRightPos, driveTrainRearRightSteer, PERIOD);
 	driveTrainRearRight->SetContinuous(CONTINUOUS);
 	driveTrainRearRight->SetAbsoluteTolerance(TOLERANCE);

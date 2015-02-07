@@ -5,6 +5,8 @@
 #include "Commands/SaveWheelPositions.h"
 #include "Commands/ShowPrefs.h"
 #include "Commands/UpdateSmartDashboard.h"
+#include "Commands/LowerElevator.h"
+#include "Commands/RaiseElevator.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -37,10 +39,14 @@ OI::OI() {
 	// Define commands
 	rotateLeft90 = new RotateBy("Rotate Left 90", -90);
 	rotateRight90 = new RotateBy("Rotate Right 90", 90);
+	goUp = new RaiseElevator();
+	goDown = new LowerElevator();
 
 	// Define joystick button mappings
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(rotateLeft90);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(rotateRight90);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(rotateLeft90);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(rotateRight90);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(goUp);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(goDown);
 
 	// Add SmartDashboard controls
 	SmartDashboard::PutData("FixPrefs", new FixPrefs());

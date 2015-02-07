@@ -4,7 +4,7 @@
 #include "Commands/AutonomousCommand.h"
 #include "Modules/DriveTrainSettings.h"
 #include "Modules/PIDParameters.h"
-#include "Commands/GyroSquare.h"
+
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -137,7 +137,7 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	LOG("Robot::AutonomousInit");
-	autonomousCommand = new GyroSquare();
+	//autonomousCommand = new GyroSquare();
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
 }
