@@ -83,7 +83,9 @@ void Robot::RobotInit() {
 	binElevator->SetPositions(EL4_BOTTOM, EL4_LOAD, EL4_TOP, EL4_DELTA, EL4_BOTMARGIN, EL4_TOPMARGIN);
 
 	toteElevatorGroup = new ElevatorGroupSub();
-
+	toteElevatorGroup->AddElevator(toteElevator1);
+	toteElevatorGroup->AddElevator(toteElevator2);
+	toteElevatorGroup->AddElevator(toteElevator3);
 
 	elevatorSelector = new ElevatorSelectorSub();
 	elevatorSelector->AddElevator(toteElevator1);
