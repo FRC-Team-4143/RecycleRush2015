@@ -24,9 +24,8 @@ public:
 	virtual void UsePIDOutput(double output);
 
 	void SetEncoderDimensions(int countsPerRotation, double inchesPerRotation);
+	void SetNeighbors(ElevatorSub* lowerNeighbor, ElevatorSub* upperNeighbor);
 	void SetPositions(double bottomInches, double loadInches, double topInches, double deltaInches, double lowerMarginInches, double upperMarginInches);
-	void SetLowerNeighbor(ElevatorSub* lowerNeighbor) { _lowerNeighbor = lowerNeighbor; }
-	void SetUpperNeighbor(ElevatorSub* upperNeighbor) { _upperNeighbor = upperNeighbor; }
 
 	void GoDown();
 	void GoUp();

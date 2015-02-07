@@ -48,6 +48,11 @@ void ElevatorSub::SetEncoderDimensions(int countsPerRotation, double inchesPerRo
 	_inchesPerRotation = inchesPerRotation;
 }
 
+void ElevatorSub::SetNeighbors(ElevatorSub* lowerNeighbor, ElevatorSub* upperNeighbor) {
+	_lowerNeighbor = lowerNeighbor;
+	_upperNeighbor = upperNeighbor;
+}
+
 void ElevatorSub::SetPositions(double bottomInches, double loadInches, double topInches, double deltaInches, double lowerMarginInches, double upperMarginInches) {
 	_bottomInches      = bottomInches;
 	_loadInches        = loadInches;

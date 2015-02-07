@@ -91,15 +91,10 @@ void Robot::RobotInit() {
 	// --------------
 	// Set neighbors
 	// --------------
-	toteElevator1->SetUpperNeighbor(toteElevator2);
-
-	toteElevator2->SetLowerNeighbor(toteElevator1);
-	toteElevator2->SetUpperNeighbor(toteElevator3);
-
-	toteElevator3->SetLowerNeighbor(toteElevator2);
-	toteElevator3->SetUpperNeighbor(binElevator);
-
-	binElevator->SetLowerNeighbor(toteElevator3);
+	toteElevator1->SetNeighbors(nullptr, toteElevator2);
+	toteElevator2->SetNeighbors(toteElevator1, toteElevator3);
+	toteElevator3->SetNeighbors(toteElevator2, binElevator);
+	binElevator->SetNeighbors(toteElevator3, nullptr);
 
 	// ----------------------------
 	// Add tote elevators to group
