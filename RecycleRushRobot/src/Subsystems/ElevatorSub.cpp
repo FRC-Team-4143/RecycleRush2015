@@ -3,8 +3,9 @@
 
 // ==========================================================================
 
-ElevatorSub::ElevatorSub(const char* name, SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams)
+ElevatorSub::ElevatorSub(const char* name, SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams, ICommandFactory* defaultCommandFactory)
 : PIDSubsystem(name, pidParams.P, pidParams.I, pidParams.D, pidParams.F),
+  _defaultCommandFactory(defaultCommandFactory),
   _motor(motor), _encoder(encoder),
   _lowerNeighbor(nullptr), _upperNeighbor(nullptr),
   _countsPerRotation(0), _inchesPerRotation(0),
@@ -17,9 +18,11 @@ ElevatorSub::ElevatorSub(const char* name, SpeedController* motor, Encoder* enco
 // ==========================================================================
 
 void ElevatorSub::InitDefaultCommand() {
-	LOG("ElevatorSub::InitDefaultCommand");
-	// Set the default command for a subsystem here.
-	//SetDefaultCommand(new MyCommand());
+	std::cout << "Elevator(" << GetName() << ")::InitDefaultCommand" << std::endl;
+
+	if (_defaultCommandFactory) {
+		SetDefaultCommand(_defaultCommandFactory->CreateCommand());
+	}
 }
 
 // ==========================================================================
@@ -40,9 +43,14 @@ void ElevatorSub::UsePIDOutput(double output) {
 // Methods for configuring the elevator
 // ==========================================================================
 
-void ElevatorSub::SetDimensions(int countsPerRotation, double inchesPerRotation) {
+void ElevatorSub::SetEncoderDimensions(int countsPerRotation, double inchesPerRotation) {
 	_countsPerRotation = countsPerRotation;
 	_inchesPerRotation = inchesPerRotation;
+}
+
+void ElevatorSub::SetNeighbors(ElevatorSub* lowerNeighbor, ElevatorSub* upperNeighbor) {
+	_lowerNeighbor = lowerNeighbor;
+	_upperNeighbor = upperNeighbor;
 }
 
 void ElevatorSub::SetPositions(double bottomInches, double loadInches, double topInches, double deltaInches, double lowerMarginInches, double upperMarginInches) {
@@ -85,6 +93,14 @@ void ElevatorSub::GoToHeight(double inches) {
 
 void ElevatorSub::HoldPosition() {
 	GoToPosition(GetPosition());
+}
+
+void ElevatorSub::MoveDown(double inches) {
+	// TODO
+}
+
+void ElevatorSub::MoveUp(double inches) {
+	// TODO
 }
 
 // ==========================================================================

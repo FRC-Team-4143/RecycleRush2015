@@ -11,6 +11,9 @@ public:
 	float GetJoystickY();
 	float GetJoystickZ();
 
+	float GetBinElevatorAxisValue();
+	float GetToteElevatorAxisValue();
+
 private:
 	// Declare joysticks
 	Joystick* driverJoystick;
@@ -26,6 +29,7 @@ private:
 	// TODO
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
+	Joystick* GetPickerJoystick() { return pickerJoystick; }
 };
 
 #endif

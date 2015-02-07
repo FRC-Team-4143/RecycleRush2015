@@ -1,6 +1,7 @@
 #include "Logger.h"
 #include "OI.h"
 #include "Commands/FixPrefs.h"
+#include "Commands/GyroSquare.h"
 #include "Commands/RotateBy.h"
 #include "Commands/SaveWheelPositions.h"
 #include "Commands/ShowPrefs.h"
@@ -58,6 +59,7 @@ OI::OI() {
 
 	SmartDashboard::PutNumber("Auto-Drive-Speed", 0.5);
 	SmartDashboard::PutNumber("Auto-Drive-Time", 1.0);
+	SmartDashboard::PutData("Gyro Square", new GyroSquare());
 }
 
 float OI::GetJoystickX() {
@@ -73,4 +75,14 @@ float OI::GetJoystickY() {
 float OI::GetJoystickZ() {
 	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_RX_AXIS);
 	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
+}
+
+float OI::GetBinElevatorAxisValue() {
+	auto value = GetPickerJoystick()->GetRawAxis(JOYSTICK_RY_AXIS);
+	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : -value;
+}
+
+float OI::GetToteElevatorAxisValue() {
+	auto value = GetPickerJoystick()->GetRawAxis(JOYSTICK_LY_AXIS);
+	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : -value;
 }

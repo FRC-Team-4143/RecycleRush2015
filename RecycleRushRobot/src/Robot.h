@@ -7,6 +7,7 @@
 #include "Commands/AutonomousCommand.h"
 #include "Subsystems/DriveTrain.h"
 #include "Subsystems/ElevatorSub.h"
+#include "Subsystems/ElevatorGroupSub.h"
 #include "Subsystems/ElevatorSelectorSub.h"
 #include "Subsystems/GyroSub.h"
 #include "OI.h"
@@ -23,6 +24,7 @@ public:
 	static ElevatorSub* toteElevator2;
 	static ElevatorSub* toteElevator3;
 	static ElevatorSub* binElevator;
+	static ElevatorGroupSub* toteElevatorGroup;
 	static ElevatorSelectorSub* elevatorSelector;
 
 	virtual void RobotInit();

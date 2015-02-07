@@ -3,6 +3,7 @@
 
 #include <WPILib.h>
 #include <Commands/PIDSubsystem.h>
+#include "Modules/ICommandFactory.h"
 #include "Modules/PIDParameters.h"
 
 //
@@ -13,7 +14,7 @@
 //
 class ElevatorSub: public PIDSubsystem {
 public:
-	ElevatorSub(const char* name, SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams);
+	ElevatorSub(const char* name, SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams, ICommandFactory* defaultCommandFactory = nullptr);
 
 	// Subsystem methods
 	virtual void InitDefaultCommand();
@@ -22,10 +23,9 @@ public:
 	virtual double ReturnPIDInput();
 	virtual void UsePIDOutput(double output);
 
-	void SetDimensions(int countsPerRotation, double inchesPerRotation);
+	void SetEncoderDimensions(int countsPerRotation, double inchesPerRotation);
+	void SetNeighbors(ElevatorSub* lowerNeighbor, ElevatorSub* upperNeighbor);
 	void SetPositions(double bottomInches, double loadInches, double topInches, double deltaInches, double lowerMarginInches, double upperMarginInches);
-	void SetLowerNeighbor(ElevatorSub* lowerNeighbor) { _lowerNeighbor = lowerNeighbor; }
-	void SetUpperNeighbor(ElevatorSub* upperNeighbor) { _upperNeighbor = upperNeighbor; }
 
 	void GoDown();
 	void GoUp();
@@ -34,6 +34,9 @@ public:
 	void GoToTop();
 	void GoToHeight(double inches);
 	void HoldPosition();
+
+	void MoveDown(double inches);
+	void MoveUp(double inches);
 
 protected:
 	SpeedController* myMotor() { return _motor; }
@@ -46,6 +49,7 @@ protected:
 	double InchesToCount(double inches) const;
 
 private:
+	ICommandFactory* _defaultCommandFactory;
 	SpeedController* _motor;
 	Encoder* _encoder;
 	ElevatorSub* _lowerNeighbor;
