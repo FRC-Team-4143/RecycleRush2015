@@ -27,6 +27,9 @@ SpeedController*   RobotMap::driveTrainRearRightDrive = nullptr;
 AnalogChannelVolt* RobotMap::driveTrainRearRightPos = nullptr;
 SpeedController*   RobotMap::driveTrainRearRightSteer = nullptr;
 
+SpeedController* RobotMap::binArmMotor = nullptr;
+Encoder*         RobotMap::binArmPos = nullptr;
+
 SpeedController* RobotMap::toteElevator1Motor = nullptr;
 Encoder*         RobotMap::toteElevator1Pos = nullptr;
 
@@ -84,6 +87,10 @@ Encoder*         RobotMap::binElevatorPos = nullptr;
 	#define BIN_MOTOR 11
 	#define BIN_POS_A 6
 	#define BIN_POS_B 7
+
+	#define BINARM_MOTOR 20
+	#define BINARM_POS_A 21
+	#define BINARM_POS_B 22
 #else
 	#define FLD 2
 	#define FLP 2
@@ -116,6 +123,10 @@ Encoder*         RobotMap::binElevatorPos = nullptr;
 	#define BIN_MOTOR 4
 	#define BIN_POS_A 6
 	#define BIN_POS_B 7
+
+	#define BINARM_MOTOR 20
+	#define BINARM_POS_A 21
+	#define BINARM_POS_B 22
 #endif
 
 void RobotMap::Init() {
@@ -166,15 +177,18 @@ void RobotMap::Init() {
 	driveTrainRearRight->SetInputRange(POTMIN, POTMAX);
 	driveTrainRearRight->SetOutputRange(-STEERPOW, STEERPOW);
 
+	binArmMotor = new Talon(BINARM_MOTOR);
+	binArmPos = new Encoder(BINARM_POS_A, BINARM_POS_B);
+
 	toteElevator1Motor = new Talon(TOTE1_MOTOR);
 	toteElevator1Pos = new Encoder(TOTE1_POS_A, TOTE1_POS_B);
 
-	toteElevator1Motor = new Talon(TOTE2_MOTOR);
-	toteElevator1Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B);
+	toteElevator2Motor = new Talon(TOTE2_MOTOR);
+	toteElevator2Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B);
 
-	toteElevator1Motor = new Talon(TOTE3_MOTOR);
-	toteElevator1Pos = new Encoder(TOTE3_POS_A, TOTE3_POS_B);
+	toteElevator3Motor = new Talon(TOTE3_MOTOR);
+	toteElevator3Pos = new Encoder(TOTE3_POS_A, TOTE3_POS_B);
 
-	toteElevator1Motor = new Talon(BIN_MOTOR);
-	toteElevator1Pos = new Encoder(BIN_POS_A, BIN_POS_B);
+	binElevatorMotor = new Talon(BIN_MOTOR);
+	binElevatorPos = new Encoder(BIN_POS_A, BIN_POS_B);
 }

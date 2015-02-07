@@ -5,6 +5,7 @@
 #include <Commands/Command.h>
 #include <LiveWindow/LiveWindow.h>
 #include "Commands/AutonomousCommand.h"
+#include "Subsystems/BinArmSub.h"
 #include "Subsystems/DriveTrain.h"
 #include "Subsystems/ElevatorSub.h"
 #include "Subsystems/ElevatorGroupSub.h"
@@ -20,6 +21,7 @@ public:
 	static OI *oi;
 	static DriveTrain* driveTrain;
 	static GyroSub* gyroSub;
+	static BinArmSub* binArm;
 	static ElevatorSub* toteElevator1;
 	static ElevatorSub* toteElevator2;
 	static ElevatorSub* toteElevator3;
