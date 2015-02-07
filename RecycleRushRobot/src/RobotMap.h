@@ -37,6 +37,9 @@ public:
 	static AnalogChannelVolt* driveTrainRearRightPos;
 	static SpeedController*   driveTrainRearRightSteer;
 
+	static SpeedController* binArmMotor;
+	static Encoder*         binArmPos;
+
 	static SpeedController* toteElevator1Motor;
 	static Encoder*         toteElevator1Pos;
 

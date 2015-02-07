@@ -10,6 +10,7 @@
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
+BinArmSub* Robot::binArm = nullptr;
 ElevatorSub* Robot::toteElevator1 = nullptr;
 ElevatorSub* Robot::toteElevator2 = nullptr;
 ElevatorSub* Robot::toteElevator3 = nullptr;
@@ -38,6 +39,9 @@ void Robot::RobotInit() {
 	// -----------------------
 	driveTrain = new DriveTrain();
 	gyroSub = new GyroSub();
+
+	#define BA_NEAR  0
+	#define BA_FAR  20
 
 	#define EL1_BOTTOM     0
 	#define EL1_LOAD       4
@@ -68,6 +72,13 @@ void Robot::RobotInit() {
 	#define EL4_TOPMARGIN  2
 
 	PIDParameters pidParams(0.1, 0.05, 0.0125, 0); // TODO - Get parameters from Preferences? From SmartDashboard?
+
+	// ---------------
+	// Create bin arm
+	// ---------------
+	binArm = new BinArmSub(RobotMap::binArmMotor, RobotMap::binArmPos, pidParams);
+
+	binArm->SetPositions(BA_NEAR, BA_FAR);
 
 	// ----------------------
 	// Create tote elevators
