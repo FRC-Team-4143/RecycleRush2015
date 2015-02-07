@@ -1,6 +1,7 @@
 #include "Logger.h"
 #include "OI.h"
 #include "Commands/FixPrefs.h"
+#include "Commands/GyroSquare.h"
 #include "Commands/RotateBy.h"
 #include "Commands/SaveWheelPositions.h"
 #include "Commands/ShowPrefs.h"
@@ -52,6 +53,7 @@ OI::OI() {
 
 	SmartDashboard::PutNumber("Auto-Drive-Speed", 0.5);
 	SmartDashboard::PutNumber("Auto-Drive-Time", 1.0);
+	SmartDashboard::PutData("Gyro Square", new GyroSquare());
 }
 
 float OI::GetJoystickX() {
