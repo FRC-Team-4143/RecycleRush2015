@@ -69,6 +69,9 @@ void Robot::RobotInit() {
 
 	PIDParameters pidParams(0.1, 0.05, 0.0125, 0); // TODO - Get parameters from Preferences? From SmartDashboard?
 
+	// ----------------------
+	// Create tote elevators
+	// ----------------------
 	toteElevator1 = new ElevatorSub("ToteElevator1", RobotMap::toteElevator1Motor, RobotMap::toteElevator1Pos, pidParams);
 	toteElevator2 = new ElevatorSub("ToteElevator2", RobotMap::toteElevator2Motor, RobotMap::toteElevator2Pos, pidParams);
 	toteElevator3 = new ElevatorSub("ToteElevator3", RobotMap::toteElevator3Motor, RobotMap::toteElevator3Pos, pidParams);
@@ -77,11 +80,30 @@ void Robot::RobotInit() {
 	toteElevator2->SetPositions(EL2_BOTTOM, EL2_LOAD, EL2_TOP, EL2_DELTA, EL2_BOTMARGIN, EL2_TOPMARGIN);
 	toteElevator3->SetPositions(EL3_BOTTOM, EL3_LOAD, EL3_TOP, EL3_DELTA, EL3_BOTMARGIN, EL3_TOPMARGIN);
 
+	// --------------------
+	// Create bin elevator
+	// --------------------
 	auto binElevatorDefaultCommandFactory = new BinElevatorMoveFactory();
 	binElevator = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams, binElevatorDefaultCommandFactory);
 
 	binElevator->SetPositions(EL4_BOTTOM, EL4_LOAD, EL4_TOP, EL4_DELTA, EL4_BOTMARGIN, EL4_TOPMARGIN);
 
+	// --------------
+	// Set neighbors
+	// --------------
+	toteElevator1->SetUpperNeighbor(toteElevator2);
+
+	toteElevator2->SetLowerNeighbor(toteElevator1);
+	toteElevator2->SetUpperNeighbor(toteElevator3);
+
+	toteElevator3->SetLowerNeighbor(toteElevator2);
+	toteElevator3->SetUpperNeighbor(binElevator);
+
+	binElevator->SetLowerNeighbor(toteElevator3);
+
+	// ----------------------------
+	// Add tote elevators to group
+	// ----------------------------
 	toteElevatorGroup = new ElevatorGroupSub();
 	toteElevatorGroup->AddElevator(toteElevator1);
 	toteElevatorGroup->AddElevator(toteElevator2);
