@@ -1,5 +1,6 @@
 #include "ElevatorGroupSub.h"
 #include "../Logger.h"
+#include "../Commands/ToteElevatorGroupMove.h"
 
 // ==========================================================================
 
@@ -13,9 +14,9 @@ ElevatorGroupSub::ElevatorGroupSub()
 // ==========================================================================
 
 void ElevatorGroupSub::InitDefaultCommand() {
-	LOG("ElevatorGroupSub::InitDefaultCommand");
-	// Set the default command for a subsystem here.
-	//SetDefaultCommand(new MyCommand());
+	std::cout << GetName() << "::InitDefaultCommand" << std::endl;
+
+	SetDefaultCommand(new ToteElevatorGroupMove());
 }
 
 // ==========================================================================
@@ -32,9 +33,13 @@ void ElevatorGroupSub::AddElevator(ElevatorSub* elevator) {
 // ==========================================================================
 
 void ElevatorGroupSub::MoveDown(double inches) {
-	// TODO
+	for (auto iter = _elevators.begin(); iter != _elevators.end(); iter++) {
+		(*iter)->MoveDown(inches);
+	}
 }
 
 void ElevatorGroupSub::MoveUp(double inches) {
-	// TODO
+	for (auto iter = _elevators.begin(); iter != _elevators.end(); iter++) {
+		(*iter)->MoveUp(inches);
+	}
 }

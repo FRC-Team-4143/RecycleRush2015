@@ -75,3 +75,8 @@ float OI::GetBinElevatorAxisValue() {
 	auto value = GetPickerJoystick()->GetRawAxis(JOYSTICK_RY_AXIS);
 	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : -value;
 }
+
+float OI::GetToteElevatorAxisValue() {
+	auto value = GetPickerJoystick()->GetRawAxis(JOYSTICK_LY_AXIS);
+	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : -value;
+}

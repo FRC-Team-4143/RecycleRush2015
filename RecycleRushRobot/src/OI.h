@@ -12,6 +12,7 @@ public:
 	float GetJoystickZ();
 
 	float GetBinElevatorAxisValue();
+	float GetToteElevatorAxisValue();
 
 private:
 	// Declare joysticks

@@ -43,7 +43,7 @@ void ElevatorSub::UsePIDOutput(double output) {
 // Methods for configuring the elevator
 // ==========================================================================
 
-void ElevatorSub::SetDimensions(int countsPerRotation, double inchesPerRotation) {
+void ElevatorSub::SetEncoderDimensions(int countsPerRotation, double inchesPerRotation) {
 	_countsPerRotation = countsPerRotation;
 	_inchesPerRotation = inchesPerRotation;
 }
@@ -88,6 +88,14 @@ void ElevatorSub::GoToHeight(double inches) {
 
 void ElevatorSub::HoldPosition() {
 	GoToPosition(GetPosition());
+}
+
+void ElevatorSub::MoveDown(double inches) {
+	// TODO
+}
+
+void ElevatorSub::MoveUp(double inches) {
+	// TODO
 }
 
 // ==========================================================================

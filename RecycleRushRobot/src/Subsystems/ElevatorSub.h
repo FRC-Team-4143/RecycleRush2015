@@ -23,7 +23,7 @@ public:
 	virtual double ReturnPIDInput();
 	virtual void UsePIDOutput(double output);
 
-	void SetDimensions(int countsPerRotation, double inchesPerRotation);
+	void SetEncoderDimensions(int countsPerRotation, double inchesPerRotation);
 	void SetPositions(double bottomInches, double loadInches, double topInches, double deltaInches, double lowerMarginInches, double upperMarginInches);
 	void SetLowerNeighbor(ElevatorSub* lowerNeighbor) { _lowerNeighbor = lowerNeighbor; }
 	void SetUpperNeighbor(ElevatorSub* upperNeighbor) { _upperNeighbor = upperNeighbor; }
@@ -35,6 +35,9 @@ public:
 	void GoToTop();
 	void GoToHeight(double inches);
 	void HoldPosition();
+
+	void MoveDown(double inches);
+	void MoveUp(double inches);
 
 protected:
 	SpeedController* myMotor() { return _motor; }

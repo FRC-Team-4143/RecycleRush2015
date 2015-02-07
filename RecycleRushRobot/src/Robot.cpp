@@ -14,6 +14,7 @@ ElevatorSub* Robot::toteElevator1 = nullptr;
 ElevatorSub* Robot::toteElevator2 = nullptr;
 ElevatorSub* Robot::toteElevator3 = nullptr;
 ElevatorSub* Robot::binElevator = nullptr;
+ElevatorGroupSub* Robot::toteElevatorGroup = nullptr;
 ElevatorSelectorSub* Robot::elevatorSelector = nullptr;
 
 void Robot::RobotInit() {
@@ -80,6 +81,9 @@ void Robot::RobotInit() {
 	binElevator = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams, binElevatorDefaultCommandFactory);
 
 	binElevator->SetPositions(EL4_BOTTOM, EL4_LOAD, EL4_TOP, EL4_DELTA, EL4_BOTMARGIN, EL4_TOPMARGIN);
+
+	toteElevatorGroup = new ElevatorGroupSub();
+
 
 	elevatorSelector = new ElevatorSelectorSub();
 	elevatorSelector->AddElevator(toteElevator1);
