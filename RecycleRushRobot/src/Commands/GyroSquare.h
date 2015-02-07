@@ -1,10 +1,10 @@
-#ifndef GYROSQUARE_H
-#define GYROSQUARE_H
+#ifndef GyroSquare_H
+#define GyroSquare_H
 
-#include <Commands/Command.h>
-#include "../Robot.h"
+#include "WPILib.h"
 
-class GyroSquare: public CommandGroup {
+class GyroSquare: public CommandGroup
+{
 public:
 	GyroSquare();
 };
