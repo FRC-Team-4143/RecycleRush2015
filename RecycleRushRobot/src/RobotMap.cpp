@@ -195,15 +195,23 @@ void RobotMap::Init() {
 	toteElevator1Pos = new Encoder(TOTE1_POS_A, TOTE1_POS_B, TOTE1_POS_REV);
 	toteElevator1Pos->Reset();
 
-	toteElevator2Motor = new Victor(TOTE2_MOTOR);
-	toteElevator2Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B, TOTE2_POS_REV);
+	//toteElevator2Motor = new Victor(TOTE2_MOTOR);
+	//toteElevator2Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B, TOTE2_POS_REV);
+	//toteElevator2Pos->Reset();
+
+	toteElevator2Motor = new Victor(BIN_MOTOR);
+	toteElevator2Pos = new Encoder(BIN_POS_A, BIN_POS_B, BIN_POS_REV);
 	toteElevator2Pos->Reset();
 
 	toteElevator3Motor = new Victor(TOTE3_MOTOR);
 	toteElevator3Pos = new Encoder(TOTE3_POS_A, TOTE3_POS_B, TOTE3_POS_REV);
 	toteElevator3Pos->Reset();
 
-	binElevatorMotor = new Victor(BIN_MOTOR);
-	binElevatorPos = new Encoder(BIN_POS_A, BIN_POS_B, BIN_POS_REV);
+	//binElevatorMotor = new Victor(BIN_MOTOR);
+	//binElevatorPos = new Encoder(BIN_POS_A, BIN_POS_B, BIN_POS_REV);
+	//binElevatorPos->Reset();
+
+	binElevatorMotor = new Victor(TOTE2_MOTOR);
+	binElevatorPos = new Encoder(TOTE2_POS_A, TOTE2_POS_B, TOTE2_POS_REV);
 	binElevatorPos->Reset();
 }

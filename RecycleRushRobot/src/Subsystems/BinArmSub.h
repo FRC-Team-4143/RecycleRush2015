@@ -22,10 +22,11 @@ public:
 	virtual void UsePIDOutput(double output);
 
 	void SetEncoderDimensions(int countsPerRotation, double inchesPerRotation);
-	void SetPositions(double minInches, double maxInches);
+	void SetArmDimensions(double minInches, double startupInches, double maxInches);
 
 	void FullyRetract();
 	void FullyExtend();
+	void MoveRel(double inches);
 	void MoveTo(double inches);
 
 protected:
@@ -35,6 +36,8 @@ protected:
 	void GoToPosition(double position);
 	double CountToInches(double count) const;
 	double InchesToCount(double inches) const;
+	double MinCount() const;
+	double MaxCount() const;
 
 private:
 	SpeedController* _motor;
@@ -43,6 +46,7 @@ private:
 	int _countsPerRotation;
 	double _inchesPerRotation;
 	double _minInches;
+	double _startupInches;
 	double _maxInches;
 };
 

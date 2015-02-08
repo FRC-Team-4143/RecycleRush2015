@@ -40,36 +40,52 @@ void Robot::RobotInit() {
 	driveTrain = new DriveTrain();
 	gyroSub = new GyroSub();
 
-	#define BA_NEAR  0
-	#define BA_FAR  20
-
 	#define TOTE_EL1_BOTTOM     0
-	#define TOTE_EL1_LOAD       4
+	#define TOTE_EL1_LOAD       1
 	#define TOTE_EL1_TOP       60
 	#define TOTE_EL1_DELTA     14
 	#define TOTE_EL1_BOTMARGIN  2
 	#define TOTE_EL1_TOPMARGIN  2
 
 	#define TOTE_EL2_BOTTOM     0
-	#define TOTE_EL2_LOAD       4
+	#define TOTE_EL2_LOAD       5
 	#define TOTE_EL2_TOP       60
 	#define TOTE_EL2_DELTA     14
 	#define TOTE_EL2_BOTMARGIN  2
 	#define TOTE_EL2_TOPMARGIN  2
 
 	#define TOTE_EL3_BOTTOM     0
-	#define TOTE_EL3_LOAD       4
+	#define TOTE_EL3_LOAD       9
 	#define TOTE_EL3_TOP       60
 	#define TOTE_EL3_DELTA     14
 	#define TOTE_EL3_BOTMARGIN  2
 	#define TOTE_EL3_TOPMARGIN  2
 
 	#define BIN_EL_BOTTOM     0
-	#define BIN_EL_LOAD       4
+	#define BIN_EL_LOAD      13
 	#define BIN_EL_TOP       60
-	#define BIN_EL_DELTA     14
+	#define BIN_EL_DELTA      4
 	#define BIN_EL_BOTMARGIN  2
 	#define BIN_EL_TOPMARGIN  2
+
+	#define BIN_ARM_MIN        0 // inches fully retracted (should always be zero)
+	#define BIN_ARM_STARTUP    0 // inches at startup
+	#define BIN_ARM_MAX       20 // inches fully extended
+
+	#define TOTE_EL1_CPR   497 // counts per rotation
+	#define TOTE_EL1_IPR     4 // inches per rotation
+
+	#define TOTE_EL2_CPR   120 // counts per rotation
+	#define TOTE_EL2_IPR     4 // inches per rotation
+
+	#define TOTE_EL3_CPR   120 // counts per rotation
+	#define TOTE_EL3_IPR     4 // inches per rotation
+
+	#define BIN_EL_CPR     497 // counts per rotation
+	#define BIN_EL_IPR       4 // inches per rotation
+
+	#define BIN_ARM_CPR    497 // counts per rotation
+	#define BIN_ARM_IPR      4 // inches per rotation
 
 	#define P 0.1
 	#define I 0
@@ -81,7 +97,8 @@ void Robot::RobotInit() {
 	// ---------------
 	binArm = new BinArmSub(RobotMap::binArmMotor, RobotMap::binArmPos, pidParams);
 
-	binArm->SetPositions(BA_NEAR, BA_FAR);
+	binArm->SetEncoderDimensions(BIN_ARM_CPR, BIN_ARM_IPR);
+	binArm->SetArmDimensions(BIN_ARM_MIN, BIN_ARM_STARTUP, BIN_ARM_MAX);
 
 	// ----------------------
 	// Create tote elevators
@@ -98,13 +115,11 @@ void Robot::RobotInit() {
 	toteElevator2->SetPositions(TOTE_EL2_BOTTOM, TOTE_EL2_LOAD, TOTE_EL2_TOP, TOTE_EL2_DELTA, TOTE_EL2_BOTMARGIN, TOTE_EL2_TOPMARGIN);
 	toteElevator3->SetPositions(TOTE_EL3_BOTTOM, TOTE_EL3_LOAD, TOTE_EL3_TOP, TOTE_EL3_DELTA, TOTE_EL3_BOTMARGIN, TOTE_EL3_TOPMARGIN);
 
-	toteElevator1->SetInputRange(0, 60 / 4 * 497);
 	toteElevator1->SetOutputRange(-0.9, 0.9);
-	toteElevator1->SetPercentTolerance(1);
+	toteElevator1->SetAbsoluteTolerance(497 / 4 / 8);
 
-	toteElevator2->SetInputRange(0, 60 / 4 * 120);
 	toteElevator2->SetOutputRange(-0.9, 0.9);
-	toteElevator2->SetPercentTolerance(1);
+	toteElevator2->SetAbsoluteTolerance(120 / 4 / 8);
 
 	// --------------------
 	// Create bin elevator
@@ -128,8 +143,8 @@ void Robot::RobotInit() {
 	// Add tote elevators to group
 	// ----------------------------
 	toteElevatorGroup = new ElevatorGroupSub();
-	//toteElevatorGroup->AddElevator(toteElevator1);
-	toteElevatorGroup->AddElevator(toteElevator2);
+	toteElevatorGroup->AddElevator(toteElevator1);
+	//toteElevatorGroup->AddElevator(toteElevator2);
 	//toteElevatorGroup->AddElevator(toteElevator3);
 
 	elevatorSelector = new ElevatorSelectorSub();
@@ -193,6 +208,8 @@ void Robot::DisabledInit(){
 
 	toteElevator1->Disable();
 	toteElevator2->Disable();
+	toteElevator3->Disable();
+	binElevator->Disable();
 }
 
 void Robot::DisabledPeriodic() {
@@ -222,7 +239,9 @@ void Robot::TeleopInit() {
 	Robot::driveTrain->outputLED();
 
 	toteElevator1->Enable();
-	toteElevator2->Enable();
+	//toteElevator2->Enable();
+	//toteElevator3->Enable();
+	binElevator->Enable();
 }
 
 void Robot::TeleopPeriodic() {

@@ -26,7 +26,7 @@ void BinElevatorMove::Execute() {
 		Robot::binElevator->MoveUp(inches);
 	}
 	else {
-		Robot::binElevator->MoveDown(inches);
+		Robot::binElevator->MoveDown(-inches);
 	}
 }
 

@@ -8,7 +8,7 @@ BinArmSub::BinArmSub(SpeedController* motor, Encoder* encoder, const PIDParamete
 : PIDSubsystem("BinArm", pidParams.P, pidParams.I, pidParams.D, pidParams.F),
   _motor(motor), _encoder(encoder),
   _countsPerRotation(0), _inchesPerRotation(0),
-  _minInches(0), _maxInches(0)
+  _minInches(0), _startupInches(0), _maxInches(0)
 {
 	std::cout << GetName() << "::ctor" << std::endl;
 }
@@ -46,8 +46,9 @@ void BinArmSub::SetEncoderDimensions(int countsPerRotation, double inchesPerRota
 	_inchesPerRotation = inchesPerRotation;
 }
 
-void BinArmSub::SetPositions(double minInches, double maxInches) {
+void BinArmSub::SetArmDimensions(double minInches, double startupInches, double maxInches) {
 	_minInches = minInches;
+	_startupInches = startupInches;
 	_maxInches = maxInches;
 }
 
@@ -64,8 +65,12 @@ void BinArmSub::FullyExtend() {
 	MoveTo(_maxInches);
 }
 
+void BinArmSub::MoveRel(double inches) {
+	GoToPosition(GetSetpoint() + InchesToCount(inches));
+}
+
 void BinArmSub::MoveTo(double inches) {
-	GoToPosition(InchesToCount(inches));
+	GoToPosition(MinCount() + InchesToCount(inches));
 }
 
 // ==========================================================================
@@ -73,12 +78,8 @@ void BinArmSub::MoveTo(double inches) {
 // ==========================================================================
 
 void BinArmSub::GoToPosition(double position) {
-	if (position < InchesToCount(_minInches)) {
-		position = InchesToCount(_minInches);
-	}
-	else if (position > InchesToCount(_maxInches)) {
-		position = InchesToCount(_maxInches);
-	}
+	position = std::min(position, MinCount());
+	position = std::max(position, MaxCount());
 	SetSetpoint(position);
 }
 
@@ -88,4 +89,12 @@ double BinArmSub::CountToInches(double count) const {
 
 double BinArmSub::InchesToCount(double inches) const {
 	return inches / _inchesPerRotation * _countsPerRotation;
+}
+
+double BinArmSub::MinCount() const {
+	return -InchesToCount(_startupInches - _minInches);
+}
+
+double BinArmSub::MaxCount() const {
+	return InchesToCount(_maxInches - _startupInches);
 }

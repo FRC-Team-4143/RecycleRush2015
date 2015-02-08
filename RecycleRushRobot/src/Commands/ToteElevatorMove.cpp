@@ -1,52 +1,57 @@
-#include "BinArmMove.h"
+#include "ToteElevatorMove.h"
 #include "../Robot.h"
 
 // ==========================================================================
 
-BinArmMove::BinArmMove() : Command("Bin Arm Move") {
-	std::cout << "BinArmMove::ctor" << std::endl;
+ToteElevatorMove::ToteElevatorMove() : Command("Tote Elevator Move") {
+	std::cout << "ToteElevatorMove::ctor" << std::endl;
 
-	Requires(Robot::binArm);
+	Requires(Robot::toteElevator1);
 }
 
 // ==========================================================================
 // Called just before this Command runs the first time
 
-void BinArmMove::Initialize() {
+void ToteElevatorMove::Initialize() {
 }
 
 // ==========================================================================
 // Called repeatedly when this Command is scheduled to run
 
-void BinArmMove::Execute() {
-	auto axisValue = Robot::oi->GetBinArmAxisValue();
+void ToteElevatorMove::Execute() {
+	auto axisValue = Robot::oi->GetToteElevatorAxisValue();
 	auto inches = AxisToInches(axisValue);
-	Robot::binArm->MoveRel(inches);
+	if (inches > 0) {
+		Robot::toteElevator1->MoveUp(inches);
+	}
+	else {
+		Robot::toteElevator1->MoveDown(-inches);
+	}
 }
 
 // ==========================================================================
 // Make this return true when this Command no longer needs to run Execute.
 
-bool BinArmMove::IsFinished() {
+bool ToteElevatorMove::IsFinished() {
 	return false;
 }
 
 // ==========================================================================
 // Called once after isFinished returns true
 
-void BinArmMove::End() {
+void ToteElevatorMove::End() {
 }
 
 // ==========================================================================
 // Called when another command which requires this subsystem is scheduled to run
 
-void BinArmMove::Interrupted() {
+void ToteElevatorMove::Interrupted() {
 	End();
 }
 
 // ==========================================================================
 
-float BinArmMove::AxisToInches(float axisValue) {
+float ToteElevatorMove::AxisToInches(float axisValue) {
 	// Do any necessary scaling here
 	return axisValue;
 }
