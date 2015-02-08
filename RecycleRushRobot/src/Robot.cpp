@@ -43,33 +43,33 @@ void Robot::RobotInit() {
 	#define BA_NEAR  0
 	#define BA_FAR  20
 
-	#define EL1_BOTTOM     0
-	#define EL1_LOAD       4
-	#define EL1_TOP       60
-	#define EL1_DELTA     14
-	#define EL1_BOTMARGIN  2
-	#define EL1_TOPMARGIN  2
+	#define TOTE_EL1_BOTTOM     0
+	#define TOTE_EL1_LOAD       4
+	#define TOTE_EL1_TOP       60
+	#define TOTE_EL1_DELTA     14
+	#define TOTE_EL1_BOTMARGIN  2
+	#define TOTE_EL1_TOPMARGIN  2
 
-	#define EL2_BOTTOM     0
-	#define EL2_LOAD       4
-	#define EL2_TOP       60
-	#define EL2_DELTA     14
-	#define EL2_BOTMARGIN  2
-	#define EL2_TOPMARGIN  2
+	#define TOTE_EL2_BOTTOM     0
+	#define TOTE_EL2_LOAD       4
+	#define TOTE_EL2_TOP       60
+	#define TOTE_EL2_DELTA     14
+	#define TOTE_EL2_BOTMARGIN  2
+	#define TOTE_EL2_TOPMARGIN  2
 
-	#define EL3_BOTTOM     0
-	#define EL3_LOAD       4
-	#define EL3_TOP       60
-	#define EL3_DELTA     14
-	#define EL3_BOTMARGIN  2
-	#define EL3_TOPMARGIN  2
+	#define TOTE_EL3_BOTTOM     0
+	#define TOTE_EL3_LOAD       4
+	#define TOTE_EL3_TOP       60
+	#define TOTE_EL3_DELTA     14
+	#define TOTE_EL3_BOTMARGIN  2
+	#define TOTE_EL3_TOPMARGIN  2
 
-	#define EL4_BOTTOM     0
-	#define EL4_LOAD       4
-	#define EL4_TOP       60
-	#define EL4_DELTA     14
-	#define EL4_BOTMARGIN  2
-	#define EL4_TOPMARGIN  2
+	#define BIN_EL_BOTTOM     0
+	#define BIN_EL_LOAD       4
+	#define BIN_EL_TOP       60
+	#define BIN_EL_DELTA     14
+	#define BIN_EL_BOTMARGIN  2
+	#define BIN_EL_TOPMARGIN  2
 
 	PIDParameters pidParams(0.1, 0.05, 0.0125, 0); // TODO - Get parameters from Preferences? From SmartDashboard?
 
@@ -87,18 +87,23 @@ void Robot::RobotInit() {
 	toteElevator2 = new ElevatorSub("ToteElevator2", RobotMap::toteElevator2Motor, RobotMap::toteElevator2Pos, pidParams);
 	toteElevator3 = new ElevatorSub("ToteElevator3", RobotMap::toteElevator3Motor, RobotMap::toteElevator3Pos, pidParams);
 
-	toteElevator1->SetPositions(EL1_BOTTOM, EL1_LOAD, EL1_TOP, EL1_DELTA, EL1_BOTMARGIN, EL1_TOPMARGIN);
-	toteElevator2->SetPositions(EL2_BOTTOM, EL2_LOAD, EL2_TOP, EL2_DELTA, EL2_BOTMARGIN, EL2_TOPMARGIN);
-	toteElevator3->SetPositions(EL3_BOTTOM, EL3_LOAD, EL3_TOP, EL3_DELTA, EL3_BOTMARGIN, EL3_TOPMARGIN);
+	toteElevator1->SetEncoderDimensions(120, 4);
+	toteElevator2->SetEncoderDimensions(120, 4);
+	toteElevator3->SetEncoderDimensions(120, 4);
 
-	toteElevator1->Enable();
+	toteElevator1->SetPositions(TOTE_EL1_BOTTOM, TOTE_EL1_LOAD, TOTE_EL1_TOP, TOTE_EL1_DELTA, TOTE_EL1_BOTMARGIN, TOTE_EL1_TOPMARGIN);
+	toteElevator2->SetPositions(TOTE_EL2_BOTTOM, TOTE_EL2_LOAD, TOTE_EL2_TOP, TOTE_EL2_DELTA, TOTE_EL2_BOTMARGIN, TOTE_EL2_TOPMARGIN);
+	toteElevator3->SetPositions(TOTE_EL3_BOTTOM, TOTE_EL3_LOAD, TOTE_EL3_TOP, TOTE_EL3_DELTA, TOTE_EL3_BOTMARGIN, TOTE_EL3_TOPMARGIN);
+
 	// --------------------
 	// Create bin elevator
 	// --------------------
 	auto binElevatorDefaultCommandFactory = new BinElevatorMoveFactory();
 	binElevator = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams, binElevatorDefaultCommandFactory);
 
-	binElevator->SetPositions(EL4_BOTTOM, EL4_LOAD, EL4_TOP, EL4_DELTA, EL4_BOTMARGIN, EL4_TOPMARGIN);
+	binElevator->SetEncoderDimensions(120, 4);
+
+	binElevator->SetPositions(BIN_EL_BOTTOM, BIN_EL_LOAD, BIN_EL_TOP, BIN_EL_DELTA, BIN_EL_BOTMARGIN, BIN_EL_TOPMARGIN);
 
 	// --------------
 	// Set neighbors
@@ -123,6 +128,14 @@ void Robot::RobotInit() {
 	elevatorSelector->AddElevator(binElevator);
 
 	elevatorSelector->SelectTop();
+
+	// -----------------
+	// Enable elevators
+	// -----------------
+	//toteElevator1->Enable();
+	//toteElevator2->Enable();
+	//toteElevator3->Enable();
+	//binElevator->Enable();
 
 	// ------------------------------------------------------------
 	// Initialize OI *AFTER* all subsystems have been initialized.
