@@ -80,6 +80,7 @@ void Robot::RobotInit() {
 	toteElevator2->SetPositions(EL2_BOTTOM, EL2_LOAD, EL2_TOP, EL2_DELTA, EL2_BOTMARGIN, EL2_TOPMARGIN);
 	toteElevator3->SetPositions(EL3_BOTTOM, EL3_LOAD, EL3_TOP, EL3_DELTA, EL3_BOTMARGIN, EL3_TOPMARGIN);
 
+	toteElevator1->Enable();
 	// --------------------
 	// Create bin elevator
 	// --------------------
