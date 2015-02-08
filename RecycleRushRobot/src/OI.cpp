@@ -100,6 +100,11 @@ float OI::GetJoystickZ() {
 	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
 
+float OI::GetBinArmAxisValue() {
+	auto value = GetPickerJoystick()->GetRawAxis(JOYSTICK_LTRIG_AXIS);
+	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : -value;
+}
+
 float OI::GetBinElevatorAxisValue() {
 	auto value = GetPickerJoystick()->GetRawAxis(JOYSTICK_RY_AXIS);
 	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : -value;

@@ -11,6 +11,7 @@ public:
 	float GetJoystickY();
 	float GetJoystickZ();
 
+	float GetBinArmAxisValue();
 	float GetBinElevatorAxisValue();
 	float GetToteElevatorAxisValue();
 
