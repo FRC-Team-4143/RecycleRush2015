@@ -1,5 +1,6 @@
 #include "Logger.h"
 #include "RobotMap.h"
+#include "Modules/VictorWrapper.h"
 #include <LiveWindow/LiveWindow.h>
 
 SerialPort* RobotMap::serialPort = nullptr;
@@ -113,24 +114,24 @@ Encoder*         RobotMap::binElevatorPos = nullptr;
 	#define RRP 0
 	#define RRS 3
 
-	#define TOTE1_MOTOR   5
-	#define TOTE1_POS_A   2
-	#define TOTE1_POS_B   3
+	#define TOTE1_MOTOR   4
+	#define TOTE1_POS_A   0
+	#define TOTE1_POS_B   1
 	#define TOTE1_POS_REV true
 
-	#define TOTE2_MOTOR   6
-	#define TOTE2_POS_A   4
-	#define TOTE2_POS_B   5
-	#define TOTE2_POS_REV false
+	#define TOTE2_MOTOR   5
+	#define TOTE2_POS_A   2
+	#define TOTE2_POS_B   3
+	#define TOTE2_POS_REV true
 
-	#define TOTE3_MOTOR   7
-	#define TOTE3_POS_A   6
-	#define TOTE3_POS_B   7
+	#define TOTE3_MOTOR   6
+	#define TOTE3_POS_A   4
+	#define TOTE3_POS_B   5
 	#define TOTE3_POS_REV false
 
-	#define BIN_MOTOR   4
-	#define BIN_POS_A   0
-	#define BIN_POS_B   1
+	#define BIN_MOTOR   7
+	#define BIN_POS_A   6
+	#define BIN_POS_B   7
 	#define BIN_POS_REV false
 
 	#define BINARM_MOTOR   8
@@ -190,15 +191,19 @@ void RobotMap::Init() {
 	binArmMotor = new Talon(BINARM_MOTOR);
 	binArmPos = new Encoder(BINARM_POS_A, BINARM_POS_B, BINARM_POS_REV);
 
-	toteElevator1Motor = new Victor(TOTE1_MOTOR);
+	toteElevator1Motor = new VictorWrapper(TOTE1_MOTOR, true);
 	toteElevator1Pos = new Encoder(TOTE1_POS_A, TOTE1_POS_B, TOTE1_POS_REV);
+	toteElevator1Pos->Reset();
 
 	toteElevator2Motor = new Victor(TOTE2_MOTOR);
 	toteElevator2Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B, TOTE2_POS_REV);
+	toteElevator2Pos->Reset();
 
 	toteElevator3Motor = new Victor(TOTE3_MOTOR);
 	toteElevator3Pos = new Encoder(TOTE3_POS_A, TOTE3_POS_B, TOTE3_POS_REV);
+	toteElevator3Pos->Reset();
 
 	binElevatorMotor = new Victor(BIN_MOTOR);
 	binElevatorPos = new Encoder(BIN_POS_A, BIN_POS_B, BIN_POS_REV);
+	binElevatorPos->Reset();
 }

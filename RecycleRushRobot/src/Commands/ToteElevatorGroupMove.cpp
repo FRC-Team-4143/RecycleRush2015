@@ -25,7 +25,7 @@ void ToteElevatorGroupMove::Execute() {
 		Robot::toteElevatorGroup->MoveUp(inches);
 	}
 	else {
-		Robot::toteElevatorGroup->MoveDown(inches);
+		Robot::toteElevatorGroup->MoveDown(-inches);
 	}
 }
 
@@ -53,7 +53,7 @@ void ToteElevatorGroupMove::Interrupted() {
 
 float ToteElevatorGroupMove::AxisToInches(float axisValue) {
 	// Do any necessary scaling here
-	return axisValue;
+	return axisValue * 4;
 }
 
 // ==========================================================================

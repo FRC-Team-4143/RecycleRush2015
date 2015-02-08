@@ -71,7 +71,10 @@ void Robot::RobotInit() {
 	#define BIN_EL_BOTMARGIN  2
 	#define BIN_EL_TOPMARGIN  2
 
-	PIDParameters pidParams(0.1, 0.05, 0.0125, 0); // TODO - Get parameters from Preferences? From SmartDashboard?
+	#define P 0.1
+	#define I 0
+	#define D P / 16
+	PIDParameters pidParams(P, I, D, 0); // TODO - Get parameters from Preferences? From SmartDashboard?
 
 	// ---------------
 	// Create bin arm
@@ -87,7 +90,7 @@ void Robot::RobotInit() {
 	toteElevator2 = new ElevatorSub("ToteElevator2", RobotMap::toteElevator2Motor, RobotMap::toteElevator2Pos, pidParams);
 	toteElevator3 = new ElevatorSub("ToteElevator3", RobotMap::toteElevator3Motor, RobotMap::toteElevator3Pos, pidParams);
 
-	toteElevator1->SetEncoderDimensions(120, 4);
+	toteElevator1->SetEncoderDimensions(497, 4);
 	toteElevator2->SetEncoderDimensions(120, 4);
 	toteElevator3->SetEncoderDimensions(120, 4);
 
@@ -95,13 +98,21 @@ void Robot::RobotInit() {
 	toteElevator2->SetPositions(TOTE_EL2_BOTTOM, TOTE_EL2_LOAD, TOTE_EL2_TOP, TOTE_EL2_DELTA, TOTE_EL2_BOTMARGIN, TOTE_EL2_TOPMARGIN);
 	toteElevator3->SetPositions(TOTE_EL3_BOTTOM, TOTE_EL3_LOAD, TOTE_EL3_TOP, TOTE_EL3_DELTA, TOTE_EL3_BOTMARGIN, TOTE_EL3_TOPMARGIN);
 
+	toteElevator1->SetInputRange(0, 60 / 4 * 497);
+	toteElevator1->SetOutputRange(-0.9, 0.9);
+	toteElevator1->SetPercentTolerance(1);
+
+	toteElevator2->SetInputRange(0, 60 / 4 * 120);
+	toteElevator2->SetOutputRange(-0.9, 0.9);
+	toteElevator2->SetPercentTolerance(1);
+
 	// --------------------
 	// Create bin elevator
 	// --------------------
 	auto binElevatorDefaultCommandFactory = new BinElevatorMoveFactory();
 	binElevator = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams, binElevatorDefaultCommandFactory);
 
-	binElevator->SetEncoderDimensions(120, 4);
+	binElevator->SetEncoderDimensions(497, 4);
 
 	binElevator->SetPositions(BIN_EL_BOTTOM, BIN_EL_LOAD, BIN_EL_TOP, BIN_EL_DELTA, BIN_EL_BOTMARGIN, BIN_EL_TOPMARGIN);
 
@@ -117,15 +128,15 @@ void Robot::RobotInit() {
 	// Add tote elevators to group
 	// ----------------------------
 	toteElevatorGroup = new ElevatorGroupSub();
-	toteElevatorGroup->AddElevator(toteElevator1);
+	//toteElevatorGroup->AddElevator(toteElevator1);
 	toteElevatorGroup->AddElevator(toteElevator2);
-	toteElevatorGroup->AddElevator(toteElevator3);
+	//toteElevatorGroup->AddElevator(toteElevator3);
 
 	elevatorSelector = new ElevatorSelectorSub();
 	elevatorSelector->AddElevator(toteElevator1);
-	elevatorSelector->AddElevator(toteElevator2);
-	elevatorSelector->AddElevator(toteElevator3);
-	elevatorSelector->AddElevator(binElevator);
+	//elevatorSelector->AddElevator(toteElevator2);
+	//elevatorSelector->AddElevator(toteElevator3);
+	//elevatorSelector->AddElevator(binElevator);
 
 	elevatorSelector->SelectTop();
 
@@ -148,7 +159,7 @@ void Robot::RobotInit() {
 	// -------------------------------------------------
 	autonomousCommand = new AutonomousCommand();
 
-	driveTrain->SetWheelbase(21.5 / 2, 21.5 / 2, 21.5 / 2);
+	driveTrain->SetWheelbase(24, 35, 24);
 
 /*
 	auto prefs = Preferences::GetInstance();
@@ -179,6 +190,9 @@ void Robot::RobotInit() {
 void Robot::DisabledInit(){
 	LOG("Robot::DisabledInit");
 	RobotMap::i2c->Write(1, 0);
+
+	toteElevator1->Disable();
+	toteElevator2->Disable();
 }
 
 void Robot::DisabledPeriodic() {
@@ -206,6 +220,9 @@ void Robot::TeleopInit() {
 		autonomousCommand->Cancel();
 
 	Robot::driveTrain->outputLED();
+
+	toteElevator1->Enable();
+	toteElevator2->Enable();
 }
 
 void Robot::TeleopPeriodic() {
