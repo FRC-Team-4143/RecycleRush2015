@@ -56,6 +56,8 @@ void UpdateSmartDashboard::Execute() {
 	SmartDashboard::PutNumber("FR-PID-Output", Robot::driveTrain->frontRight->Get());
 	SmartDashboard::PutNumber("RL-PID-Output", Robot::driveTrain->rearLeft->Get());
 	SmartDashboard::PutNumber("RR-PID-Output", Robot::driveTrain->rearRight->Get());
+
+	SmartDashboard::PutData("Tote1-PID", Robot::toteElevator1->DebugGetPIDController());
 }
 
 // ==========================================================================

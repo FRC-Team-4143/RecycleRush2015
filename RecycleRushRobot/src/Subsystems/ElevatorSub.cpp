@@ -11,8 +11,6 @@ ElevatorSub::ElevatorSub(const char* name, SpeedController* motor, Encoder* enco
   _countsPerRotation(120), _inchesPerRotation(4),
   _bottomInches(0), _loadInches(4), _topInches(50), _deltaInches(14), _lowerMarginInches(2), _upperMarginInches(2) {
 	std::cout << "ElevatorSub::ElevatorSub(" << name << ")" << std::endl;
-	SetOutputRange(-0.3, 0.3);
-
 }
 
 // ==========================================================================
@@ -98,11 +96,11 @@ void ElevatorSub::HoldPosition() {
 }
 
 void ElevatorSub::MoveDown(double inches) {
-	// TODO
+	GoToPosition(GetPosition() - InchesToCount(inches));
 }
 
 void ElevatorSub::MoveUp(double inches) {
-	// TODO
+	GoToPosition(GetPosition() + InchesToCount(inches));
 }
 
 // ==========================================================================

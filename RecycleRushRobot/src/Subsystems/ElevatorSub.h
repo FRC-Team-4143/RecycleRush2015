@@ -38,6 +38,8 @@ public:
 	void MoveDown(double inches);
 	void MoveUp(double inches);
 
+	PIDController* DebugGetPIDController() { return GetPIDController(); }
+
 protected:
 	SpeedController* myMotor() { return _motor; }
 	Encoder* myEncoder() { return _encoder; }

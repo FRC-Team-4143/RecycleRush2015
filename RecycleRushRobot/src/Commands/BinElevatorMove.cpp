@@ -13,6 +13,7 @@ BinElevatorMove::BinElevatorMove() : Command("Bin Elevator Move") {
 // Called just before this Command runs the first time
 
 void BinElevatorMove::Initialize() {
+	Robot::binElevator->Enable();
 }
 
 // ==========================================================================
@@ -40,6 +41,7 @@ bool BinElevatorMove::IsFinished() {
 // Called once after isFinished returns true
 
 void BinElevatorMove::End() {
+	Robot::binElevator->Disable();
 }
 
 // ==========================================================================
