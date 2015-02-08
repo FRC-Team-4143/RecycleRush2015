@@ -97,7 +97,7 @@ Encoder*         RobotMap::binElevatorPos = nullptr;
 	#define FLS 2
 
 	#define FRD 1
-	#define FRP 0
+	#define FRP 1
 	#define FRS 4
 
 	#define RLD 3
@@ -105,24 +105,24 @@ Encoder*         RobotMap::binElevatorPos = nullptr;
 	#define RLS 1
 
 	#define RRD 0
-	#define RRP 1
+	#define RRP 0
 	#define RRS 3
 
 	#define TOTE1_MOTOR 5
-	#define TOTE1_POS_A 0
-	#define TOTE1_POS_B 1
+	#define TOTE1_POS_A 2
+	#define TOTE1_POS_B 3
 
 	#define TOTE2_MOTOR 6
-	#define TOTE2_POS_A 2
-	#define TOTE2_POS_B 3
+	#define TOTE2_POS_A 4
+	#define TOTE2_POS_B 5
 
 	#define TOTE3_MOTOR 7
-	#define TOTE3_POS_A 4
-	#define TOTE3_POS_B 5
+	#define TOTE3_POS_A 6
+	#define TOTE3_POS_B 7
 
 	#define BIN_MOTOR 4
-	#define BIN_POS_A 6
-	#define BIN_POS_B 7
+	#define BIN_POS_A 0
+	#define BIN_POS_B 1
 
 	#define BINARM_MOTOR 20
 	#define BINARM_POS_A 21
@@ -180,15 +180,15 @@ void RobotMap::Init() {
 	binArmMotor = new Talon(BINARM_MOTOR);
 	binArmPos = new Encoder(BINARM_POS_A, BINARM_POS_B);
 
-	toteElevator1Motor = new Talon(TOTE1_MOTOR);
+	toteElevator1Motor = new Victor(TOTE1_MOTOR);
 	toteElevator1Pos = new Encoder(TOTE1_POS_A, TOTE1_POS_B);
 
-	toteElevator2Motor = new Talon(TOTE2_MOTOR);
+	toteElevator2Motor = new Victor(TOTE2_MOTOR);
 	toteElevator2Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B);
 
-	toteElevator3Motor = new Talon(TOTE3_MOTOR);
+	toteElevator3Motor = new Victor(TOTE3_MOTOR);
 	toteElevator3Pos = new Encoder(TOTE3_POS_A, TOTE3_POS_B);
 
-	binElevatorMotor = new Talon(BIN_MOTOR);
+	binElevatorMotor = new Victor(BIN_MOTOR);
 	binElevatorPos = new Encoder(BIN_POS_A, BIN_POS_B);
 }

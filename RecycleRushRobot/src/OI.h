@@ -23,8 +23,14 @@ private:
 	// Declare commands
 	Command* rotateLeft90;
 	Command* rotateRight90;
-	Command* goUp;
-	Command* goDown;
+	Command* Tote1Up;
+	Command* Tote1Down;
+	Command* Tote2Up;
+	Command* Tote2Down;
+	Command* Tote3Up;
+	Command* Tote3Down;
+	Command* BinUp;
+	Command* BinDown;
 
 	// Declare joystick buttons
 	// TODO

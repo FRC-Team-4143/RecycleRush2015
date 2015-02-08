@@ -1,5 +1,6 @@
 #include "Logger.h"
 #include "OI.h"
+#include "Robot.h"
 #include "Commands/FixPrefs.h"
 #include "Commands/GyroSquare.h"
 #include "Commands/RotateBy.h"
@@ -40,14 +41,36 @@ OI::OI() {
 	// Define commands
 	rotateLeft90 = new RotateBy("Rotate Left 90", -90);
 	rotateRight90 = new RotateBy("Rotate Right 90", 90);
-	goUp = new RaiseElevator();
-	goDown = new LowerElevator();
+
+
+	Tote1Up = new RaiseElevator(Robot::toteElevator1);
+	Tote1Down = new LowerElevator(Robot::toteElevator1);
+
+	Tote2Up = new RaiseElevator(Robot::toteElevator2);
+	Tote2Down = new LowerElevator(Robot::toteElevator2);
+
+	Tote3Up = new RaiseElevator(Robot::toteElevator3);
+	Tote3Down = new LowerElevator(Robot::toteElevator3);
+
+	BinUp = new RaiseElevator(Robot::binElevator);
+	BinDown = new LowerElevator(Robot::binElevator);
+
 
 	// Define joystick button mappings
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(rotateLeft90);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(rotateRight90);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(goUp);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(goDown);
+
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(Tote1Up);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(Tote1Down);
+
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhenPressed(Tote2Up);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhenPressed(Tote2Down);
+
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(Tote3Up);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(Tote3Down);
+
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(BinUp);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(BinDown);
 
 	// Add SmartDashboard controls
 	SmartDashboard::PutData("FixPrefs", new FixPrefs());
