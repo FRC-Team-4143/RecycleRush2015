@@ -148,7 +148,7 @@ void RobotMap::Init() {
 	serialPort = new SerialPort(57600, SerialPort::kOnboard);
 	imu = new IMUAdvanced(serialPort, 50);
 	pdp = new PowerDistributionPanel();
-	i2c = new I2C((I2C::Port) 1, 0x04 << 1);
+	i2c = new I2C((I2C::Port) 1, 0x04);
 
 	lw->AddSensor("IMU", "Gyro", imu);
 
