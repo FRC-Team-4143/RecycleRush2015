@@ -11,6 +11,7 @@
 #include "Subsystems/ElevatorGroupSub.h"
 #include "Subsystems/ElevatorSelectorSub.h"
 #include "Subsystems/GyroSub.h"
+#include "Subsystems/CompleteElevator.h"
 #include "OI.h"
 
 class Robot : public IterativeRobot {
@@ -28,6 +29,7 @@ public:
 	static ElevatorSub* binElevator;
 	static ElevatorGroupSub* toteElevatorGroup;
 	static ElevatorSelectorSub* elevatorSelector;
+	static CompleteElevator* completeElevator;
 
 	virtual void RobotInit();
 

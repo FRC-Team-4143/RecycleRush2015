@@ -9,6 +9,7 @@
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
+CompleteElevator* Robot::completeElevator = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
 BinArmSub* Robot::binArm = nullptr;
 ElevatorSub* Robot::toteElevator1 = nullptr;
@@ -38,6 +39,7 @@ void Robot::RobotInit() {
 	// Initialize subsystems.
 	// -----------------------
 	driveTrain = new DriveTrain();
+	completeElevator = new CompleteElevator();
 	gyroSub = new GyroSub();
 
 	#define TOTE_EL1_BOTTOM     0
@@ -95,65 +97,66 @@ void Robot::RobotInit() {
 	// ---------------
 	// Create bin arm
 	// ---------------
-	binArm = new BinArmSub(RobotMap::binArmMotor, RobotMap::binArmPos, pidParams);
+	//binArm = new BinArmSub(RobotMap::binArmMotor, RobotMap::binArmPos, pidParams);
 
-	binArm->SetEncoderDimensions(BIN_ARM_CPR, BIN_ARM_IPR);
-	binArm->SetArmDimensions(BIN_ARM_MIN, BIN_ARM_STARTUP, BIN_ARM_MAX);
+	//binArm->SetEncoderDimensions(BIN_ARM_CPR, BIN_ARM_IPR);
+	//binArm->SetArmDimensions(BIN_ARM_MIN, BIN_ARM_STARTUP, BIN_ARM_MAX);
 
 	// ----------------------
 	// Create tote elevators
 	// ----------------------
-	toteElevator1 = new ElevatorSub("ToteElevator1", RobotMap::toteElevator1Motor, RobotMap::toteElevator1Pos, pidParams);
-	toteElevator2 = new ElevatorSub("ToteElevator2", RobotMap::toteElevator2Motor, RobotMap::toteElevator2Pos, pidParams);
-	toteElevator3 = new ElevatorSub("ToteElevator3", RobotMap::toteElevator3Motor, RobotMap::toteElevator3Pos, pidParams);
+	//toteElevator1 = new ElevatorSub("ToteElevator1", RobotMap::toteElevator1Motor, RobotMap::toteElevator1Pos, pidParams);
+	//toteElevator1 = new ElevatorSub("ToteElevator1", RobotMap::binArmMotor, RobotMap::binArmPos, pidParams);
+	//toteElevator2 = new ElevatorSub("ToteElevator2", RobotMap::toteElevator2Motor, RobotMap::toteElevator2Pos, pidParams);
+	//toteElevator3 = new ElevatorSub("ToteElevator3", RobotMap::toteElevator3Motor, RobotMap::toteElevator3Pos, pidParams);
 
-	toteElevator1->SetEncoderDimensions(497, 4);
-	toteElevator2->SetEncoderDimensions(120, 4);
-	toteElevator3->SetEncoderDimensions(120, 4);
+	//toteElevator1->SetEncoderDimensions(497, 4);
+	//toteElevator2->SetEncoderDimensions(120, 4);
+	//toteElevator3->SetEncoderDimensions(120, 4);
 
-	toteElevator1->SetPositions(TOTE_EL1_BOTTOM, TOTE_EL1_LOAD, TOTE_EL1_TOP, TOTE_EL1_DELTA, TOTE_EL1_BOTMARGIN, TOTE_EL1_TOPMARGIN);
-	toteElevator2->SetPositions(TOTE_EL2_BOTTOM, TOTE_EL2_LOAD, TOTE_EL2_TOP, TOTE_EL2_DELTA, TOTE_EL2_BOTMARGIN, TOTE_EL2_TOPMARGIN);
-	toteElevator3->SetPositions(TOTE_EL3_BOTTOM, TOTE_EL3_LOAD, TOTE_EL3_TOP, TOTE_EL3_DELTA, TOTE_EL3_BOTMARGIN, TOTE_EL3_TOPMARGIN);
+	//toteElevator1->SetPositions(TOTE_EL1_BOTTOM, TOTE_EL1_LOAD, TOTE_EL1_TOP, TOTE_EL1_DELTA, TOTE_EL1_BOTMARGIN, TOTE_EL1_TOPMARGIN);
+	//toteElevator2->SetPositions(TOTE_EL2_BOTTOM, TOTE_EL2_LOAD, TOTE_EL2_TOP, TOTE_EL2_DELTA, TOTE_EL2_BOTMARGIN, TOTE_EL2_TOPMARGIN);
+	//toteElevator3->SetPositions(TOTE_EL3_BOTTOM, TOTE_EL3_LOAD, TOTE_EL3_TOP, TOTE_EL3_DELTA, TOTE_EL3_BOTMARGIN, TOTE_EL3_TOPMARGIN);
 
-	toteElevator1->SetOutputRange(-0.9, 0.9);
-	toteElevator1->SetAbsoluteTolerance(497 / 4 / 8);
+	//toteElevator1->SetOutputRange(-0.9, 0.9);
+	//toteElevator1->SetAbsoluteTolerance(497 / 4 / 8);
 
-	toteElevator2->SetOutputRange(-0.9, 0.9);
-	toteElevator2->SetAbsoluteTolerance(120 / 4 / 8);
+	//toteElevator2->SetOutputRange(-0.9, 0.9);
+	//toteElevator2->SetAbsoluteTolerance(120 / 4 / 8);
 
 	// --------------------
 	// Create bin elevator
 	// --------------------
-	auto binElevatorDefaultCommandFactory = new BinElevatorMoveFactory();
-	binElevator = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams, binElevatorDefaultCommandFactory);
+	//auto binElevatorDefaultCommandFactory = new BinElevatorMoveFactory();
+	//binElevator = new ElevatorSub("BinElevator", RobotMap::binElevatorMotor, RobotMap::binElevatorPos, pidParams, binElevatorDefaultCommandFactory);
 
-	binElevator->SetEncoderDimensions(497, 4);
+	//binElevator->SetEncoderDimensions(497, 4);
 
-	binElevator->SetPositions(BIN_EL_BOTTOM, BIN_EL_LOAD, BIN_EL_TOP, BIN_EL_DELTA, BIN_EL_BOTMARGIN, BIN_EL_TOPMARGIN);
+	//binElevator->SetPositions(BIN_EL_BOTTOM, BIN_EL_LOAD, BIN_EL_TOP, BIN_EL_DELTA, BIN_EL_BOTMARGIN, BIN_EL_TOPMARGIN);
 
 	// --------------
 	// Set neighbors
 	// --------------
-	toteElevator1->SetNeighbors(nullptr, toteElevator2);
-	toteElevator2->SetNeighbors(toteElevator1, toteElevator3);
-	toteElevator3->SetNeighbors(toteElevator2, binElevator);
-	binElevator->SetNeighbors(toteElevator3, nullptr);
+	//toteElevator1->SetNeighbors(nullptr, toteElevator2);
+	//toteElevator2->SetNeighbors(toteElevator1, toteElevator3);
+	//toteElevator3->SetNeighbors(toteElevator2, binElevator);
+	//binElevator->SetNeighbors(toteElevator3, nullptr);
 
 	// ----------------------------
 	// Add tote elevators to group
 	// ----------------------------
-	toteElevatorGroup = new ElevatorGroupSub();
-	toteElevatorGroup->AddElevator(toteElevator1);
+	//toteElevatorGroup = new ElevatorGroupSub();
+	//toteElevatorGroup->AddElevator(toteElevator1);
 	//toteElevatorGroup->AddElevator(toteElevator2);
 	//toteElevatorGroup->AddElevator(toteElevator3);
 
-	elevatorSelector = new ElevatorSelectorSub();
-	elevatorSelector->AddElevator(toteElevator1);
+	//elevatorSelector = new ElevatorSelectorSub();
+	//elevatorSelector->AddElevator(toteElevator1);
 	//elevatorSelector->AddElevator(toteElevator2);
 	//elevatorSelector->AddElevator(toteElevator3);
 	//elevatorSelector->AddElevator(binElevator);
 
-	elevatorSelector->SelectTop();
+	//elevatorSelector->SelectTop();
 
 	// -----------------
 	// Enable elevators
@@ -196,6 +199,9 @@ void Robot::RobotInit() {
 	driveTrain->frontRight->Enable();
 	driveTrain->rearLeft->Enable();
 	driveTrain->rearRight->Enable();
+	completeElevator->toteElevator1PID->Enable();
+	completeElevator->toteElevator2PID->Enable();
+	completeElevator->toteElevator3PID->Enable();
 }
 
 // ---------------------------------------------------------
@@ -206,10 +212,10 @@ void Robot::DisabledInit(){
 	LOG("Robot::DisabledInit");
 	RobotMap::i2c->Write(1, 0);
 
-	toteElevator1->Disable();
-	toteElevator2->Disable();
-	toteElevator3->Disable();
-	binElevator->Disable();
+	//toteElevator1->Disable();
+	//toteElevator2->Disable();
+	//toteElevator3->Disable();
+	//binElevator->Disable();
 }
 
 void Robot::DisabledPeriodic() {
@@ -238,10 +244,10 @@ void Robot::TeleopInit() {
 
 	Robot::driveTrain->outputLED();
 
-	toteElevator1->Enable();
+	//toteElevator1->Enable();
 	//toteElevator2->Enable();
 	//toteElevator3->Enable();
-	binElevator->Enable();
+	//binElevator->Enable();
 }
 
 void Robot::TeleopPeriodic() {

@@ -9,6 +9,11 @@
 #include "Commands/UpdateSmartDashboard.h"
 #include "Commands/LowerElevator.h"
 #include "Commands/RaiseElevator.h"
+#include "Commands/ResetAllEncoders.h"
+#include "Commands/BinArmIn.h"
+#include "Commands/BinArmOut.h"
+#include "Commands/BinUp.h"
+#include "Commands/BinDown.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -43,34 +48,46 @@ OI::OI() {
 	rotateRight90 = new RotateBy("Rotate Right 90", 90);
 
 
-	Tote1Up = new RaiseElevator(Robot::toteElevator1);
-	Tote1Down = new LowerElevator(Robot::toteElevator1);
+	//Tote1Up = new RaiseElevator(Robot::toteElevator1);
+	//Tote1Down = new LowerElevator(Robot::toteElevator1);
 
-	Tote2Up = new RaiseElevator(Robot::toteElevator2);
-	Tote2Down = new LowerElevator(Robot::toteElevator2);
+	//Tote2Up = new RaiseElevator(Robot::toteElevator2);
+	//Tote2Down = new LowerElevator(Robot::toteElevator2);
 
-	Tote3Up = new RaiseElevator(Robot::toteElevator3);
-	Tote3Down = new LowerElevator(Robot::toteElevator3);
+	//Tote3Up = new RaiseElevator(Robot::toteElevator3);
+	//Tote3Down = new LowerElevator(Robot::toteElevator3);
 
-	BinUp = new RaiseElevator(Robot::binElevator);
-	BinDown = new LowerElevator(Robot::binElevator);
+	//BinUp = new RaiseElevator(Robot::binElevator);
+	//BinDown = new LowerElevator(Robot::binElevator);
+
+	binArmIn = new BinArmIn();
+	binArmOut = new BinArmOut();
+
+	binUp = new BinUp();
+	binDown = new BinDown();
 
 
 	// Define joystick button mappings
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(rotateLeft90);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(rotateRight90);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(Tote1Up);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(Tote1Down);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(Tote1Up);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(Tote1Down);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhenPressed(Tote2Up);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhenPressed(Tote2Down);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhenPressed(Tote2Up);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhenPressed(Tote2Down);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(Tote3Up);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(Tote3Down);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(Tote3Up);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(Tote3Down);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(BinUp);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(BinDown);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(BinUp);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(BinDown);
+
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(binArmIn);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(binArmOut);
+
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(binUp);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(binDown);
 
 	// Add SmartDashboard controls
 	SmartDashboard::PutData("FixPrefs", new FixPrefs());
@@ -83,6 +100,7 @@ OI::OI() {
 	SmartDashboard::PutNumber("Auto-Drive-Speed", 0.5);
 	SmartDashboard::PutNumber("Auto-Drive-Time", 1.0);
 	SmartDashboard::PutData("Gyro Square", new GyroSquare());
+	SmartDashboard::PutData("Reset All Encoders", new ResetAllEncoders());
 }
 
 float OI::GetJoystickX() {
@@ -97,6 +115,16 @@ float OI::GetJoystickY() {
 
 float OI::GetJoystickZ() {
 	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_RX_AXIS);
+	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
+}
+
+float OI::GetDriverRightTrigger(){
+	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_RTRIG_AXIS);
+	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
+}
+
+float OI::GetDriverLeftTrigger(){
+	auto value = GetDriverJoystick()->GetRawAxis(JOYSTICK_LTRIG_AXIS);
 	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
 

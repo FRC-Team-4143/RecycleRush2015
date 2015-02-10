@@ -42,12 +42,15 @@ public:
 
 	static SpeedController* toteElevator1Motor;
 	static Encoder*         toteElevator1Pos;
+	static PIDController*   toteElevator1PID;
 
 	static SpeedController* toteElevator2Motor;
 	static Encoder*         toteElevator2Pos;
+	static PIDController*	toteElevator2PID;
 
 	static SpeedController* toteElevator3Motor;
 	static Encoder*         toteElevator3Pos;
+	static PIDController*	toteElevator3PID;
 
 	static SpeedController* binElevatorMotor;
 	static Encoder*         binElevatorPos;

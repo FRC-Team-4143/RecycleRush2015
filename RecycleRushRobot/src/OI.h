@@ -11,6 +11,9 @@ public:
 	float GetJoystickY();
 	float GetJoystickZ();
 
+	float GetDriverLeftTrigger();
+	float GetDriverRightTrigger();
+
 	float GetBinArmAxisValue();
 	float GetBinElevatorAxisValue();
 	float GetToteElevatorAxisValue();
@@ -29,8 +32,12 @@ private:
 	Command* Tote2Down;
 	Command* Tote3Up;
 	Command* Tote3Down;
-	Command* BinUp;
-	Command* BinDown;
+	//Command* BinUp;
+	//Command* BinDown;
+	Command* binArmIn;
+	Command* binArmOut;
+	Command* binUp;
+	Command* binDown;
 
 	// Declare joystick buttons
 	// TODO
