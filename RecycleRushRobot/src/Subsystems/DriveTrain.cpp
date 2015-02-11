@@ -179,13 +179,18 @@ void DriveTrain::Crab(float twist, float y, float x) {
 		RLRatio = RL;
 		RRRatio = RR;
     }
-    if(y > 0.049 && y < .051)  
+    //if(y > 0.049 && y < .051)
+    if (fabs(x) < 0.3 && fabs(y) < 0.3 && fabs(twist) < 0.3)
 	{
 		FLRatio = 0.0;
 		FRRatio = 0.0;
 		RLRatio = 0.0;
 		RRRatio = 0.0;
 	}
+    FLRatio *= 0.8;
+    FRRatio *= 0.8;
+    RLRatio *= 0.8;
+    RRRatio *= 0.8;
 
 	//Set drive speeds
 	SetDriveSpeed(FLRatio, -FRRatio, RLRatio, -RRRatio);

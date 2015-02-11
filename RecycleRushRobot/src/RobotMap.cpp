@@ -28,8 +28,7 @@ SpeedController*   RobotMap::driveTrainRearRightDrive = nullptr;
 AnalogChannelVolt* RobotMap::driveTrainRearRightPos = nullptr;
 SpeedController*   RobotMap::driveTrainRearRightSteer = nullptr;
 
-SpeedController* RobotMap::binArmMotor = nullptr;
-Encoder*         RobotMap::binArmPos = nullptr;
+
 
 SpeedController* RobotMap::toteElevator1Motor = nullptr;
 Encoder*         RobotMap::toteElevator1Pos = nullptr;
@@ -45,6 +44,9 @@ PIDController*   RobotMap::toteElevator3PID = nullptr;
 
 SpeedController* RobotMap::binElevatorMotor = nullptr;
 Encoder*         RobotMap::binElevatorPos = nullptr;
+
+SpeedController* RobotMap::binArmMotor = nullptr;
+Encoder*         RobotMap::binArmPos = nullptr;
 
 #define CONTINUOUS true
 #define P 0.5
@@ -155,6 +157,10 @@ void RobotMap::Init() {
 
 	lw->AddSensor("IMU", "Gyro", imu);
 
+//_______________________________________________________
+//			Drivetrain Motors and PIDControllers
+//-------------------------------------------------------
+
 	driveTrainFrontLeftDrive = new Talon(FLD);
 	driveTrainFrontLeftPos   = new AnalogChannelVolt(FLP, true, RATIO);
 	driveTrainFrontLeftSteer = new CANTalon(FLS);
@@ -191,8 +197,9 @@ void RobotMap::Init() {
 	driveTrainRearRight->SetInputRange(POTMIN, POTMAX);
 	driveTrainRearRight->SetOutputRange(-STEERPOW, STEERPOW);
 
-	binArmMotor = new Victor(BINARM_MOTOR);
-	binArmPos = new Encoder(BINARM_POS_A, BINARM_POS_B, BINARM_POS_REV);
+//_______________________________________________________
+//			Elevator Motors and PIDControllers
+//-------------------------------------------------------
 
 	toteElevator1Motor = new VictorWrapper(TOTE1_MOTOR, true);
 	toteElevator1Pos = new Encoder(TOTE1_POS_A, TOTE1_POS_B, TOTE1_POS_REV);
@@ -203,12 +210,12 @@ void RobotMap::Init() {
 	toteElevator2Motor = new Victor(TOTE2_MOTOR);
 	toteElevator2Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B, TOTE2_POS_REV);
 	toteElevator2Pos->Reset();
+	toteElevator2PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator2Pos, toteElevator2Motor, PERIOD);
+	toteElevator2PID->SetOutputRange(-1, 1);
 
 	//toteElevator2Motor = new Victor(BIN_MOTOR);
 	//toteElevator2Pos = new Encoder(BIN_POS_A, BIN_POS_B, BIN_POS_REV);
 	//toteElevator2Pos->Reset();
-	toteElevator2PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator2Pos, toteElevator2Motor, PERIOD);
-	toteElevator2PID->SetOutputRange(-1, 1);
 
 	toteElevator3Motor = new VictorWrapper(TOTE3_MOTOR, true);
 	toteElevator3Pos = new Encoder(TOTE3_POS_A, TOTE3_POS_B, TOTE3_POS_REV);
@@ -219,6 +226,9 @@ void RobotMap::Init() {
 	binElevatorMotor = new Victor(BIN_MOTOR);
 	binElevatorPos = new Encoder(BIN_POS_A, BIN_POS_B, BIN_POS_REV);
 	binElevatorPos->Reset();
+
+	binArmMotor = new Victor(BINARM_MOTOR);
+	binArmPos = new Encoder(BINARM_POS_A, BINARM_POS_B, BINARM_POS_REV);
 
 	//binElevatorMotor = new Victor(TOTE2_MOTOR);
 	//binElevatorPos = new Encoder(TOTE2_POS_A, TOTE2_POS_B, TOTE2_POS_REV);
