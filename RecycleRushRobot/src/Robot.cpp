@@ -24,6 +24,8 @@ void Robot::RobotInit() {
 
 	PreferencesInit();
 
+	CameraInit();
+
 	RobotMap::Init();
 
 	// List all preferences
@@ -267,6 +269,10 @@ void Robot::CameraInit() {
 	auto cam = CameraServer::GetInstance();
 	cam->SetQuality(50);
 	cam->StartAutomaticCapture("cam0");
+
+	auto cam2 = CameraServer::GetInstance();
+	cam2->SetQuality(50);
+	cam2->StartAutomaticCapture("cam1");
 }
 
 void Robot::PreferencesInit() {
