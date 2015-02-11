@@ -5,7 +5,8 @@
 #include "Modules/BinElevatorMoveFactory.h"
 #include "Modules/DriveTrainSettings.h"
 #include "Modules/PIDParameters.h"
-
+#include "Commands/AutoBinMove.h"
+#include "Commands/AutoBackup.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -25,6 +26,15 @@ void Robot::RobotInit() {
 	PreferencesInit();
 
 	RobotMap::Init();
+
+	SmartDashboard::PutNumber("AutoSleep", 3);
+
+	autoChooser = new SendableChooser();
+	autoChooser->AddDefault("Tote&Move", (void*) 1);
+	autoChooser->AddDefault("Bin&Move", (void*) 2);
+	autoChooser->AddDefault("BackIntoAutozone", (void*) 3);
+	SmartDashboard::PutData("AutonomousChooser", autoChooser);
+
 
 	// List all preferences
 	auto prefs = Preferences::GetInstance();
@@ -175,7 +185,7 @@ void Robot::RobotInit() {
 	// -------------------------------------------------
 	// Initialize the command used for autonomous mode.
 	// -------------------------------------------------
-	autonomousCommand = new AutonomousCommand();
+	//autonomousCommand = new AutonomousCommand();
 
 	driveTrain->SetWheelbase(24, 35, 24);
 
@@ -224,7 +234,17 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	LOG("Robot::AutonomousInit");
-	//autonomousCommand = new GyroSquare();
+	int selected = (int)autoChooser->GetSelected();
+
+	if (selected == 1){
+		autonomousCommand = new AutonomousCommand();
+	}
+	else if (selected == 2){
+		autonomousCommand = new AutoBinMove();
+	}
+	else if (selected == 3){
+		autonomousCommand = new AutoBackup();
+	}
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
 }
