@@ -7,6 +7,7 @@
 #include "Modules/PIDParameters.h"
 #include "Commands/AutoBinMove.h"
 #include "Commands/AutoBackup.h"
+#include "Commands/AutoToteAndBin.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -30,9 +31,10 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("AutoSleep", 3);
 
 	autoChooser = new SendableChooser();
-	autoChooser->AddDefault("Tote&Move", (void*) 1);
-	autoChooser->AddDefault("Bin&Move", (void*) 2);
-	autoChooser->AddDefault("BackIntoAutozone", (void*) 3);
+	autoChooser->AddDefault("Tote", (void*) 1);
+	autoChooser->AddDefault("Bin", (void*) 2);
+	autoChooser->AddDefault("ToteAndBin", (void*) 3);
+	autoChooser->AddDefault("BackIntoAutozone", (void*) 4);
 	SmartDashboard::PutData("AutonomousChooser", autoChooser);
 
 
@@ -243,11 +245,14 @@ void Robot::AutonomousInit() {
 		autonomousCommand = new AutoBinMove();
 	}
 	else if (selected == 3){
+	autonomousCommand = new AutoToteAndBin();
+	}
+	else if (selected == 4){
 		autonomousCommand = new AutoBackup();
 	}
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
-}
+	}
 
 void Robot::AutonomousPeriodic() {
 	Scheduler::GetInstance()->Run();
