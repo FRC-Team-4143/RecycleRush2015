@@ -45,6 +45,8 @@ public:
 	virtual void TestInit();
 	virtual void TestPeriodic();
 
+
+
 protected:
 	void CameraInit();
 	void PreferencesInit();

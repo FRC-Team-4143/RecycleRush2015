@@ -49,7 +49,7 @@ SpeedController* RobotMap::binArmMotor = nullptr;
 Encoder*         RobotMap::binArmPos = nullptr;
 
 #define CONTINUOUS true
-#define P 0.5
+#define P 1.0
 #define I 0.0
 #define D 0.1
 #define F 0.0
