@@ -18,7 +18,7 @@
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
 
-const float JOYSTICK_DEAD_ZONE = 0.15;
+const float JOYSTICK_DEAD_ZONE = 0.1;
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -86,8 +86,8 @@ OI::OI() {
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(binArmIn);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(binArmOut);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(binUp);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(binDown);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(binUp);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(binDown);
 
 	// Add SmartDashboard controls
 	SmartDashboard::PutData("FixPrefs", new FixPrefs());
@@ -101,6 +101,8 @@ OI::OI() {
 	SmartDashboard::PutNumber("Auto-Drive-Time", 1.0);
 	SmartDashboard::PutData("Gyro Square", new GyroSquare());
 	SmartDashboard::PutData("Reset All Encoders", new ResetAllEncoders());
+
+	SmartDashboard::PutNumber("pdp-channel", 0);
 }
 
 float OI::GetJoystickX() {

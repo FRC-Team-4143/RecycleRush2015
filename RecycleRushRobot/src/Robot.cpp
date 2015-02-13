@@ -21,10 +21,23 @@ ElevatorSub* Robot::binElevator = nullptr;
 ElevatorGroupSub* Robot::toteElevatorGroup = nullptr;
 ElevatorSelectorSub* Robot::elevatorSelector = nullptr;
 
+IMAQdxSession sessionCam0;
+Image *frameCam0;
+IMAQdxError imaqError;
+
 void Robot::RobotInit() {
 	LOG("Robot::RobotInit");
 
+	frameCam0 = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
+
+	imaqError = IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &sessionCam0);
+	imaqError = IMAQdxConfigureGrab(sessionCam0);
+
+	IMAQdxStartAcquisition(sessionCam0);
+
 	PreferencesInit();
+
+	//CameraInit();
 
 	RobotMap::Init();
 
@@ -232,6 +245,8 @@ void Robot::DisabledInit(){
 
 void Robot::DisabledPeriodic() {
 	Scheduler::GetInstance()->Run();
+	imaqError = IMAQdxGrab(sessionCam0, frameCam0, true, NULL);
+	CameraServer::GetInstance()->SetImage(frameCam0);
 }
 
 void Robot::AutonomousInit() {
@@ -293,6 +308,7 @@ void Robot::CameraInit() {
 	auto cam = CameraServer::GetInstance();
 	cam->SetQuality(50);
 	cam->StartAutomaticCapture("cam0");
+
 }
 
 void Robot::PreferencesInit() {
