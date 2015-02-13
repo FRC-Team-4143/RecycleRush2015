@@ -45,11 +45,10 @@ void Robot::RobotInit() {
 
 	autoChooser = new SendableChooser();
 	autoChooser->AddDefault("Tote", (void*) 1);
-	autoChooser->AddDefault("Bin", (void*) 2);
-	autoChooser->AddDefault("ToteAndBin", (void*) 3);
-	autoChooser->AddDefault("BackIntoAutozone", (void*) 4);
+	autoChooser->AddObject("Bin", (void*) 2);
+	autoChooser->AddObject("ToteAndBin", (void*) 3);
+	autoChooser->AddObject("BackIntoAutozone", (void*) 4);
 	SmartDashboard::PutData("AutonomousChooser", autoChooser);
-
 
 	// List all preferences
 	auto prefs = Preferences::GetInstance();
@@ -203,7 +202,6 @@ void Robot::RobotInit() {
 	//autonomousCommand = new AutonomousCommand();
 
 	driveTrain->SetWheelbase(24, 35, 24);
-
 /*
 	auto prefs = Preferences::GetInstance();
 	auto FLOffset = prefs->GetDouble("FLOff");
@@ -255,6 +253,7 @@ void Robot::AutonomousInit() {
 
 	if (selected == 1){
 		autonomousCommand = new AutonomousCommand();
+		//just the tote pickup
 	}
 	else if (selected == 2){
 		autonomousCommand = new AutoBinMove();
