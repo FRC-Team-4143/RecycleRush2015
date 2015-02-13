@@ -50,7 +50,6 @@ void Robot::RobotInit() {
 	autoChooser->AddObject("BackIntoAutozone", (void*) 4);
 	SmartDashboard::PutData("AutonomousChooser", autoChooser);
 
-
 	// List all preferences
 	auto prefs = Preferences::GetInstance();
 	auto keys = prefs->GetKeys();
@@ -203,7 +202,6 @@ void Robot::RobotInit() {
 	//autonomousCommand = new AutonomousCommand();
 
 	driveTrain->SetWheelbase(24, 35, 24);
-
 /*
 	auto prefs = Preferences::GetInstance();
 	auto FLOffset = prefs->GetDouble("FLOff");
