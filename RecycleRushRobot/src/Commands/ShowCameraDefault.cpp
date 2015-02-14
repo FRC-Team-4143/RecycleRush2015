@@ -1,39 +1,38 @@
-#include "BinUp.h"
-#include "../RobotMap.h"
+#include "ShowCameraDefault.h"
+#include "../Robot.h"
 
-BinUp::BinUp()
+ShowCameraDefault::ShowCameraDefault()
 {
-	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(chassis);
+	Requires(Robot::camera);
 }
 
 // Called just before this Command runs the first time
-void BinUp::Initialize()
+void ShowCameraDefault::Initialize()
 {
 
 }
 
 // Called repeatedly when this Command is scheduled to run
-void BinUp::Execute()
+void ShowCameraDefault::Execute()
 {
-	RobotMap::binElevatorMotor->Set(1);
+	Robot::camera->ShowCamera(Robot::camera->cameraCurrent);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool BinUp::IsFinished()
+bool ShowCameraDefault::IsFinished()
 {
 	return false;
 }
 
 // Called once after isFinished returns true
-void BinUp::End()
+void ShowCameraDefault::End()
 {
-	RobotMap::binElevatorMotor->Set(0);
+
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void BinUp::Interrupted()
+void ShowCameraDefault::Interrupted()
 {
-	RobotMap::binElevatorMotor->Set(0);
+
 }

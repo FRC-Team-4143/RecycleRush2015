@@ -32,12 +32,11 @@ private:
 	Command* Tote2Down;
 	Command* Tote3Up;
 	Command* Tote3Down;
-	//Command* BinUp;
-	//Command* BinDown;
 	Command* binArmIn;
 	Command* binArmOut;
-	Command* binUp;
-	Command* binDown;
+	Command* switchCamera;
+	Command* testSolenoidForward;
+	Command* testSolenoidReverse;
 
 	// Declare joystick buttons
 	// TODO

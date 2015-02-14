@@ -16,6 +16,7 @@ public:
 	static IMUAdvanced* imu;
     static PowerDistributionPanel* pdp;
     static I2C* i2c;
+    static DoubleSolenoid* testSolenoid;
 
 	static PIDController*     driveTrainFrontLeft;
 	static SpeedController*   driveTrainFrontLeftDrive;
@@ -52,8 +53,9 @@ public:
 	static Encoder*         toteElevator3Pos;
 	static PIDController*	toteElevator3PID;
 
-	static SpeedController* binElevatorMotor;
-	static Encoder*         binElevatorPos;
+	static SpeedController* toteElevator4Motor;
+	static Encoder*         toteElevator4Pos;
+	static PIDController*	toteElevator4PID;
 
     static void Init();
 };

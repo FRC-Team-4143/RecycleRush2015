@@ -12,8 +12,10 @@
 #include "Commands/ResetAllEncoders.h"
 #include "Commands/BinArmIn.h"
 #include "Commands/BinArmOut.h"
-#include "Commands/BinUp.h"
-#include "Commands/BinDown.h"
+#include "Commands/CompleteElevatorDefaultCommand.h"
+#include "Commands/SwitchCamera.h"
+#include "Commands/TestSolenoidForward.h"
+#include "Commands/TestSolenoidReverse.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -62,9 +64,9 @@ OI::OI() {
 
 	binArmIn = new BinArmIn();
 	binArmOut = new BinArmOut();
-
-	binUp = new BinUp();
-	binDown = new BinDown();
+	switchCamera = new SwitchCamera();
+	testSolenoidForward = new TestSolenoidForward();
+	testSolenoidReverse = new TestSolenoidReverse();
 
 
 	// Define joystick button mappings
@@ -80,16 +82,20 @@ OI::OI() {
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(Tote3Up);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(Tote3Down);
 
-	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(BinUp);
-	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(BinDown);
-
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(binArmIn);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(binArmOut);
-
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(binUp);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(binDown);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(binArmIn);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(binArmOut);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchCamera);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(testSolenoidForward);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(testSolenoidReverse);
 
 	// Add SmartDashboard controls
+	SmartDashboard::PutNumber("Tote4-3 distance", 14.0);
+	SmartDashboard::PutNumber("Tote3-2 distance", 14.0);
+	SmartDashboard::PutNumber("Tote2-1 distance", 14.0);
+
+	SmartDashboard::PutData("testSolenoidForward", new TestSolenoidForward());
+	SmartDashboard::PutData("testSolenoidReverse", new TestSolenoidReverse());
+
 	SmartDashboard::PutData("FixPrefs", new FixPrefs());
 	SmartDashboard::PutData("SaveWheelPositions", new SaveWheelPositions());
 	SmartDashboard::PutData("ShowPrefs", new ShowPrefs());

@@ -12,15 +12,16 @@ ResetAllEncoders::ResetAllEncoders()
 // Called just before this Command runs the first time
 void ResetAllEncoders::Initialize()
 {
-
+	RobotMap::toteElevator1Pos->Reset();
+	RobotMap::toteElevator2Pos->Reset();
+	RobotMap::toteElevator3Pos->Reset();
+	RobotMap::toteElevator4Pos->Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ResetAllEncoders::Execute()
 {
-	RobotMap::toteElevator1Pos->Reset();
-	RobotMap::toteElevator2Pos->Reset();
-	RobotMap::toteElevator3Pos->Reset();
+
 }
 
 // Make this return true when this Command no longer needs to run execute()

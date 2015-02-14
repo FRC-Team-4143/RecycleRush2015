@@ -17,6 +17,11 @@ public:
 	PIDController*     toteElevator1PID;
 	PIDController*     toteElevator2PID;
 	PIDController*     toteElevator3PID;
+	PIDController*     toteElevator4PID;
+
+	double distance4_3;
+	double distance3_2;
+	double distance2_1;
 };
 
 #endif

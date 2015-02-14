@@ -186,7 +186,7 @@ void DriveTrain::Crab(float twist, float y, float x) {
 		FRRatio = 0.0;
 		RLRatio = 0.0;
 		RRRatio = 0.0;
-	} else if (fabs(x) < 0.8 && fabs(y) < 0.8 && fabs(twist) < 0.8){
+	} else {
 		FLRatio *= 0.5;
 		FRRatio *= 0.5;
 		RLRatio *= 0.5;
