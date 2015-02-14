@@ -31,7 +31,7 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("AutoSleep", 3);
 
 	autoChooser = new SendableChooser();
-	autoChooser->AddDefault("Tote", (void*) 1);
+	autoChooser->AddDefault("ToteRaised", (void*) 1);
 	autoChooser->AddObject("Bin", (void*) 2);
 	autoChooser->AddObject("ToteAndBin", (void*) 3);
 	autoChooser->AddObject("BackIntoAutozone", (void*) 4);
