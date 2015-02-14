@@ -1,10 +1,10 @@
-#include "AutonomousCommand.h"
+#include <Commands/AutoToteMove.h>
 #include "Tote3UpTimed.h"
 #include "Drive.h"
 #include "RotateBy.h"
 #include "Sleep.h"
 #include "Tote3DownTimed.h"
-AutonomousCommand::AutonomousCommand() {
+AutoToteMove::AutoToteMove() {
 	// TODO - Use AddSequential and AddParallel here
 	AddSequential (new Sleep(SmartDashboard::GetNumber("AutoSleep", 3)));
 	AddSequential (new Tote3UpTimed (5));

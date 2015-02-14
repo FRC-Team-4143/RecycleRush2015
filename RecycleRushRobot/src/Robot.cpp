@@ -1,13 +1,13 @@
 #include "Logger.h"
 #include "Robot.h"
 #include "RobotMap.h"
-#include "Commands/AutonomousCommand.h"
 #include "Modules/BinElevatorMoveFactory.h"
 #include "Modules/DriveTrainSettings.h"
 #include "Modules/PIDParameters.h"
 #include "Commands/AutoBinMove.h"
 #include "Commands/AutoBackup.h"
 #include "Commands/AutoToteAndBin.h"
+#include "Commands/AutoToteMove.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -239,7 +239,7 @@ void Robot::AutonomousInit() {
 	int selected = (int)autoChooser->GetSelected();
 
 	if (selected == 1){
-		autonomousCommand = new AutonomousCommand();
+		autonomousCommand = new AutoToteMove();
 		//just the tote pickup
 	}
 	else if (selected == 2){

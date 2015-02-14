@@ -1,10 +1,10 @@
 #ifndef _ROBOT_H
 #define _ROBOT_H
 
+#include <Commands/AutoToteMove.h>
 #include <WPILib.h>
 #include <Commands/Command.h>
 #include <LiveWindow/LiveWindow.h>
-#include "Commands/AutonomousCommand.h"
 #include "Subsystems/BinArmSub.h"
 #include "Subsystems/DriveTrain.h"
 #include "Subsystems/ElevatorSub.h"

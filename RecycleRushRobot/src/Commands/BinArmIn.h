@@ -1,5 +1,5 @@
-#ifndef BinArmIn_H
-#define BinArmIn_H
+#ifndef BINARMIN_H
+#define BINARMIN_H
 
 #include "WPILib.h"
 
