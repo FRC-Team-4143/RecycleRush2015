@@ -61,6 +61,7 @@ Encoder*         RobotMap::binArmPos = nullptr;
 #define TOLERANCE 0.2
 #define PERIOD .02
 #define RATIO 1
+#define ELEVATOR_TOLERANCE 2
 
 #define TESTSWERVE 0
 #if TESTSWERVE
@@ -215,12 +216,14 @@ void RobotMap::Init() {
 	toteElevator1Pos->Reset();
 	toteElevator1PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator1Pos, toteElevator1Motor, PERIOD);
 	toteElevator1PID->SetOutputRange(-1, 1);
+	toteElevator1PID->SetAbsoluteTolerance(ELEVATOR_TOLERANCE);
 
 	toteElevator2Motor = new VictorWrapper(TOTE2_MOTOR, TOTE2_MOTOR_REV);
 	toteElevator2Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B, TOTE2_POS_REV);
 	toteElevator2Pos->Reset();
 	toteElevator2PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator2Pos, toteElevator2Motor, PERIOD);
 	toteElevator2PID->SetOutputRange(-1, 1);
+	toteElevator2PID->SetAbsoluteTolerance(ELEVATOR_TOLERANCE);
 
 	//toteElevator2Motor = new Victor(BIN_MOTOR);
 	//toteElevator2Pos = new Encoder(BIN_POS_A, BIN_POS_B, BIN_POS_REV);
@@ -231,12 +234,14 @@ void RobotMap::Init() {
 	toteElevator3Pos->Reset();
 	toteElevator3PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator3Pos, toteElevator3Motor, PERIOD);
 	toteElevator3PID->SetOutputRange(-1, 1);
+	toteElevator3PID->SetAbsoluteTolerance(ELEVATOR_TOLERANCE);
 
 	toteElevator4Motor = new VictorWrapper(TOTE4_MOTOR, TOTE4_MOTOR_REV);
 	toteElevator4Pos = new Encoder(TOTE4_POS_A, TOTE4_POS_B, TOTE4_POS_REV);
 	toteElevator4Pos->Reset();
 	toteElevator4PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator4Pos, toteElevator4Motor, PERIOD);
 	toteElevator4PID->SetOutputRange(-1, 1);
+	toteElevator4PID->SetAbsoluteTolerance(ELEVATOR_TOLERANCE);
 
 	binArmMotor = new VictorWrapper(BINARM_MOTOR, BINARM_MOTOR_REV);
 	binArmPos = new Encoder(BINARM_POS_A, BINARM_POS_B, BINARM_POS_REV);
