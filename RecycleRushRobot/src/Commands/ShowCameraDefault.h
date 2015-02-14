@@ -1,12 +1,12 @@
-#ifndef BinDown_H
-#define BinDown_H
+#ifndef ShowCameraDefault_H
+#define ShowCameraDefault_H
 
 #include "WPILib.h"
 
-class BinDown: public Command
+class ShowCameraDefault: public Command
 {
 public:
-	BinDown();
+	ShowCameraDefault();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

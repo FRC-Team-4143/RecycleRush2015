@@ -7,6 +7,7 @@ SerialPort* RobotMap::serialPort = nullptr;
 IMUAdvanced* RobotMap::imu = nullptr;
 PowerDistributionPanel* RobotMap::pdp = nullptr;
 I2C* RobotMap::i2c = nullptr;
+DoubleSolenoid* RobotMap::testSolenoid = nullptr;
 
 PIDController*     RobotMap::driveTrainFrontLeft = nullptr;
 SpeedController*   RobotMap::driveTrainFrontLeftDrive = nullptr;
@@ -42,8 +43,9 @@ SpeedController* RobotMap::toteElevator3Motor = nullptr;
 Encoder*         RobotMap::toteElevator3Pos = nullptr;
 PIDController*   RobotMap::toteElevator3PID = nullptr;
 
-SpeedController* RobotMap::binElevatorMotor = nullptr;
-Encoder*         RobotMap::binElevatorPos = nullptr;
+SpeedController* RobotMap::toteElevator4Motor = nullptr;
+Encoder*         RobotMap::toteElevator4Pos = nullptr;
+PIDController*   RobotMap::toteElevator4PID = nullptr;
 
 SpeedController* RobotMap::binArmMotor = nullptr;
 Encoder*         RobotMap::binArmPos = nullptr;
@@ -123,26 +125,31 @@ Encoder*         RobotMap::binArmPos = nullptr;
 	#define TOTE1_POS_A   0
 	#define TOTE1_POS_B   1
 	#define TOTE1_POS_REV true
+	#define TOTE1_MOTOR_REV false
 
 	#define TOTE2_MOTOR   5
 	#define TOTE2_POS_A   2
 	#define TOTE2_POS_B   3
 	#define TOTE2_POS_REV true
+	#define TOTE2_MOTOR_REV false
 
 	#define TOTE3_MOTOR   6
 	#define TOTE3_POS_A   4
 	#define TOTE3_POS_B   5
 	#define TOTE3_POS_REV false
+	#define TOTE3_MOTOR_REV true
 
-	#define BIN_MOTOR   7
-	#define BIN_POS_A   6
-	#define BIN_POS_B   7
-	#define BIN_POS_REV false
+	#define TOTE4_MOTOR   7
+	#define TOTE4_POS_A   6
+	#define TOTE4_POS_B   7
+	#define TOTE4_POS_REV false
+	#define TOTE4_MOTOR_REV true
 
 	#define BINARM_MOTOR   8
 	#define BINARM_POS_A   8
 	#define BINARM_POS_B   9
 	#define BINARM_POS_REV false
+	#define BINARM_MOTOR_REV false
 #endif
 
 void RobotMap::Init() {
@@ -156,6 +163,8 @@ void RobotMap::Init() {
 	i2c = new I2C((I2C::Port) 1, 0x04);
 
 	lw->AddSensor("IMU", "Gyro", imu);
+
+	testSolenoid = new DoubleSolenoid(0, 1);
 
 //_______________________________________________________
 //			Drivetrain Motors and PIDControllers
@@ -201,13 +210,13 @@ void RobotMap::Init() {
 //			Elevator Motors and PIDControllers
 //-------------------------------------------------------
 
-	toteElevator1Motor = new VictorWrapper(TOTE1_MOTOR, true);
+	toteElevator1Motor = new VictorWrapper(TOTE1_MOTOR, TOTE1_MOTOR_REV);
 	toteElevator1Pos = new Encoder(TOTE1_POS_A, TOTE1_POS_B, TOTE1_POS_REV);
 	toteElevator1Pos->Reset();
 	toteElevator1PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator1Pos, toteElevator1Motor, PERIOD);
 	toteElevator1PID->SetOutputRange(-1, 1);
 
-	toteElevator2Motor = new Victor(TOTE2_MOTOR);
+	toteElevator2Motor = new VictorWrapper(TOTE2_MOTOR, TOTE2_MOTOR_REV);
 	toteElevator2Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B, TOTE2_POS_REV);
 	toteElevator2Pos->Reset();
 	toteElevator2PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator2Pos, toteElevator2Motor, PERIOD);
@@ -217,17 +226,19 @@ void RobotMap::Init() {
 	//toteElevator2Pos = new Encoder(BIN_POS_A, BIN_POS_B, BIN_POS_REV);
 	//toteElevator2Pos->Reset();
 
-	toteElevator3Motor = new VictorWrapper(TOTE3_MOTOR, true);
+	toteElevator3Motor = new VictorWrapper(TOTE3_MOTOR, TOTE3_MOTOR_REV);
 	toteElevator3Pos = new Encoder(TOTE3_POS_A, TOTE3_POS_B, TOTE3_POS_REV);
 	toteElevator3Pos->Reset();
 	toteElevator3PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator3Pos, toteElevator3Motor, PERIOD);
 	toteElevator3PID->SetOutputRange(-1, 1);
 
-	binElevatorMotor = new Victor(BIN_MOTOR);
-	binElevatorPos = new Encoder(BIN_POS_A, BIN_POS_B, BIN_POS_REV);
-	binElevatorPos->Reset();
+	toteElevator4Motor = new VictorWrapper(TOTE4_MOTOR, TOTE4_MOTOR_REV);
+	toteElevator4Pos = new Encoder(TOTE4_POS_A, TOTE4_POS_B, TOTE4_POS_REV);
+	toteElevator4Pos->Reset();
+	toteElevator4PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator4Pos, toteElevator4Motor, PERIOD);
+	toteElevator4PID->SetOutputRange(-1, 1);
 
-	binArmMotor = new Victor(BINARM_MOTOR);
+	binArmMotor = new VictorWrapper(BINARM_MOTOR, BINARM_MOTOR_REV);
 	binArmPos = new Encoder(BINARM_POS_A, BINARM_POS_B, BINARM_POS_REV);
 
 	//binElevatorMotor = new Victor(TOTE2_MOTOR);

@@ -1,12 +1,12 @@
-#ifndef BinUp_H
-#define BinUp_H
+#ifndef TestSolenoidReverse_H
+#define TestSolenoidReverse_H
 
 #include "WPILib.h"
 
-class BinUp: public Command
+class TestSolenoidReverse: public Command
 {
 public:
-	BinUp();
+	TestSolenoidReverse();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
