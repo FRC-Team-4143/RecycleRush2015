@@ -22,6 +22,8 @@ public:
 	double distance4_3;
 	double distance3_2;
 	double distance2_1;
+
+	Preferences* prefs;
 };
 
 #endif

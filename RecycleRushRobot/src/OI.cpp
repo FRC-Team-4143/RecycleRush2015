@@ -16,6 +16,8 @@
 #include "Commands/SwitchCamera.h"
 #include "Commands/TestSolenoidForward.h"
 #include "Commands/TestSolenoidReverse.h"
+#include "Commands/SetElevatorDistances.h"
+#include "Commands/LowerAllElevators.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -92,6 +94,7 @@ OI::OI() {
 	SmartDashboard::PutNumber("Tote4-3 distance", 14.0);
 	SmartDashboard::PutNumber("Tote3-2 distance", 14.0);
 	SmartDashboard::PutNumber("Tote2-1 distance", 14.0);
+	SmartDashboard::PutData("Save Elevator Distances", new SetElevatorDistances());
 
 	SmartDashboard::PutData("testSolenoidForward", new TestSolenoidForward());
 	SmartDashboard::PutData("testSolenoidReverse", new TestSolenoidReverse());
@@ -109,6 +112,9 @@ OI::OI() {
 	SmartDashboard::PutData("Reset All Encoders", new ResetAllEncoders());
 
 	SmartDashboard::PutNumber("pdp-channel", 0);
+	SmartDashboard::PutNumber("pdp Total Voltage", RobotMap::pdp->GetVoltage());
+	SmartDashboard::PutNumber("pdp current channel reading", RobotMap::pdp->GetCurrent(0));
+	SmartDashboard::PutData("Lower All Elevators", new LowerAllElevators());
 }
 
 float OI::GetJoystickX() {

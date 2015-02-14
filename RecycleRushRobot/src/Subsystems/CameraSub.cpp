@@ -14,7 +14,7 @@ CameraSub::CameraSub() :
 
 void CameraSub::InitDefaultCommand()
 {
-	SetDefaultCommand(new ShowCameraDefault());
+	//SetDefaultCommand(new ShowCameraDefault());
 }
 
 void CameraSub::StartCamera(int cameraNum){
@@ -58,9 +58,11 @@ void CameraSub::SwitchCamera(){
 	if (cameraCurrent == 0){
 		StopCamera(0);
 		StartCamera(1);
+		cameraCurrent = 1;
 
 	} else if (cameraCurrent == 1){
 		StopCamera(1);
 		StartCamera(0);
+		cameraCurrent = 0;
 	}
 }

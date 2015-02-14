@@ -60,7 +60,7 @@ void UpdateSmartDashboard::Execute() {
 	SmartDashboard::PutNumber("RL-PID-Output", Robot::driveTrain->rearLeft->Get());
 	SmartDashboard::PutNumber("RR-PID-Output", Robot::driveTrain->rearRight->Get());
 
-	SmartDashboard::PutData("Tote1-PID", Robot::toteElevator1->DebugGetPIDController());
+	//SmartDashboard::PutData("Tote1-PID", Robot::toteElevator1->DebugGetPIDController());
 
 	SmartDashboard::PutNumber("pdp Total Voltage", RobotMap::pdp->GetVoltage());
 	SmartDashboard::PutNumber("pdp current channel reading", RobotMap::pdp->GetCurrent(pdpCurrentChannel));
