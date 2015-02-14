@@ -12,6 +12,9 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
+
+	float setpoint;
+	PIDController* arm;
 };
 
 #endif

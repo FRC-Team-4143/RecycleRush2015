@@ -3,29 +3,31 @@
 #include "../Commands/ShowCameraDefault.h"
 
 CameraSub::CameraSub() :
-		Subsystem("Camera")
+		Subsystem("Camera Subsystem")
 {
 	frameCam0 = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 	frameCam1 = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 
+	CameraServer::GetInstance()->SetQuality(50);
+
 	cameraCurrent = 0;
-	//StartCamera(cameraCurrent);
+	StartCamera(cameraCurrent);
 }
 
 void CameraSub::InitDefaultCommand()
 {
-	//SetDefaultCommand(new ShowCameraDefault());
+	SetDefaultCommand(new ShowCameraDefault());
 }
 
 void CameraSub::StartCamera(int cameraNum){
 	if (cameraNum == 0){
-		imaqError = IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &sessionCam0);
-		imaqError = IMAQdxConfigureGrab(sessionCam0);
+		IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &sessionCam0);
+		IMAQdxConfigureGrab(sessionCam0);
 		IMAQdxStartAcquisition(sessionCam0);
 
 	} else if (cameraNum == 1){
-		imaqError = IMAQdxOpenCamera("cam1", IMAQdxCameraControlModeController, &sessionCam1);
-		imaqError = IMAQdxConfigureGrab(sessionCam1);
+		IMAQdxOpenCamera("cam1", IMAQdxCameraControlModeController, &sessionCam1);
+		IMAQdxConfigureGrab(sessionCam1);
 		IMAQdxStartAcquisition(sessionCam1);
 	}
 
@@ -34,22 +36,22 @@ void CameraSub::StartCamera(int cameraNum){
 void CameraSub::StopCamera(int cameraNum){
 	if (cameraNum == 0){
 		IMAQdxStopAcquisition(sessionCam0);
-		imaqError = IMAQdxCloseCamera(sessionCam0);
+		IMAQdxCloseCamera(sessionCam0);
 
 	} else if (cameraNum == 1){
 		IMAQdxStopAcquisition(sessionCam1);
-		imaqError = IMAQdxCloseCamera(sessionCam1);
+		IMAQdxCloseCamera(sessionCam1);
 	}
 
 }
 
 void CameraSub::ShowCamera(int cameraNum){
 	if (cameraNum == 0){
-		imaqError = IMAQdxGrab(sessionCam0, frameCam0, true, NULL);
+		IMAQdxGrab(sessionCam0, frameCam0, true, NULL);
 		CameraServer::GetInstance()->SetImage(frameCam0);
 
 	} else if (cameraNum == 1){
-		imaqError = IMAQdxGrab(sessionCam1, frameCam1, true, NULL);
+		IMAQdxGrab(sessionCam1, frameCam1, true, NULL);
 		CameraServer::GetInstance()->SetImage(frameCam1);
 	}
 }

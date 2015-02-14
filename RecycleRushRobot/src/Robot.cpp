@@ -220,6 +220,7 @@ void Robot::RobotInit() {
 	completeElevator->toteElevator2PID->Enable();
 	completeElevator->toteElevator3PID->Enable();
 	completeElevator->toteElevator4PID->Enable();
+	RobotMap::binArmPID->Enable();
 }
 
 // ---------------------------------------------------------
