@@ -7,6 +7,8 @@ class OI {
 public:
 	OI();
 
+	bool GetBackButton();
+
 	float GetJoystickX();
 	float GetJoystickY();
 	float GetJoystickZ();
@@ -23,6 +25,8 @@ private:
 	Joystick* driverJoystick;
 	Joystick* pickerJoystick;
 
+	Preferences* prefs;
+
 	// Declare commands
 	Command* rotateLeft90;
 	Command* rotateRight90;
@@ -37,6 +41,7 @@ private:
 	Command* switchCamera;
 	Command* testSolenoidForward;
 	Command* testSolenoidReverse;
+	Command* clawRoutine;
 
 	// Declare joystick buttons
 	// TODO

@@ -7,14 +7,16 @@ class BinArmOut: public Command
 {
 public:
 	BinArmOut();
+	BinArmOut(double distance);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
 
-	float setpoint;
+	double setpoint;
 	PIDController* arm;
+	double current;
 };
 
 #endif

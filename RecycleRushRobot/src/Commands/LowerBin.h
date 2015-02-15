@@ -1,17 +1,20 @@
-#ifndef TestSolenoidReverse_H
-#define TestSolenoidReverse_H
+#ifndef LowerBin_H
+#define LowerBin_H
 
 #include "WPILib.h"
 
-class TestSolenoidReverse: public Command
+class LowerBin: public Command
 {
 public:
-	TestSolenoidReverse();
+	LowerBin(double distance);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
+
+	double dist;
+	double current;
 };
 
 #endif

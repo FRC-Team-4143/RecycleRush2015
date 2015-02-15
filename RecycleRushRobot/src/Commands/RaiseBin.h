@@ -1,21 +1,19 @@
-#ifndef BinArmIn_H
-#define BinArmIn_H
+#ifndef RaiseBin_H
+#define RaiseBin_H
 
 #include "WPILib.h"
 
-class BinArmIn: public Command
+class RaiseBin: public Command
 {
 public:
-	BinArmIn();
-	BinArmIn(double distance);
+	RaiseBin(double distance);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
 
-	double setpoint;
-	PIDController* arm;
+	double dist;
 	double current;
 };
 

@@ -11,12 +11,12 @@ CameraSub::CameraSub() :
 	CameraServer::GetInstance()->SetQuality(50);
 
 	cameraCurrent = 0;
-	StartCamera(cameraCurrent);
+	//StartCamera(cameraCurrent);
 }
 
 void CameraSub::InitDefaultCommand()
 {
-	SetDefaultCommand(new ShowCameraDefault());
+	//SetDefaultCommand(new ShowCameraDefault());
 }
 
 void CameraSub::StartCamera(int cameraNum){
