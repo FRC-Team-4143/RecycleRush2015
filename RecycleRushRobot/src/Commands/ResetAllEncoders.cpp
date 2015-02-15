@@ -16,7 +16,11 @@ void ResetAllEncoders::Initialize()
 	RobotMap::toteElevator2Pos->Reset();
 	RobotMap::toteElevator3Pos->Reset();
 	RobotMap::toteElevator4Pos->Reset();
-	RobotMap::binArmPos->Reset();
+	RobotMap::toteElevator1PID->SetSetpoint(0);
+	RobotMap::toteElevator2PID->SetSetpoint(0);
+	RobotMap::toteElevator3PID->SetSetpoint(0);
+	RobotMap::toteElevator4PID->SetSetpoint(0);
+	//RobotMap::binArmPos->Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run

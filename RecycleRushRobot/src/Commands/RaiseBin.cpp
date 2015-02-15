@@ -11,12 +11,13 @@ RaiseBin::RaiseBin(double distance)
 void RaiseBin::Initialize()
 {
 	current = RobotMap::toteElevator4PID->GetSetpoint();
+	setpoint = current + dist;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void RaiseBin::Execute()
 {
-	RobotMap::toteElevator4PID->SetSetpoint(current + dist);
+	RobotMap::toteElevator4PID->SetSetpoint(setpoint);
 }
 
 // Make this return true when this Command no longer needs to run execute()

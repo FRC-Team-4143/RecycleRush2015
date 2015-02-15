@@ -53,7 +53,7 @@ void VictorWrapper::EnableCurrentLimit(uint8_t pdpChannel, double maxCurrent) {
 }
 
 void VictorWrapper::DisableCurrentLimit() {
-	_pdpChannel = -1;
+	_pdpChannel = INVALID_PDP_CHANNEL;
 }
 
 double VictorWrapper::_GetCurrent() {
@@ -69,7 +69,7 @@ PowerDistributionPanel* VictorWrapper::_GetPDP() {
 
 // True if limiting current.
 bool VictorWrapper::_IsCurrentLimitEnabled() const {
-	return _pdpChannel != -1;
+	return _pdpChannel != INVALID_PDP_CHANNEL;
 }
 
 // True if the current limit has been exceeded.

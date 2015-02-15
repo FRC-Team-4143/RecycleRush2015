@@ -6,7 +6,6 @@
 class BinArmIn: public Command
 {
 public:
-	BinArmIn();
 	BinArmIn(double distance);
 	void Initialize();
 	void Execute();
@@ -16,7 +15,6 @@ public:
 
 	double setpoint;
 	PIDController* arm;
-	double current;
 };
 
 #endif

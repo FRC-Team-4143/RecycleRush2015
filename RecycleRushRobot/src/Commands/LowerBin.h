@@ -15,6 +15,7 @@ public:
 
 	double dist;
 	double current;
+	double setpoint;
 };
 
 #endif

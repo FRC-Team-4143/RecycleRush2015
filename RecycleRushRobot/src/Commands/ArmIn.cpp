@@ -1,41 +1,45 @@
-#include "LowerBin.h"
+#include "ArmIn.h"
 #include "../RobotMap.h"
 
-LowerBin::LowerBin(double distance)
+ArmIn::ArmIn()
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
-	dist = distance;
 }
 
 // Called just before this Command runs the first time
-void LowerBin::Initialize()
+void ArmIn::Initialize()
 {
-	current = RobotMap::toteElevator4PID->GetSetpoint();
-	setpoint = current - dist;
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void LowerBin::Execute()
+void ArmIn::Execute()
 {
-	RobotMap::toteElevator4PID->SetSetpoint(setpoint);
+
+	if (RobotMap::binArmPos->GetDistance() <= 30*30){//inches * counts per inch
+		RobotMap::binArmMotor->Set(-0.5);
+	} else {
+		RobotMap::binArmMotor->Set(0);
+	}
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool LowerBin::IsFinished()
+bool ArmIn::IsFinished()
 {
-	return RobotMap::toteElevator4PID->OnTarget();
+	return false;
 }
 
 // Called once after isFinished returns true
-void LowerBin::End()
+void ArmIn::End()
 {
-
+	RobotMap::binArmMotor->Set(0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void LowerBin::Interrupted()
+void ArmIn::Interrupted()
 {
-
+	RobotMap::binArmMotor->Set(0);
 }
