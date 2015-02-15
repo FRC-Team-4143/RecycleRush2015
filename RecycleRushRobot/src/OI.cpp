@@ -1,3 +1,5 @@
+#include "Commands/ClampClaw.h"
+#include "Commands/ReleaseClaw.h"
 #include "Logger.h"
 #include "OI.h"
 #include "Robot.h"
@@ -14,10 +16,9 @@
 #include "Commands/BinArmOut.h"
 #include "Commands/CompleteElevatorDefaultCommand.h"
 #include "Commands/SwitchCamera.h"
-#include "Commands/TestSolenoidForward.h"
-#include "Commands/TestSolenoidReverse.h"
 #include "Commands/SetElevatorDistances.h"
 #include "Commands/LowerAllElevators.h"
+#include "Commands/ClawRoutine.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -47,6 +48,8 @@ OI::OI() {
 	driverJoystick = new Joystick(JOYSTICK_PORT_DRIVER);
 	pickerJoystick = new Joystick(JOYSTICK_PORT_PICKER);
 
+	prefs = Preferences::GetInstance();
+
 	// Define commands
 	rotateLeft90 = new RotateBy("Rotate Left 90", -90);
 	rotateRight90 = new RotateBy("Rotate Right 90", 90);
@@ -67,8 +70,9 @@ OI::OI() {
 	binArmIn = new BinArmIn();
 	binArmOut = new BinArmOut();
 	switchCamera = new SwitchCamera();
-	testSolenoidForward = new TestSolenoidForward();
-	testSolenoidReverse = new TestSolenoidReverse();
+	testSolenoidForward = new ClampClaw();
+	testSolenoidReverse = new ReleaseClaw();
+	clawRoutine = new ClawRoutine();
 
 
 	// Define joystick button mappings
@@ -89,15 +93,16 @@ OI::OI() {
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchCamera);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(testSolenoidForward);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(testSolenoidReverse);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(clawRoutine);
 
 	// Add SmartDashboard controls
-	SmartDashboard::PutNumber("Tote4-3 distance", 14.0);
-	SmartDashboard::PutNumber("Tote3-2 distance", 14.0);
-	SmartDashboard::PutNumber("Tote2-1 distance", 14.0);
+	SmartDashboard::PutNumber("Tote4-3 distance", prefs->GetDouble("distance4_3"));
+	SmartDashboard::PutNumber("Tote3-2 distance", prefs->GetDouble("distance3_2"));
+	SmartDashboard::PutNumber("Tote2-1 distance", prefs->GetDouble("distance2_1"));
 	SmartDashboard::PutData("Save Elevator Distances", new SetElevatorDistances());
 
-	SmartDashboard::PutData("testSolenoidForward", new TestSolenoidForward());
-	SmartDashboard::PutData("testSolenoidReverse", new TestSolenoidReverse());
+	SmartDashboard::PutData("Clamp Claw", new ClampClaw());
+	SmartDashboard::PutData("Release Claw", new ReleaseClaw());
 
 	SmartDashboard::PutData("FixPrefs", new FixPrefs());
 	SmartDashboard::PutData("SaveWheelPositions", new SaveWheelPositions());
@@ -115,6 +120,11 @@ OI::OI() {
 	SmartDashboard::PutNumber("pdp Total Voltage", RobotMap::pdp->GetVoltage());
 	SmartDashboard::PutNumber("pdp current channel reading", RobotMap::pdp->GetCurrent(0));
 	SmartDashboard::PutData("Lower All Elevators", new LowerAllElevators());
+}
+
+bool OI::GetBackButton(){
+	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_BACK);
+	return (value);
 }
 
 float OI::GetJoystickX() {

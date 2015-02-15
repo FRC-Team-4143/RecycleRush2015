@@ -1,12 +1,12 @@
-#ifndef TestSolenoidForward_H
-#define TestSolenoidForward_H
+#ifndef ClampClaw_H
+#define ClampClaw_H
 
 #include "WPILib.h"
 
-class TestSolenoidForward: public Command
+class ClampClaw: public Command
 {
 public:
-	TestSolenoidForward();
+	ClampClaw();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
