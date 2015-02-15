@@ -12,13 +12,15 @@
 #include "Commands/LowerElevator.h"
 #include "Commands/RaiseElevator.h"
 #include "Commands/ResetAllEncoders.h"
-#include "Commands/BinArmIn.h"
-#include "Commands/BinArmOut.h"
+#include "Commands/ArmIn.h"
+#include "Commands/ArmOut.h"
 #include "Commands/CompleteElevatorDefaultCommand.h"
 #include "Commands/SwitchCamera.h"
 #include "Commands/SetElevatorDistances.h"
 #include "Commands/LowerAllElevators.h"
 #include "Commands/ClawRoutine.h"
+#include "Commands/ResetArm.h"
+#include "Commands/RunCamera.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -67,12 +69,13 @@ OI::OI() {
 	//BinUp = new RaiseElevator(Robot::binElevator);
 	//BinDown = new LowerElevator(Robot::binElevator);
 
-	binArmIn = new BinArmIn();
-	binArmOut = new BinArmOut();
+	binArmIn = new ArmIn();
+	binArmOut = new ArmOut();
 	switchCamera = new SwitchCamera();
 	testSolenoidForward = new ClampClaw();
 	testSolenoidReverse = new ReleaseClaw();
 	clawRoutine = new ClawRoutine();
+	runCamera = new RunCamera(0);
 
 
 	// Define joystick button mappings
@@ -93,13 +96,18 @@ OI::OI() {
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchCamera);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(testSolenoidForward);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(testSolenoidReverse);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(clawRoutine);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(clawRoutine);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(runCamera);
 
 	// Add SmartDashboard controls
 	SmartDashboard::PutNumber("Tote4-3 distance", prefs->GetDouble("distance4_3"));
 	SmartDashboard::PutNumber("Tote3-2 distance", prefs->GetDouble("distance3_2"));
 	SmartDashboard::PutNumber("Tote2-1 distance", prefs->GetDouble("distance2_1"));
 	SmartDashboard::PutData("Save Elevator Distances", new SetElevatorDistances());
+
+	SmartDashboard::PutData("Lower All Elevators", new LowerAllElevators());
+	SmartDashboard::PutData("Reset Arm", new ResetArm());
+	SmartDashboard::PutData("Reset All Encoders", new ResetAllEncoders());
 
 	SmartDashboard::PutData("Clamp Claw", new ClampClaw());
 	SmartDashboard::PutData("Release Claw", new ReleaseClaw());
@@ -114,16 +122,16 @@ OI::OI() {
 	SmartDashboard::PutNumber("Auto-Drive-Speed", 0.5);
 	SmartDashboard::PutNumber("Auto-Drive-Time", 1.0);
 	SmartDashboard::PutData("Gyro Square", new GyroSquare());
-	SmartDashboard::PutData("Reset All Encoders", new ResetAllEncoders());
+
 
 	SmartDashboard::PutNumber("pdp-channel", 0);
 	SmartDashboard::PutNumber("pdp Total Voltage", RobotMap::pdp->GetVoltage());
 	SmartDashboard::PutNumber("pdp current channel reading", RobotMap::pdp->GetCurrent(0));
-	SmartDashboard::PutData("Lower All Elevators", new LowerAllElevators());
+
 }
 
-bool OI::GetBackButton(){
-	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_BACK);
+bool OI::GetButtonB(){
+	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_B);
 	return (value);
 }
 

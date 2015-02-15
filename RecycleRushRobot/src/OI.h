@@ -7,7 +7,7 @@ class OI {
 public:
 	OI();
 
-	bool GetBackButton();
+	bool GetButtonB();
 
 	float GetJoystickX();
 	float GetJoystickY();
@@ -42,6 +42,7 @@ private:
 	Command* testSolenoidForward;
 	Command* testSolenoidReverse;
 	Command* clawRoutine;
+	Command* runCamera;
 
 	// Declare joystick buttons
 	// TODO

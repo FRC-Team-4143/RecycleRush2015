@@ -18,10 +18,14 @@ public:
 	PIDController*     toteElevator2PID;
 	PIDController*     toteElevator3PID;
 	PIDController*     toteElevator4PID;
+	Encoder*		   armEncoder;
 
 	double distance4_3;
 	double distance3_2;
 	double distance2_1;
+
+	double armPos;
+	double armMin;
 
 	Preferences* prefs;
 };

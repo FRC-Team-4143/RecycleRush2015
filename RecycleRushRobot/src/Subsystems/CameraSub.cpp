@@ -8,7 +8,7 @@ CameraSub::CameraSub() :
 	frameCam0 = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 	frameCam1 = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 
-	CameraServer::GetInstance()->SetQuality(50);
+	CameraServer::GetInstance()->SetQuality(10);
 
 	cameraCurrent = 0;
 	//StartCamera(cameraCurrent);
@@ -58,13 +58,13 @@ void CameraSub::ShowCamera(int cameraNum){
 
 void CameraSub::SwitchCamera(){
 	if (cameraCurrent == 0){
-		StopCamera(0);
-		StartCamera(1);
+		//StopCamera(0);
+		//StartCamera(1);
 		cameraCurrent = 1;
 
 	} else if (cameraCurrent == 1){
-		StopCamera(1);
-		StartCamera(0);
+		//StopCamera(1);
+		//StartCamera(0);
 		cameraCurrent = 0;
 	}
 }
