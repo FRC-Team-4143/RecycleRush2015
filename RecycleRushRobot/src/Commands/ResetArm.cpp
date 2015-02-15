@@ -1,45 +1,46 @@
-#include "ResetAllEncoders.h"
-#include "../Robot.h"
+#include "ResetArm.h"
+#include "../RobotMap.h"
 
-ResetAllEncoders::ResetAllEncoders()
+ResetArm::ResetArm()
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
-	SetRunWhenDisabled(true);
-
+	SetTimeout(3);
 }
 
 // Called just before this Command runs the first time
-void ResetAllEncoders::Initialize()
+void ResetArm::Initialize()
 {
-	RobotMap::toteElevator1Pos->Reset();
-	RobotMap::toteElevator2Pos->Reset();
-	RobotMap::toteElevator3Pos->Reset();
-	RobotMap::toteElevator4Pos->Reset();
-	RobotMap::binArmPos->Reset();
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ResetAllEncoders::Execute()
+void ResetArm::Execute()
 {
+	while(RobotMap::pdp->GetCurrent(0/*GET PDP PORT*/) < 5 && !IsTimedOut()){
+		RobotMap::binArmMotor->Set(-0.5);
+	}
+	RobotMap::binArmMotor->Set(0);
+	RobotMap::binArmPos->Reset();
+	RobotMap::binArmPID->SetSetpoint(0);
 
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ResetAllEncoders::IsFinished()
+bool ResetArm::IsFinished()
 {
 	return true;
 }
 
 // Called once after isFinished returns true
-void ResetAllEncoders::End()
+void ResetArm::End()
 {
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ResetAllEncoders::Interrupted()
+void ResetArm::Interrupted()
 {
 
 }

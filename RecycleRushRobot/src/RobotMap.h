@@ -40,6 +40,7 @@ public:
 
 	static SpeedController* binArmMotor;
 	static Encoder*         binArmPos;
+	static PIDController* 	binArmPID;
 
 	static SpeedController* toteElevator1Motor;
 	static Encoder*         toteElevator1Pos;
