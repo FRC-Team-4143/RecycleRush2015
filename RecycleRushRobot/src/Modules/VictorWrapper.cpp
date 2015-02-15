@@ -17,7 +17,7 @@ VictorWrapper::VictorWrapper(uint32_t channel, bool invert, float scaleSpeed, fl
 void VictorWrapper::Set(float speed, uint8_t syncGroup) {
 	speed *= _scaleSpeed;
 	speed = copysign(std::min<float>(fabs(speed), _maxSpeed), speed);
-	if (_pdpChannel != -1 && _GetPDP()->GetCurrent(_pdpChannel) > _maxCurrent) {
+	if (_pdpChannel != (uint8_t)-1 && _GetPDP()->GetCurrent(_pdpChannel) > _maxCurrent) {
 		speed = 0;
 	}
 	Victor::Set(IsInvert() ? -speed : speed, syncGroup);

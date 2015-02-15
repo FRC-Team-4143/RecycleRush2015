@@ -3,6 +3,7 @@
 
 RunCamera::RunCamera(int cameraNumber)
 {
+	SetRunWhenDisabled(true);
 	cameraNum = cameraNumber;
 }
 
@@ -15,7 +16,7 @@ void RunCamera::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void RunCamera::Execute()
 {
-	Robot::camera->ShowCamera(cameraNum);
+
 }
 
 // Make this return true when this Command no longer needs to run execute()

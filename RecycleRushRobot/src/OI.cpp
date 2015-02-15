@@ -128,6 +128,7 @@ OI::OI() {
 	SmartDashboard::PutNumber("pdp Total Voltage", RobotMap::pdp->GetVoltage());
 	SmartDashboard::PutNumber("pdp current channel reading", RobotMap::pdp->GetCurrent(0));
 
+	SmartDashboard::PutData("Run Camera", runCamera);
 }
 
 bool OI::GetButtonB(){
