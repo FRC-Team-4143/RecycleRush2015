@@ -20,6 +20,7 @@ void ResetAllEncoders::Initialize()
 	RobotMap::toteElevator2PID->SetSetpoint(0);
 	RobotMap::toteElevator3PID->SetSetpoint(0);
 	RobotMap::toteElevator4PID->SetSetpoint(0);
+	Robot::completeElevator->setpoint = 0;
 	//RobotMap::binArmPos->Reset();
 }
 

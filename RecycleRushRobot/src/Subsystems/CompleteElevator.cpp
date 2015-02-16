@@ -2,11 +2,11 @@
 #include "../RobotMap.h"
 #include "../Commands/CompleteElevatorDefaultCommand.h"
 
-#define SPEED 5
-#define COUNTS_PER_REV 120
-#define INCHES_PER_REV 4
-#define MAX 2000
-#define MIN 0
+#define SPEED (float)5
+#define COUNTS_PER_REV (float)120
+#define INCHES_PER_REV (float)4
+#define MAX (float)62  // inches
+#define MIN (float)0
 
 CompleteElevator::CompleteElevator() :
 		Subsystem("CompleteElevator")
@@ -17,6 +17,7 @@ CompleteElevator::CompleteElevator() :
 	toteElevator4PID       = RobotMap::toteElevator4PID;
 	armEncoder			   = RobotMap::binArmPos;
 	prefs = Preferences::GetInstance();
+	setpoint = 0;
 }
 
 void CompleteElevator::InitDefaultCommand()
@@ -25,16 +26,23 @@ void CompleteElevator::InitDefaultCommand()
 }
 
 void CompleteElevator::MoveElevator(float trigger){
-	float setpoint1 = toteElevator1PID->GetSetpoint();
-	float setpoint2 = toteElevator2PID->GetSetpoint();
-	float setpoint3 = toteElevator3PID->GetSetpoint();
-	float setpoint4 = toteElevator4PID->GetSetpoint();
+	//float setpoint1 = toteElevator1PID->GetSetpoint();
+	//float setpoint2 = toteElevator2PID->GetSetpoint();
+	//float setpoint3 = toteElevator3PID->GetSetpoint();
+	//float setpoint4 = toteElevator4PID->GetSetpoint();
+
+	setpoint = std::max((float)MIN, setpoint + (trigger*SPEED));
 
 	armPos = armEncoder->GetDistance();
 
 	distance4_3 = prefs->GetDouble("distance4_3");
 	distance3_2 = prefs->GetDouble("distance3_2");
 	distance2_1 = prefs->GetDouble("distance2_1");
+
+	tote4Max = 62;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+	tote3Max = 49;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+	tote2Max = 41;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
+	tote1Max = 36;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
 /*
 	if (armPos >= 0){
 		armMin = 0;
@@ -42,41 +50,9 @@ void CompleteElevator::MoveElevator(float trigger){
 		armMin = 330;
 	}*/
 
-	toteElevator4PID->SetSetpoint(std::max((float)0, setpoint4 + (trigger*SPEED)));
-	if (setpoint4 - setpoint3 > distance4_3*COUNTS_PER_REV/INCHES_PER_REV){
-		toteElevator3PID->SetSetpoint(std::max((float)0, setpoint3 + (trigger*SPEED)));
-	}
-	if (setpoint3 - setpoint2 > distance3_2*COUNTS_PER_REV/INCHES_PER_REV){
-		toteElevator2PID->SetSetpoint(std::max((float)0, setpoint2 + (trigger*SPEED)));
-	}
-	if (setpoint2 - setpoint1 > distance2_1*COUNTS_PER_REV/INCHES_PER_REV){
-		toteElevator1PID->SetSetpoint(std::max((float)0, setpoint1 + (trigger*SPEED)));
+	toteElevator4PID->SetSetpoint(std::min(tote4Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint)));
+	toteElevator3PID->SetSetpoint(std::min(tote3Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint-(float)(distance4_3)*COUNTS_PER_REV/INCHES_PER_REV)));
+	toteElevator2PID->SetSetpoint(std::min(tote2Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint-(float)((distance3_2 +distance4_3)*COUNTS_PER_REV/INCHES_PER_REV))));
+	toteElevator1PID->SetSetpoint(std::min(tote1Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint-(float)((distance2_1+distance3_2 +distance4_3)*COUNTS_PER_REV/INCHES_PER_REV))));
 
-	}
-/*
-	if (trigger > 0){
-		toteElevator4PID->SetSetpoint(std::min((float)MAX, setpoint4 + (trigger*SPEED)));
-		if (setpoint4 - setpoint3 > distance4_3*COUNTS_PER_REV/INCHES_PER_REV || setpoint4 == MAX){
-			toteElevator3PID->SetSetpoint(std::min((float)MAX, setpoint3 + (trigger*SPEED)));
-		}
-		if (setpoint3 - setpoint2 > distance3_2*COUNTS_PER_REV/INCHES_PER_REV || setpoint3 == MAX){
-			toteElevator2PID->SetSetpoint(std::min((float)MAX, setpoint2 + (trigger*SPEED)));
-		}
-		if (setpoint2 - setpoint1 > distance2_1*COUNTS_PER_REV/INCHES_PER_REV || setpoint2 == MAX){
-			toteElevator1PID->SetSetpoint(std::min((float)MAX, setpoint1 + (trigger*SPEED)));
-
-		}
-	} else if (trigger < 0){
-		toteElevator1PID->SetSetpoint(std::max((float)MIN, setpoint1 + (trigger*SPEED)));
-		if (setpoint2 - setpoint1 > distance2_1*COUNTS_PER_REV/INCHES_PER_REV || setpoint1 == MIN){
-			toteElevator2PID->SetSetpoint(std::max((float)MIN, setpoint2 + (trigger*SPEED)));
-		}
-		if (setpoint3 - setpoint2 > distance3_2*COUNTS_PER_REV/INCHES_PER_REV || setpoint2 == MIN){
-			toteElevator3PID->SetSetpoint(std::max((float)MIN, setpoint3 + (trigger*SPEED)));
-		}
-		if (setpoint4 - setpoint3 > distance4_3*COUNTS_PER_REV/INCHES_PER_REV || setpoint3 == MIN){
-			toteElevator4PID->SetSetpoint(std::max((float)armMin, setpoint4 + (trigger*SPEED)));
-
-		}
-	}*/
 }

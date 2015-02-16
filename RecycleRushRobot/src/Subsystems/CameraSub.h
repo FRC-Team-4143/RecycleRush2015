@@ -16,6 +16,7 @@ public:
 	void ShowCamera(int cameraNum);
 	void SwitchCamera();
 
+	CameraServer* server;
 	IMAQdxSession sessionCam0;
 	IMAQdxSession sessionCam1;
 	Image *frameCam0;

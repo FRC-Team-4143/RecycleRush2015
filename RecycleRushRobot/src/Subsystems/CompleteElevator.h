@@ -24,8 +24,15 @@ public:
 	double distance3_2;
 	double distance2_1;
 
+	float tote4Max;
+	float tote3Max;
+	float tote2Max;
+	float tote1Max;
+
 	double armPos;
 	double armMin;
+
+	float setpoint;
 
 	Preferences* prefs;
 };

@@ -4,6 +4,7 @@
 ShowCameraDefault::ShowCameraDefault()
 {
 	Requires(Robot::camera);
+	SetRunWhenDisabled(true);
 }
 
 // Called just before this Command runs the first time
