@@ -17,6 +17,11 @@ public:
 	double distance4_3;
 	double distance3_2;
 	double distance2_1;
+
+	double tote4Max;
+	double tote3Max;
+	double tote2Max;
+	double tote1Max;
 };
 
 #endif

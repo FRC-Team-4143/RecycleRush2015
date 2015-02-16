@@ -14,11 +14,23 @@ void SetElevatorDistances::Initialize()
 	distance4_3 = SmartDashboard::GetNumber("Tote4-3 distance");
 	distance3_2 = SmartDashboard::GetNumber("Tote3-2 distance");
 	distance2_1 = SmartDashboard::GetNumber("Tote2-1 distance");
+
+	tote4Max = SmartDashboard::GetNumber("Tote4-Max");
+	tote3Max = SmartDashboard::GetNumber("Tote3-Max");
+	tote2Max = SmartDashboard::GetNumber("Tote2-Max");
+	tote1Max = SmartDashboard::GetNumber("Tote1-Max");
+
 	printf("saveDistances numbers from smartdashboard \n");
 
 	prefs->PutDouble("distance4_3", distance4_3);
 	prefs->PutDouble("distance3_2", distance3_2);
 	prefs->PutDouble("distance2_1", distance2_1);
+
+	prefs->PutDouble("tote4-Max", tote4Max);
+	prefs->PutDouble("tote3-Max", tote3Max);
+	prefs->PutDouble("tote2-Max", tote2Max);
+	prefs->PutDouble("tote1-Max", tote1Max);
+
 	printf("saveDistances numbers set \n");
 
 	prefs->Save();

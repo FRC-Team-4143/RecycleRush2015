@@ -8,52 +8,57 @@ CameraSub::CameraSub() :
 	frameCam0 = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 	frameCam1 = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 
-	CameraServer::GetInstance()->SetQuality(50);
+	server = CameraServer::GetInstance();
+	server->SetQuality(50);
 
 	cameraCurrent = 0;
-	StartCamera(cameraCurrent);
+	//StartCamera(cameraCurrent);
 
 }
 
 void CameraSub::InitDefaultCommand()
 {
-	SetDefaultCommand(new ShowCameraDefault());
+	//SetDefaultCommand(new ShowCameraDefault());
 }
 
 void CameraSub::StartCamera(int cameraNum){
 	if (cameraNum == 0){
-		imaqError = IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &sessionCam0);
-		imaqError = IMAQdxConfigureGrab(sessionCam0);
-		imaqError = IMAQdxStartAcquisition(sessionCam0);
+		//IMAQdxSetAttribute(sessionCam0, "cam0", IMAQdxValueTypeEnumItem, IMAQdxUSBConnectionSpeedLow);
+		IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &sessionCam0);
+		IMAQdxConfigureGrab(sessionCam0);
+		IMAQdxConfigureAcquisition(sessionCam0, true, 10);
+		IMAQdxStartAcquisition(sessionCam0);
 
 	} else if (cameraNum == 1){
-		imaqError = IMAQdxOpenCamera("cam1", IMAQdxCameraControlModeController, &sessionCam1);
-		imaqError = IMAQdxConfigureGrab(sessionCam1);
-		imaqError = IMAQdxStartAcquisition(sessionCam1);
+		//IMAQdxSetAttribute(sessionCam1, "cam1", IMAQdxValueTypeEnumItem, IMAQdxUSBConnectionSpeedLow);
+		IMAQdxOpenCamera("cam1", IMAQdxCameraControlModeController, &sessionCam1);
+		IMAQdxConfigureGrab(sessionCam1);
+		IMAQdxConfigureAcquisition(sessionCam1, true, 10);
+		IMAQdxStartAcquisition(sessionCam1);
 	}
 
 }
 
 void CameraSub::StopCamera(int cameraNum){
 	if (cameraNum == 0){
-		imaqError = IMAQdxStopAcquisition(sessionCam0);
-		imaqError = IMAQdxCloseCamera(sessionCam0);
+		IMAQdxStopAcquisition(sessionCam0);
+		IMAQdxCloseCamera(sessionCam0);
 
 	} else if (cameraNum == 1){
-		imaqError = IMAQdxStopAcquisition(sessionCam1);
-		imaqError = IMAQdxCloseCamera(sessionCam1);
+		IMAQdxStopAcquisition(sessionCam1);
+		IMAQdxCloseCamera(sessionCam1);
 	}
 
 }
 
 void CameraSub::ShowCamera(int cameraNum){
 	if (cameraNum == 0){
-		imaqError = IMAQdxGrab(sessionCam0, frameCam0, true, NULL);
-		CameraServer::GetInstance()->SetImage(frameCam0);
+		IMAQdxGrab(sessionCam0, frameCam0, true, NULL);
+		server->SetImage(frameCam0);
 
 	} else if (cameraNum == 1){
-		imaqError = IMAQdxGrab(sessionCam1, frameCam1, true, NULL);
-		CameraServer::GetInstance()->SetImage(frameCam1);
+		IMAQdxGrab(sessionCam1, frameCam1, true, NULL);
+		server->SetImage(frameCam1);
 	}
 }
 

@@ -103,7 +103,12 @@ OI::OI() {
 	SmartDashboard::PutNumber("Tote4-3 distance", prefs->GetDouble("distance4_3"));
 	SmartDashboard::PutNumber("Tote3-2 distance", prefs->GetDouble("distance3_2"));
 	SmartDashboard::PutNumber("Tote2-1 distance", prefs->GetDouble("distance2_1"));
-	SmartDashboard::PutData("Save Elevator Distances", new SetElevatorDistances());
+	//SmartDashboard::PutNumber("Tote4-max", 62);
+	//SmartDashboard::PutNumber("Tote3-max", 60);
+	//SmartDashboard::PutNumber("Tote2-max", 58);
+	//SmartDashboard::PutNumber("Tote1-max", 56);
+
+	SmartDashboard::PutData("Save Elevator Preference", new SetElevatorDistances());
 
 	SmartDashboard::PutData("Lower All Elevators", new LowerAllElevators());
 	SmartDashboard::PutData("Reset Arm", new ResetArm());
