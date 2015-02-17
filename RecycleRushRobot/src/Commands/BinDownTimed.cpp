@@ -1,10 +1,10 @@
-#include <Commands/Tote3UpTimed.h>
+#include <Commands/BinDownTimed.h>
 #include "../Robot.h"
 
 // ==========================================================================
 
-Tote3UpTimed::Tote3UpTimed(double seconds) : Command("Tote 3 Up Timed") {
-	std::cout << "Tote3UpTimed::ctor" << std::endl;
+BinDownTimed::BinDownTimed(double seconds) : Command("Bin Up Timed") {
+	std::cout << "BinDownTimed::ctor" << std::endl;
 
 	Requires(Robot::completeElevator);
 	_seconds = seconds;
@@ -13,35 +13,35 @@ Tote3UpTimed::Tote3UpTimed(double seconds) : Command("Tote 3 Up Timed") {
 // ==========================================================================
 // Called just before this Command runs the first time
 
-void Tote3UpTimed::Initialize() {
+void BinDownTimed::Initialize() {
 	SetTimeout (_seconds);
 }
 
 // ==========================================================================
 // Called repeatedly when this Command is scheduled to run
 
-void Tote3UpTimed::Execute() {
+void BinDownTimed::Execute() {
 
-		Robot::completeElevator->MoveElevator(1);
+		Robot::completeElevator->MoveElevator(-1);
 
 }
 
 // ==========================================================================
 // Make this return true when this Command no longer needs to run Execute.
 
-bool Tote3UpTimed::IsFinished() {
+bool BinDownTimed::IsFinished() {
 	return IsTimedOut();
 }
 
 // ==========================================================================
 // Called once after isFinished returns true
 
-void Tote3UpTimed::End() {
+void BinDownTimed::End() {
 }
 
 // ==========================================================================
 // Called when another command which requires this subsystem is scheduled to run
 
-void Tote3UpTimed::Interrupted() {
+void BinDownTimed::Interrupted() {
 	End();
 }

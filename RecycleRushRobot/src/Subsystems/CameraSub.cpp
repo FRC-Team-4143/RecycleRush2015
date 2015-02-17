@@ -12,13 +12,13 @@ CameraSub::CameraSub() :
 	server->SetQuality(50);
 
 	cameraCurrent = 0;
-	//StartCamera(cameraCurrent);
+	StartCamera(cameraCurrent);
 
 }
 
 void CameraSub::InitDefaultCommand()
 {
-	//SetDefaultCommand(new ShowCameraDefault());
+	SetDefaultCommand(new ShowCameraDefault());
 }
 
 void CameraSub::StartCamera(int cameraNum){
@@ -26,14 +26,14 @@ void CameraSub::StartCamera(int cameraNum){
 		//IMAQdxSetAttribute(sessionCam0, "cam0", IMAQdxValueTypeEnumItem, IMAQdxUSBConnectionSpeedLow);
 		IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &sessionCam0);
 		IMAQdxConfigureGrab(sessionCam0);
-		IMAQdxConfigureAcquisition(sessionCam0, true, 10);
+		IMAQdxConfigureAcquisition(sessionCam0, true, 100);
 		IMAQdxStartAcquisition(sessionCam0);
 
 	} else if (cameraNum == 1){
 		//IMAQdxSetAttribute(sessionCam1, "cam1", IMAQdxValueTypeEnumItem, IMAQdxUSBConnectionSpeedLow);
 		IMAQdxOpenCamera("cam1", IMAQdxCameraControlModeController, &sessionCam1);
 		IMAQdxConfigureGrab(sessionCam1);
-		IMAQdxConfigureAcquisition(sessionCam1, true, 10);
+		IMAQdxConfigureAcquisition(sessionCam1, true, 100);
 		IMAQdxStartAcquisition(sessionCam1);
 	}
 
