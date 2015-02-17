@@ -1,3 +1,4 @@
+#include <Commands/AutodoNothingAuto.h>
 #include "Logger.h"
 #include "Robot.h"
 #include "RobotMap.h"
@@ -39,6 +40,7 @@ void Robot::RobotInit() {
 	autoChooser->AddObject("Bin", (void*) 2);
 	autoChooser->AddObject("ToteAndBin", (void*) 3);
 	autoChooser->AddObject("BackIntoAutozone", (void*) 4);
+	autoChooser->AddObject("DoNothingAuto", (void*) 5);
 	SmartDashboard::PutData("AutonomousChooser", autoChooser);
 
 	// List all preferences
@@ -256,6 +258,9 @@ void Robot::AutonomousInit() {
 	}
 	else if (selected == 4){
 		autonomousCommand = new AutoBackup();
+	}
+	else if (selected == 5){
+		autonomousCommand = new AutodoNothingAuto();
 	}
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();

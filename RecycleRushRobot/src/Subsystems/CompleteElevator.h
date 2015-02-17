@@ -32,6 +32,8 @@ public:
 	double armPos;
 	double armMin;
 
+	float lastTimeStamp;
+
 	float setpoint;
 
 	Preferences* prefs;

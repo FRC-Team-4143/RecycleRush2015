@@ -6,7 +6,7 @@
 BinUpTimed::BinUpTimed(double seconds) : Command("Bin Up Timed") {
 	std::cout << "BinUpTimed::ctor" << std::endl;
 
-	Requires(Robot::binElevator);
+	Requires(Robot::completeElevator);
 	_seconds = seconds;
 }
 
@@ -22,7 +22,7 @@ void BinUpTimed::Initialize() {
 
 void BinUpTimed::Execute() {
 
-		Robot::binElevator->MoveUp(1);
+		Robot::completeElevator->MoveElevator(1);
 
 }
 

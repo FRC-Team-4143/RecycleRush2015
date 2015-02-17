@@ -6,7 +6,7 @@
 Tote3DownTimed::Tote3DownTimed(double seconds) : Command("Tote 3 Down Timed") {
 	std::cout << "Tote3DownTimed::ctor" << std::endl;
 
-	Requires(Robot::toteElevator3);
+	Requires(Robot::completeElevator);
 	_seconds = seconds;
 }
 
@@ -22,7 +22,7 @@ void Tote3DownTimed::Initialize() {
 
 void Tote3DownTimed::Execute() {
 
-		Robot::toteElevator3->MoveDown(1);
+		Robot::completeElevator->MoveElevator(1);
 
 }
 
