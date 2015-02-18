@@ -46,10 +46,10 @@ void CompleteElevator::MoveElevator(float trigger){
 	distance3_2 = prefs->GetDouble("distance3_2");
 	distance2_1 = prefs->GetDouble("distance2_1");
 
-	tote4Max = 63;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
-	tote3Max = 50;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
-	tote2Max = 42;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
-	tote1Max = 37;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
+	tote4Max = 62.5;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+	tote3Max = 49.5;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+	tote2Max = 41.5;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
+	tote1Max = 38;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
 /*
 	if (armPos >= 0){
 		armMin = 0;

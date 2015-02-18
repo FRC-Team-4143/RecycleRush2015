@@ -304,7 +304,6 @@ void Robot::CameraInit() {
 	auto cam = CameraServer::GetInstance();
 	cam->SetQuality(50);
 	cam->StartAutomaticCapture("cam0");
-
 }
 
 void Robot::PreferencesInit() {

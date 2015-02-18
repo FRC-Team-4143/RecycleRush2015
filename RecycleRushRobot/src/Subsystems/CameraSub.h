@@ -23,6 +23,8 @@ public:
 	Image *frameCam1;
 	IMAQdxError imaqError;
 	int cameraCurrent;
+	USBCamera cam0;
+	USBCamera cam1;
 };
 
 #endif
