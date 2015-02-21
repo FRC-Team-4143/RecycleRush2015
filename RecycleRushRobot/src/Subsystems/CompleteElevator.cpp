@@ -50,16 +50,17 @@ void CompleteElevator::MoveElevator(float trigger){
 	tote3Max = 49.5;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
 	tote2Max = 41.5;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
 	tote1Max = 38;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
-/*
+
 	if (armPos >= 0){
 		armMin = 0;
 	} else {
 		armMin = 330;
-	}*/
+	}
 
 	toteElevator4PID->SetSetpoint(std::min(tote4Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint)));
 	toteElevator3PID->SetSetpoint(std::min(tote3Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint-(float)(distance4_3)*COUNTS_PER_REV/INCHES_PER_REV)));
 	toteElevator2PID->SetSetpoint(std::min(tote2Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint-(float)((distance3_2 +distance4_3)*COUNTS_PER_REV/INCHES_PER_REV))));
 	toteElevator1PID->SetSetpoint(std::min(tote1Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint-(float)((distance2_1+distance3_2 +distance4_3)*COUNTS_PER_REV/INCHES_PER_REV))));
-lastTimeStamp = now;
+
+	lastTimeStamp = now;
 }

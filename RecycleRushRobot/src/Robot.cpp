@@ -9,6 +9,7 @@
 #include "Commands/AutoBackup.h"
 #include "Commands/AutoToteAndBin.h"
 #include "Commands/AutoToteMove.h"
+#include "Commands/AutoGyroSquare.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -41,6 +42,7 @@ void Robot::RobotInit() {
 	autoChooser->AddObject("ToteAndBin", (void*) 3);
 	autoChooser->AddObject("BackIntoAutozone", (void*) 4);
 	autoChooser->AddObject("DoNothingAuto", (void*) 5);
+	autoChooser->AddObject("GyroSquare", (void*) 6);
 	SmartDashboard::PutData("AutonomousChooser", autoChooser);
 
 	// List all preferences
@@ -261,6 +263,9 @@ void Robot::AutonomousInit() {
 	}
 	else if (selected == 5){
 		autonomousCommand = new AutodoNothingAuto();
+	}
+	else if (selected == 6){
+		autonomousCommand = new AutoGyroSquare();
 	}
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();

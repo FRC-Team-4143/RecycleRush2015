@@ -186,12 +186,12 @@ void DriveTrain::Crab(float twist, float y, float x) {
 		FRRatio = 0.0;
 		RLRatio = 0.0;
 		RRRatio = 0.0;
-	} //else {
-		//FLRatio *= 0.6;
-		//FRRatio *= 0.6;
-		//RLRatio *= 0.6;
-		//RRRatio *= 0.6;
-	//}
+	} else {
+		FLRatio *= 0.6;
+		FRRatio *= 0.6;
+		RLRatio *= 0.6;
+		RRRatio *= 0.6;
+	}
 
 
 	//Set drive speeds
