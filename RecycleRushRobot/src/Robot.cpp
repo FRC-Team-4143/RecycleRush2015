@@ -9,7 +9,7 @@
 #include "Commands/AutoBackup.h"
 #include "Commands/AutoToteAndBin.h"
 #include "Commands/AutoToteMove.h"
-#include "Commands/AutoGyroSquare.h"
+#include "Commands/GyroSquare.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -265,7 +265,7 @@ void Robot::AutonomousInit() {
 		autonomousCommand = new AutodoNothingAuto();
 	}
 	else if (selected == 6){
-		autonomousCommand = new AutoGyroSquare();
+		autonomousCommand = new GyroSquare();
 	}
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();

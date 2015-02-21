@@ -43,6 +43,12 @@ void SetElevatorDistances::Initialize()
 	prefs->PutDouble("tote2-Max", tote2Max);
 	prefs->PutDouble("tote1-Max", tote1Max);
 
+	//sets the max values in the subsystem
+	Robot::completeElevator->tote4Max = tote4Max;
+	Robot::completeElevator->tote3Max = tote3Max;
+	Robot::completeElevator->tote2Max = tote2Max;
+	Robot::completeElevator->tote1Max = tote1Max;
+
 	printf("saveDistances numbers set \n");
 
 	//saves preferences
