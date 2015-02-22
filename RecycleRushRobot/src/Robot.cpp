@@ -9,7 +9,7 @@
 #include "Commands/AutoBackup.h"
 #include "Commands/AutoToteAndBin.h"
 #include "Commands/AutoToteMove.h"
-#include "Commands/GyroSquare.h"
+#include "Commands/Auto3Tote.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -34,16 +34,25 @@ void Robot::RobotInit() {
 
 	RobotMap::Init();
 
-	SmartDashboard::PutNumber("AutoSleep", 3);
+	SmartDashboard::PutNumber("AutoDelay", 3);
+	SmartDashboard::PutNumber("AutoDriveTime", 4.5);
+	SmartDashboard::PutNumber("AutoRotateDirection", 90);
+	SmartDashboard::PutNumber("AutoBinUpTime", 2);
+	SmartDashboard::PutNumber("AutoBinDownTime", 2.5);
+	SmartDashboard::PutNumber("AutoFinalBackup", 1);
+	SmartDashboard::PutNumber("AutoTote3UpTimed", 5);
+	SmartDashboard::PutNumber("AutoTote3DownTimed", 5);
 
 	autoChooser = new SendableChooser();
-	autoChooser->AddDefault("ToteRaised", (void*) 1);
+	autoChooser->AddDefault("Tote", (void*) 1);
 	autoChooser->AddObject("Bin", (void*) 2);
 	autoChooser->AddObject("ToteAndBin", (void*) 3);
 	autoChooser->AddObject("BackIntoAutozone", (void*) 4);
 	autoChooser->AddObject("DoNothingAuto", (void*) 5);
-	autoChooser->AddObject("GyroSquare", (void*) 6);
+	autoChooser->AddObject("Auto3Tote", (void*) 6);
+
 	SmartDashboard::PutData("AutonomousChooser", autoChooser);
+
 
 	// List all preferences
 	auto prefs = Preferences::GetInstance();
@@ -265,7 +274,7 @@ void Robot::AutonomousInit() {
 		autonomousCommand = new AutodoNothingAuto();
 	}
 	else if (selected == 6){
-		autonomousCommand = new GyroSquare();
+		autonomousCommand = new Auto3Tote();
 	}
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
