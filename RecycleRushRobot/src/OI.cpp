@@ -127,7 +127,8 @@ OI::OI() {
 	SmartDashboard::PutNumber("Auto-Drive-Speed", 0.5);
 	SmartDashboard::PutNumber("Auto-Drive-Time", 1.0);
 	SmartDashboard::PutData("Gyro Square", new GyroSquare());
-
+	SmartDashboard::PutNumber("Gyro-speed", 0.5);
+	SmartDashboard::PutNumber("Gyro-time", 1);
 
 	SmartDashboard::PutNumber("pdp-channel", 0);
 	SmartDashboard::PutNumber("pdp Total Voltage", RobotMap::pdp->GetVoltage());

@@ -1,6 +1,7 @@
 #include "AutoBackup.h"
 #include "Drive.h"
 #include "Sleep.h"
+#include "RotateBy.h"
 AutoBackup::AutoBackup() {
 	// TODO - Use AddSequential and AddParallel here
 	AddSequential (new Sleep(SmartDashboard::GetNumber("AutoSleep", 1)));
