@@ -43,6 +43,7 @@ private:
 	Command* testSolenoidReverse;
 	Command* clawRoutine;
 	Command* runCamera;
+	Command* switchMode;
 
 	// Declare joystick buttons
 	// TODO

@@ -18,7 +18,7 @@ void ArmOut::Execute()
 {
 
 	if (RobotMap::binArmPos >= 0){
-		RobotMap::binArmMotor->Set(0.5);
+		RobotMap::binArmMotor->Set(1);
 	} else {
 		RobotMap::binArmMotor->Set(0);
 	}
