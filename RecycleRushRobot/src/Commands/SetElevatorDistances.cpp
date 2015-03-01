@@ -1,4 +1,5 @@
 #include "SetElevatorDistances.h"
+#include "../Robot.h"
 
 SetElevatorDistances::SetElevatorDistances()
 {
@@ -9,8 +10,11 @@ SetElevatorDistances::SetElevatorDistances()
 void SetElevatorDistances::Initialize()
 {
 	printf("saveDistances started \n");
+	//initializes preferences
 	Preferences* prefs = Preferences::GetInstance();
 	printf("saveDistances prefs initialized \n");
+
+	//takes distance values from smartdashboard
 	distance4_3 = SmartDashboard::GetNumber("Tote4-3 distance");
 	distance3_2 = SmartDashboard::GetNumber("Tote3-2 distance");
 	distance2_1 = SmartDashboard::GetNumber("Tote2-1 distance");
@@ -22,6 +26,7 @@ void SetElevatorDistances::Initialize()
 
 	printf("saveDistances numbers from smartdashboard \n");
 
+	//sets distances in preferences
 	prefs->PutDouble("distance4_3", distance4_3);
 	prefs->PutDouble("distance3_2", distance3_2);
 	prefs->PutDouble("distance2_1", distance2_1);
@@ -31,8 +36,15 @@ void SetElevatorDistances::Initialize()
 	//prefs->PutDouble("tote2-Max", tote2Max);
 	//prefs->PutDouble("tote1-Max", tote1Max);
 
+	//sets the max values in the subsystem
+	Robot::completeElevator->tote4Max = tote4Max;
+	Robot::completeElevator->tote3Max = tote3Max;
+	Robot::completeElevator->tote2Max = tote2Max;
+	Robot::completeElevator->tote1Max = tote1Max;
+
 	printf("saveDistances numbers set \n");
 
+	//saves preferences
 	prefs->Save();
 	printf("saveDistances saved \n");
 
@@ -41,7 +53,6 @@ void SetElevatorDistances::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void SetElevatorDistances::Execute()
 {
-
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -53,12 +64,10 @@ bool SetElevatorDistances::IsFinished()
 // Called once after isFinished returns true
 void SetElevatorDistances::End()
 {
-
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void SetElevatorDistances::Interrupted()
 {
-
 }

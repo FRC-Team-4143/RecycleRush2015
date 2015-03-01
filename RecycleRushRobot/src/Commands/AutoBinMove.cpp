@@ -6,11 +6,11 @@
 #include "BinDownTimed.h"
 AutoBinMove::AutoBinMove() {
 	// TODO - Use AddSequential and AddParallel here
-	AddSequential (new Sleep(SmartDashboard::GetNumber("AutoSleep", 1.5)));
-	AddSequential (new BinUpTimed (2));
-	AddSequential (new Drive (-0.5, 0, 0, true, 4.5));
-	AddSequential (new RotateBy ("RotateBy90", 120));
-	AddSequential (new BinDownTimed (2.5));
-	AddSequential (new Drive (-0.5, 0, 0, true, 1));
+	AddSequential (new Sleep(SmartDashboard::GetNumber("AutoDelay")));
+	AddSequential (new BinUpTimed (SmartDashboard::GetNumber("AutoBinUpTime")));
+	AddSequential (new Drive (-0.5, 0, 0, true, (SmartDashboard::GetNumber("AutoDriveTime"))));
+	AddSequential (new RotateBy ("RotateBy90", (SmartDashboard::GetNumber("AutoRotateDirection"))));
+	AddSequential (new BinDownTimed (SmartDashboard::GetNumber("AutoBinDownTime")));
+	AddSequential (new Drive (-0.5, 0, 0, true, (SmartDashboard::GetNumber("AutoFinalBackup"))));
 
 }

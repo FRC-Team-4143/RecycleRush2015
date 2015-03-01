@@ -7,6 +7,9 @@ class GyroSquare: public CommandGroup
 {
 public:
 	GyroSquare();
+
+	double driveSpeed;
+	double driveTime;
 };
 
 #endif
