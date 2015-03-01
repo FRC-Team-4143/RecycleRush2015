@@ -21,6 +21,7 @@
 #include "Commands/ClawRoutine.h"
 #include "Commands/ResetArm.h"
 #include "Commands/RunCamera.h"
+#include "Commands/SwitchMode.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -76,6 +77,7 @@ OI::OI() {
 	testSolenoidReverse = new ReleaseClaw();
 	clawRoutine = new ClawRoutine();
 	runCamera = new RunCamera(0);
+	switchMode = new SwitchCamera();
 
 
 	// Define joystick button mappings
@@ -93,16 +95,17 @@ OI::OI() {
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(binArmIn);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(binArmOut);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchCamera);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(testSolenoidForward);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(testSolenoidReverse);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(clawRoutine);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchCamera);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(testSolenoidForward);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(testSolenoidReverse);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(clawRoutine);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(runCamera);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchMode);
 
 	// Add SmartDashboard controls
-	SmartDashboard::PutNumber("Tote4-3 distance", prefs->GetDouble("distance4_3"));
-	SmartDashboard::PutNumber("Tote3-2 distance", prefs->GetDouble("distance3_2"));
-	SmartDashboard::PutNumber("Tote2-1 distance", prefs->GetDouble("distance2_1"));
+	//SmartDashboard::PutNumber("Tote4-3 distance", prefs->GetDouble("distance4_3"));
+	//SmartDashboard::PutNumber("Tote3-2 distance", prefs->GetDouble("distance3_2"));
+	//SmartDashboard::PutNumber("Tote2-1 distance", prefs->GetDouble("distance2_1"));
 	//SmartDashboard::PutNumber("Tote4-max", 62);
 	//SmartDashboard::PutNumber("Tote3-max", 60);
 	//SmartDashboard::PutNumber("Tote2-max", 58);

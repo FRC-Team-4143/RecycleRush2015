@@ -172,7 +172,7 @@ void RobotMap::Init() {
 //			Drivetrain Motors and PIDControllers
 //-------------------------------------------------------
 
-	driveTrainFrontLeftDrive = new Talon(FLD);
+	driveTrainFrontLeftDrive = new Victor(FLD);
 	driveTrainFrontLeftPos   = new AnalogChannelVolt(FLP, true, RATIO);
 	driveTrainFrontLeftSteer = new CANTalon(FLS);
 	driveTrainFrontLeft      = new PIDController(P, I, D, F, driveTrainFrontLeftPos, driveTrainFrontLeftSteer, PERIOD);
@@ -181,7 +181,7 @@ void RobotMap::Init() {
 	driveTrainFrontLeft->SetInputRange(POTMIN, POTMAX);
 	driveTrainFrontLeft->SetOutputRange(-STEERPOW, STEERPOW);
 
-	driveTrainFrontRightDrive = new Talon(FRD);
+	driveTrainFrontRightDrive = new Victor(FRD);
 	driveTrainFrontRightPos   = new AnalogChannelVolt(FRP, true, RATIO);
 	driveTrainFrontRightSteer = new CANTalon(FRS);
 	driveTrainFrontRight      = new PIDController(P, I, D, F, driveTrainFrontRightPos, driveTrainFrontRightSteer, PERIOD);
@@ -190,7 +190,7 @@ void RobotMap::Init() {
 	driveTrainFrontRight->SetInputRange(POTMIN, POTMAX);
 	driveTrainFrontRight->SetOutputRange(-STEERPOW, STEERPOW);
 
-	driveTrainRearLeftDrive = new Talon(RLD);
+	driveTrainRearLeftDrive = new Victor(RLD);
 	driveTrainRearLeftPos   = new AnalogChannelVolt(RLP, true, RATIO);
 	driveTrainRearLeftSteer = new CANTalon(RLS);
 	driveTrainRearLeft      = new PIDController(P, I, D, F, driveTrainRearLeftPos, driveTrainRearLeftSteer, PERIOD);
@@ -199,7 +199,7 @@ void RobotMap::Init() {
 	driveTrainRearLeft->SetInputRange(POTMIN, POTMAX);
 	driveTrainRearLeft->SetOutputRange(-STEERPOW, STEERPOW);
 
-	driveTrainRearRightDrive = new Talon(RRD);
+	driveTrainRearRightDrive = new Victor(RRD);
 	driveTrainRearRightPos   = new AnalogChannelVolt(RRP, true, RATIO);
 	driveTrainRearRightSteer = new CANTalon(RRS);
 	driveTrainRearRight      = new PIDController(P, I, D, F, driveTrainRearRightPos, driveTrainRearRightSteer, PERIOD);
@@ -215,14 +215,14 @@ void RobotMap::Init() {
 	toteElevator1Motor = new VictorWrapper(TOTE1_MOTOR, TOTE1_MOTOR_REV);
 	toteElevator1Pos = new Encoder(TOTE1_POS_A, TOTE1_POS_B, TOTE1_POS_REV);
 	toteElevator1Pos->Reset();
-	toteElevator1PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator1Pos, toteElevator1Motor, PERIOD);
+	toteElevator1PID      = new PIDController(0.025, 0, 0.0, 0, toteElevator1Pos, toteElevator1Motor, PERIOD);
 	toteElevator1PID->SetOutputRange(-1, 1);
 	toteElevator1PID->SetAbsoluteTolerance(ELEVATOR_TOLERANCE);
 
 	toteElevator2Motor = new VictorWrapper(TOTE2_MOTOR, TOTE2_MOTOR_REV);
 	toteElevator2Pos = new Encoder(TOTE2_POS_A, TOTE2_POS_B, TOTE2_POS_REV);
 	toteElevator2Pos->Reset();
-	toteElevator2PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator2Pos, toteElevator2Motor, PERIOD);
+	toteElevator2PID      = new PIDController(0.025, 0, 0.0, 0, toteElevator2Pos, toteElevator2Motor, PERIOD);
 	toteElevator2PID->SetOutputRange(-1, 1);
 	toteElevator2PID->SetAbsoluteTolerance(ELEVATOR_TOLERANCE);
 
@@ -233,14 +233,14 @@ void RobotMap::Init() {
 	toteElevator3Motor = new VictorWrapper(TOTE3_MOTOR, TOTE3_MOTOR_REV);
 	toteElevator3Pos = new Encoder(TOTE3_POS_A, TOTE3_POS_B, TOTE3_POS_REV);
 	toteElevator3Pos->Reset();
-	toteElevator3PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator3Pos, toteElevator3Motor, PERIOD);
+	toteElevator3PID      = new PIDController(0.025, 0, 0.0, 0, toteElevator3Pos, toteElevator3Motor, PERIOD);
 	toteElevator3PID->SetOutputRange(-1, 1);
 	toteElevator3PID->SetAbsoluteTolerance(ELEVATOR_TOLERANCE);
 
 	toteElevator4Motor = new VictorWrapper(TOTE4_MOTOR, TOTE4_MOTOR_REV);
 	toteElevator4Pos = new Encoder(TOTE4_POS_A, TOTE4_POS_B, TOTE4_POS_REV);
 	toteElevator4Pos->Reset();
-	toteElevator4PID      = new PIDController(0.05, 0, 0.0, 0, toteElevator4Pos, toteElevator4Motor, PERIOD);
+	toteElevator4PID      = new PIDController(0.025, 0, 0.0, 0, toteElevator4Pos, toteElevator4Motor, PERIOD);
 	toteElevator4PID->SetOutputRange(-1, 1);
 	toteElevator4PID->SetAbsoluteTolerance(ELEVATOR_TOLERANCE);
 

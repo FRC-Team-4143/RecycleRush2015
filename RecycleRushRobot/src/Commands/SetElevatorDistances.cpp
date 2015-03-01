@@ -19,16 +19,10 @@ void SetElevatorDistances::Initialize()
 	distance3_2 = SmartDashboard::GetNumber("Tote3-2 distance");
 	distance2_1 = SmartDashboard::GetNumber("Tote2-1 distance");
 
-	//sets the distances in the subsystem
-	Robot::completeElevator->distance4_3 = distance4_3;
-	Robot::completeElevator->distance3_2 = distance3_2;
-	Robot::completeElevator->distance2_1 = distance2_1;
-
-	//gets max values from smartdashboard
-	tote4Max = SmartDashboard::GetNumber("Tote4-Max");
-	tote3Max = SmartDashboard::GetNumber("Tote3-Max");
-	tote2Max = SmartDashboard::GetNumber("Tote2-Max");
-	tote1Max = SmartDashboard::GetNumber("Tote1-Max");
+	//tote4Max = SmartDashboard::GetNumber("Tote4-Max");
+	//tote3Max = SmartDashboard::GetNumber("Tote3-Max");
+	//tote2Max = SmartDashboard::GetNumber("Tote2-Max");
+	//tote1Max = SmartDashboard::GetNumber("Tote1-Max");
 
 	printf("saveDistances numbers from smartdashboard \n");
 
@@ -37,11 +31,10 @@ void SetElevatorDistances::Initialize()
 	prefs->PutDouble("distance3_2", distance3_2);
 	prefs->PutDouble("distance2_1", distance2_1);
 
-	//sets max values in preferences
-	prefs->PutDouble("tote4-Max", tote4Max);
-	prefs->PutDouble("tote3-Max", tote3Max);
-	prefs->PutDouble("tote2-Max", tote2Max);
-	prefs->PutDouble("tote1-Max", tote1Max);
+	//prefs->PutDouble("tote4-Max", tote4Max);
+	//prefs->PutDouble("tote3-Max", tote3Max);
+	//prefs->PutDouble("tote2-Max", tote2Max);
+	//prefs->PutDouble("tote1-Max", tote1Max);
 
 	//sets the max values in the subsystem
 	Robot::completeElevator->tote4Max = tote4Max;
@@ -60,7 +53,6 @@ void SetElevatorDistances::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void SetElevatorDistances::Execute()
 {
-
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -72,12 +64,10 @@ bool SetElevatorDistances::IsFinished()
 // Called once after isFinished returns true
 void SetElevatorDistances::End()
 {
-
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void SetElevatorDistances::Interrupted()
 {
-
 }
