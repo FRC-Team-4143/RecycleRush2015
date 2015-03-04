@@ -44,6 +44,7 @@ private:
 	Command* clawRoutine;
 	Command* runCamera;
 	Command* switchMode;
+	Command* raise1Level;
 
 	// Declare joystick buttons
 	// TODO

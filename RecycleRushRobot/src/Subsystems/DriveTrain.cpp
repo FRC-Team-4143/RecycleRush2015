@@ -192,10 +192,10 @@ void DriveTrain::Crab(float twist, float y, float x) {
 		RLRatio *= fabs(RLRatio);
 		RRRatio *= fabs(RRRatio);
 
-		//FLRatio *= 0.6;
-		//FRRatio *= 0.6;
-		//RLRatio *= 0.6;
-		//RRRatio *= 0.6;
+		FLRatio *= 0.8;
+		FRRatio *= 0.8;
+		RLRatio *= 0.8;
+		RRRatio *= 0.8;
 	}
 
 

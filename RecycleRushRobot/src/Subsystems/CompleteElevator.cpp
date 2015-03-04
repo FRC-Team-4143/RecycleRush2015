@@ -19,10 +19,14 @@ CompleteElevator::CompleteElevator() :
 	setpoint = 0;
 	lastTimeStamp = 0;
 	mode = 0;
+	offset = 0;
+
+	SmartDashboard::PutNumber("Raise1Level-distance", 10);
+
 
 	/*
 	 * Set numbers on smartdashboard based on preferences
-	 */
+	 *
 	if (prefs->ContainsKey("distance4_3")){
 		SmartDashboard::PutNumber("Tote4-3 Distance", prefs->GetDouble("distance4_3"));
 	} else {
@@ -65,7 +69,7 @@ CompleteElevator::CompleteElevator() :
 		SmartDashboard::PutNumber("Tote1-Max", prefs->GetDouble("tote1Max"));
 	} else {
 		SmartDashboard::PutNumber("Tote1-Max", 39);
-	}
+	}*/
 }
 
 void CompleteElevator::InitDefaultCommand()
@@ -77,6 +81,16 @@ void CompleteElevator::SetMode() {
 	if( mode > 2)
 		mode = 0;
 
+	SetLED();
+}
+
+void CompleteElevator::SetMode(int Mode) {
+	if(Mode >=0 && Mode <= 2)
+		mode = Mode;
+	SetLED();
+}
+
+void CompleteElevator::SetLED(){
 	if(mode == 0)
 		RobotMap::i2c->Write(2, 0);
 	else if(mode == 1)
@@ -85,10 +99,6 @@ void CompleteElevator::SetMode() {
 		RobotMap::i2c->Write(4, 0);
 }
 
-void CompleteElevator::SetMode(int Mode) {
-	if(Mode >=0 && Mode <= 2)
-		mode = Mode;
-}
 void CompleteElevator::MoveElevator(float trigger){
 	//float setpoint1 = toteElevator1PID->GetSetpoint();
 	//float setpoint2 = toteElevator2PID->GetSetpoint();
@@ -125,7 +135,16 @@ void CompleteElevator::MoveElevator(float trigger){
 	} else if (mode == 2) { // yellow tote mode
 		distance4_3 = SmartDashboard::GetNumber("Tote4-3 Distance");
 		distance3_2 = SmartDashboard::GetNumber("Tote3-2 Distance");
-		distance2_1 = 1;
+		distance2_1 = 0.5;
+
+		if (trigger < 0){
+			offset = -2;
+		} else if (trigger > 0){
+			offset = 0;
+		}
+
+		distance4_3 += offset;
+		distance3_2 += offset;
 	}
 
 

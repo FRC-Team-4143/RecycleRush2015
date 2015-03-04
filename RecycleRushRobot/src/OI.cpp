@@ -22,6 +22,7 @@
 #include "Commands/ResetArm.h"
 #include "Commands/RunCamera.h"
 #include "Commands/SwitchMode.h"
+#include "Commands/Raise1Level.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -78,6 +79,7 @@ OI::OI() {
 	clawRoutine = new ClawRoutine();
 	//runCamera = new RunCamera(0);
 	switchMode = new SwitchMode();
+	raise1Level = new Raise1Level();
 
 
 	// Define joystick button mappings
@@ -101,6 +103,7 @@ OI::OI() {
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(clawRoutine);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(runCamera);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchMode);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(raise1Level);
 
 	// Add SmartDashboard controls
 	//SmartDashboard::PutNumber("Tote4-3 distance", prefs->GetDouble("distance4_3"));
