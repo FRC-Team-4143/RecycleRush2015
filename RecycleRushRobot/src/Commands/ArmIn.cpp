@@ -17,7 +17,7 @@ void ArmIn::Initialize()
 void ArmIn::Execute()
 {
 
-	if (RobotMap::binArmPos->GetDistance() <= 25*30){//inches * counts per inch
+	if (RobotMap::binArmPos->GetDistance() <= 32*30){//inches * counts per inch
 		RobotMap::binArmMotor->Set(-1);
 	} else {
 		RobotMap::binArmMotor->Set(0);

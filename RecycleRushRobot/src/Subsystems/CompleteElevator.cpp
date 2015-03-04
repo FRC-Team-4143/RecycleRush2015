@@ -31,10 +31,21 @@ void CompleteElevator::InitDefaultCommand()
 	SetDefaultCommand(new CompleteElevatorDefaultCommand());
 }
 void CompleteElevator::SetMode() {
-	if(mode == 0)
-		mode = 1;
-	else
+	mode ++;
+	if( mode > 2)
 		mode = 0;
+
+	if(mode == 0)
+		RobotMap::i2c->Write(2, 0);
+	else if(mode == 1)
+		RobotMap::i2c->Write(3, 0);
+	else if(mode == 2)
+		RobotMap::i2c->Write(4, 0);
+}
+
+void CompleteElevator::SetMode(int Mode) {
+	if(Mode >=0 && Mode <= 2)
+		mode = Mode;
 }
 void CompleteElevator::MoveElevator(float trigger){
 	//float setpoint1 = toteElevator1PID->GetSetpoint();
@@ -52,20 +63,29 @@ void CompleteElevator::MoveElevator(float trigger){
 
 	armPos = armEncoder->GetDistance();
 
-	if (mode == 0){
+	if (mode == 0){  //tote stacking mode
 		distance4_3 = SmartDashboard::GetNumber("Tote4-3 Distance");
 		distance3_2 = SmartDashboard::GetNumber("Tote3-2 Distance");
 		distance2_1 = SmartDashboard::GetNumber("Tote2-1 Distance");
-	} else {
+		tote4Max = 62;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote3Max = 52;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+		tote2Max = 43;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
+		tote1Max = 39;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
+
+	} else if (mode == 1) {  //barrel mode
 		distance4_3 = 1;
 		distance3_2 = 1;
 		distance2_1 = 1;
+		tote4Max = 62;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote3Max = 62;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+		tote2Max = 62;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
+		tote1Max = 62;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
+	} else if (mode == 2) { // yellow tote mode
+		distance4_3 = SmartDashboard::GetNumber("Tote4-3 Distance");
+		distance3_2 = SmartDashboard::GetNumber("Tote3-2 Distance");
+		distance2_1 = 1;
 	}
 
-	tote4Max = 62;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
-	tote3Max = 52;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
-	tote2Max = 43;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
-	tote1Max = 39;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
 
 	if (armPos >= 0){
 		armMin = 0;

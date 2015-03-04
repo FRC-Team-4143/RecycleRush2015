@@ -3,7 +3,7 @@
 
 SwitchCamera::SwitchCamera()
 {
-	Requires(Robot::camera);
+	//Requires(Robot::camera);
 	SetRunWhenDisabled(true);
 }
 
@@ -16,7 +16,7 @@ void SwitchCamera::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void SwitchCamera::Execute()
 {
-	Robot::camera->SwitchCamera();
+	//Robot::camera->SwitchCamera();
 }
 
 // Make this return true when this Command no longer needs to run execute()

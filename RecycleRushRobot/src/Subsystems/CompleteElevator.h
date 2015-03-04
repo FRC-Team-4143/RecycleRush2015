@@ -16,6 +16,7 @@ public:
 	void InitDefaultCommand();
 	void MoveElevator(float setpoint);
 	void SetMode();
+	void SetMode(int);
 
 	PIDController*     toteElevator1PID;
 	PIDController*     toteElevator2PID;

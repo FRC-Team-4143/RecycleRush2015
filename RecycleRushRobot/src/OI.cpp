@@ -51,11 +51,11 @@ OI::OI() {
 	driverJoystick = new Joystick(JOYSTICK_PORT_DRIVER);
 	pickerJoystick = new Joystick(JOYSTICK_PORT_PICKER);
 
-	prefs = Preferences::GetInstance();
+	//prefs = Preferences::GetInstance();
 
 	// Define commands
-	rotateLeft90 = new RotateBy("Rotate Left 90", -90);
-	rotateRight90 = new RotateBy("Rotate Right 90", 90);
+	//rotateLeft90 = new RotateBy("Rotate Left 90", -90);
+	//rotateRight90 = new RotateBy("Rotate Right 90", 90);
 
 
 	//Tote1Up = new RaiseElevator(Robot::toteElevator1);
@@ -72,12 +72,12 @@ OI::OI() {
 
 	binArmIn = new ArmIn();
 	binArmOut = new ArmOut();
-	switchCamera = new SwitchCamera();
+	//switchCamera = new SwitchCamera();
 	testSolenoidForward = new ClampClaw();
 	testSolenoidReverse = new ReleaseClaw();
 	clawRoutine = new ClawRoutine();
-	runCamera = new RunCamera(0);
-	switchMode = new SwitchCamera();
+	//runCamera = new RunCamera(0);
+	switchMode = new SwitchMode();
 
 
 	// Define joystick button mappings
@@ -99,7 +99,7 @@ OI::OI() {
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(testSolenoidForward);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(testSolenoidReverse);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(clawRoutine);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(runCamera);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(runCamera);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchMode);
 
 	// Add SmartDashboard controls
@@ -113,31 +113,30 @@ OI::OI() {
 
 	SmartDashboard::PutData("Save Elevator Preference", new SetElevatorDistances());
 
-	SmartDashboard::PutData("Lower All Elevators", new LowerAllElevators());
-	SmartDashboard::PutData("Reset Arm", new ResetArm());
+	//SmartDashboard::PutData("Lower All Elevators", new LowerAllElevators());
+	//SmartDashboard::PutData("Reset Arm", new ResetArm());
 	SmartDashboard::PutData("Reset All Encoders", new ResetAllEncoders());
 
-	SmartDashboard::PutData("Clamp Claw", new ClampClaw());
-	SmartDashboard::PutData("Release Claw", new ReleaseClaw());
-
-	SmartDashboard::PutData("FixPrefs", new FixPrefs());
+	//SmartDashboard::PutData("Clamp Claw", new ClampClaw());
+	//SmartDashboard::PutData("Release Claw", new ReleaseClaw());
+	//SmartDashboard::PutData("FixPrefs", new FixPrefs());
 	SmartDashboard::PutData("SaveWheelPositions", new SaveWheelPositions());
-	SmartDashboard::PutData("ShowPrefs", new ShowPrefs());
+	//SmartDashboard::PutData("ShowPrefs", new ShowPrefs());
 	SmartDashboard::PutData("UpdateSmartDashboard", new UpdateSmartDashboard());
-	SmartDashboard::PutData("Rotate Left 90", rotateLeft90);
-	SmartDashboard::PutData("Rotate Right 90", rotateRight90);
+	//SmartDashboard::PutData("Rotate Left 90", rotateLeft90);
+	//SmartDashboard::PutData("Rotate Right 90", rotateRight90);
 
-	SmartDashboard::PutNumber("Auto-Drive-Speed", 0.5);
-	SmartDashboard::PutNumber("Auto-Drive-Time", 1.0);
-	SmartDashboard::PutData("Gyro Square", new GyroSquare());
-	SmartDashboard::PutNumber("Gyro-speed", 0.5);
-	SmartDashboard::PutNumber("Gyro-time", 1);
+	//SmartDashboard::PutNumber("Auto-Drive-Speed", 0.5);
+	//SmartDashboard::PutNumber("Auto-Drive-Time", 1.0);
+	//SmartDashboard::PutData("Gyro Square", new GyroSquare());
+	//SmartDashboard::PutNumber("Gyro-speed", 0.5);
+	//SmartDashboard::PutNumber("Gyro-time", 1);
 
-	SmartDashboard::PutNumber("pdp-channel", 0);
-	SmartDashboard::PutNumber("pdp Total Voltage", RobotMap::pdp->GetVoltage());
-	SmartDashboard::PutNumber("pdp current channel reading", RobotMap::pdp->GetCurrent(0));
+	//SmartDashboard::PutNumber("pdp-channel", 0);
+	//SmartDashboard::PutNumber("pdp Total Voltage", RobotMap::pdp->GetVoltage());
+	//SmartDashboard::PutNumber("pdp current channel reading", RobotMap::pdp->GetCurrent(0));
 
-	SmartDashboard::PutData("Run Camera", runCamera);
+	//SmartDashboard::PutData("Run Camera", runCamera);
 }
 
 bool OI::GetButtonB(){

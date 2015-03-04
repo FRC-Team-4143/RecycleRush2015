@@ -129,11 +129,11 @@ PIDController*	 RobotMap::binArmPID = nullptr;
 	#define TOTE1_POS_REV true
 	#define TOTE1_MOTOR_REV false
 
-	#define TOTE2_MOTOR   7
-	#define TOTE2_POS_A   6
-	#define TOTE2_POS_B   7
-	#define TOTE2_POS_REV false
-	#define TOTE2_MOTOR_REV true
+	#define TOTE2_MOTOR   5
+	#define TOTE2_POS_A   2
+	#define TOTE2_POS_B   3
+	#define TOTE2_POS_REV true
+	#define TOTE2_MOTOR_REV false
 
 	#define TOTE3_MOTOR   6
 	#define TOTE3_POS_A   4
@@ -141,11 +141,11 @@ PIDController*	 RobotMap::binArmPID = nullptr;
 	#define TOTE3_POS_REV false
 	#define TOTE3_MOTOR_REV true
 
-	#define TOTE4_MOTOR   5
-	#define TOTE4_POS_A   2
-	#define TOTE4_POS_B   3
-	#define TOTE4_POS_REV true
-	#define TOTE4_MOTOR_REV false
+	#define TOTE4_MOTOR   7
+	#define TOTE4_POS_A   6
+	#define TOTE4_POS_B   7
+	#define TOTE4_POS_REV false
+	#define TOTE4_MOTOR_REV true
 
 	#define BINARM_MOTOR   8
 	#define BINARM_POS_A   8

@@ -20,9 +20,9 @@ void UpdateSmartDashboard::Initialize() {
 
 void UpdateSmartDashboard::Execute() {
 
-	pdpCurrentChannel = SmartDashboard::GetNumber("pdp-channel");
+	//pdpCurrentChannel = SmartDashboard::GetNumber("pdp-channel");
 
-	SmartDashboard::PutData("SchedulerData", Scheduler::GetInstance());
+	//SmartDashboard::PutData("SchedulerData", Scheduler::GetInstance());
 
 	SmartDashboard::PutNumber("Encoder0 tote1", RobotMap::toteElevator1Pos->GetDistance());
 	SmartDashboard::PutNumber("Encoder2 tote2", RobotMap::toteElevator2Pos->GetDistance());
@@ -70,8 +70,8 @@ void UpdateSmartDashboard::Execute() {
 
 	//SmartDashboard::PutData("Tote1-PID", Robot::toteElevator1->DebugGetPIDController());
 
-	SmartDashboard::PutNumber("pdp Total Voltage", RobotMap::pdp->GetVoltage());
-	SmartDashboard::PutNumber("pdp current channel reading", RobotMap::pdp->GetCurrent(pdpCurrentChannel));
+	//SmartDashboard::PutNumber("pdp Total Voltage", RobotMap::pdp->GetVoltage());
+	//SmartDashboard::PutNumber("pdp current channel reading", RobotMap::pdp->GetCurrent(pdpCurrentChannel));
 }
 
 // ==========================================================================

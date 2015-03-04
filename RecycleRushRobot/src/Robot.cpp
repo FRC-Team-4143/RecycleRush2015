@@ -22,7 +22,7 @@ ElevatorSub* Robot::toteElevator3 = nullptr;
 ElevatorSub* Robot::binElevator = nullptr;
 ElevatorGroupSub* Robot::toteElevatorGroup = nullptr;
 ElevatorSelectorSub* Robot::elevatorSelector = nullptr;
-CameraSub* Robot::camera = nullptr;
+//CameraSub* Robot::camera = nullptr;
 Pneumatics* Robot::pneumatics = nullptr;
 
 void Robot::RobotInit() {
@@ -30,9 +30,9 @@ void Robot::RobotInit() {
 
 	PreferencesInit();
 
-	//CameraInit();
-
 	RobotMap::Init();
+
+	CameraInit();
 
 	SmartDashboard::PutNumber("AutoDelay", 3);
 	SmartDashboard::PutNumber("AutoDriveTime", 4.5);
@@ -69,7 +69,7 @@ void Robot::RobotInit() {
 	driveTrain = new DriveTrain();
 	completeElevator = new CompleteElevator();
 	gyroSub = new GyroSub();
-	camera = new CameraSub();
+	//camera = new CameraSub();
 	pneumatics = new Pneumatics();
 
 	#define TOTE_EL1_BOTTOM     0
@@ -293,7 +293,9 @@ void Robot::TeleopInit() {
 	if (autonomousCommand != NULL)
 		autonomousCommand->Cancel();
 
-	Robot::driveTrain->outputLED();
+	//Robot::driveTrain->outputLED();
+
+	completeElevator->SetMode(0);
 
 	//toteElevator1->Enable();
 	//toteElevator2->Enable();

@@ -32,7 +32,7 @@ public:
 	static ElevatorGroupSub* toteElevatorGroup;
 	static ElevatorSelectorSub* elevatorSelector;
 	static CompleteElevator* completeElevator;
-	static CameraSub* camera;
+	//static CameraSub* camera;
 	static Pneumatics* pneumatics;
 
 	virtual void RobotInit();
