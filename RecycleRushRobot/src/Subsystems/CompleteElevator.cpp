@@ -5,7 +5,6 @@
 #define SPEED (float)200
 #define COUNTS_PER_REV (float)120
 #define INCHES_PER_REV (float)4
-#define MAX (float)62  // inches
 #define MIN (float)0
 
 CompleteElevator::CompleteElevator() :
@@ -21,9 +20,52 @@ CompleteElevator::CompleteElevator() :
 	lastTimeStamp = 0;
 	mode = 0;
 
-	SmartDashboard::PutNumber("Tote4-3 Distance", 14);
-	SmartDashboard::PutNumber("Tote3-2 Distance", 14);
-	SmartDashboard::PutNumber("Tote2-1 Distance", 14);
+	/*
+	 * Set numbers on smartdashboard based on preferences
+	 */
+	if (prefs->ContainsKey("distance4_3")){
+		SmartDashboard::PutNumber("Tote4-3 Distance", prefs->GetDouble("distance4_3"));
+	} else {
+		SmartDashboard::PutNumber("Tote4-3 Distance", 14);
+	}
+
+	if (prefs->ContainsKey("distance3_2")){
+		SmartDashboard::PutNumber("Tote3-2 Distance", prefs->GetDouble("distance3_2"));
+	} else {
+		SmartDashboard::PutNumber("Tote3-2 Distance", 14);
+	}
+
+	if (prefs->ContainsKey("distance2_1")){
+		SmartDashboard::PutNumber("Tote2-1 Distance", prefs->GetDouble("distance2_1"));
+	} else {
+		SmartDashboard::PutNumber("Tote2-1 Distance", 14);
+	}
+
+
+
+	if (prefs->ContainsKey("tote4Max")){
+		SmartDashboard::PutNumber("Tote4-Max", prefs->GetDouble("tote4Max"));
+	} else {
+		SmartDashboard::PutNumber("Tote4-Max", 62);
+	}
+
+	if (prefs->ContainsKey("tote3Max")){
+		SmartDashboard::PutNumber("Tote3-Max", prefs->GetDouble("tote3Max"));
+	} else {
+		SmartDashboard::PutNumber("Tote3-Max", 52);
+	}
+
+	if (prefs->ContainsKey("tote2Max")){
+		SmartDashboard::PutNumber("Tote2-Max", prefs->GetDouble("tote2Max"));
+	} else {
+		SmartDashboard::PutNumber("Tote2-Max", 43);
+	}
+
+	if (prefs->ContainsKey("tote1Max")){
+		SmartDashboard::PutNumber("Tote1-Max", prefs->GetDouble("tote1Max"));
+	} else {
+		SmartDashboard::PutNumber("Tote1-Max", 39);
+	}
 }
 
 void CompleteElevator::InitDefaultCommand()
