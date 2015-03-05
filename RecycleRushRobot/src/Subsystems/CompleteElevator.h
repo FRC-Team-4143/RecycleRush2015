@@ -17,6 +17,7 @@ public:
 	void MoveElevator(float setpoint);
 	void SetMode();
 	void SetMode(int);
+	void SetLED();
 
 	PIDController*     toteElevator1PID;
 	PIDController*     toteElevator2PID;
@@ -39,6 +40,7 @@ public:
 	float lastTimeStamp;
 
 	float setpoint;
+	float offset;
 
 	Preferences* prefs;
 

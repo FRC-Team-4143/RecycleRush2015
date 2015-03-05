@@ -5,7 +5,6 @@
 #define SPEED (float)200
 #define COUNTS_PER_REV (float)120
 #define INCHES_PER_REV (float)4
-#define MAX (float)62  // inches
 #define MIN (float)0
 
 CompleteElevator::CompleteElevator() :
@@ -20,10 +19,57 @@ CompleteElevator::CompleteElevator() :
 	setpoint = 0;
 	lastTimeStamp = 0;
 	mode = 0;
+	offset = 0;
 
-	SmartDashboard::PutNumber("Tote4-3 Distance", 14);
-	SmartDashboard::PutNumber("Tote3-2 Distance", 14);
-	SmartDashboard::PutNumber("Tote2-1 Distance", 14);
+	SmartDashboard::PutNumber("Raise1Level-distance", 10);
+
+
+	/*
+	 * Set numbers on smartdashboard based on preferences
+	 *
+	if (prefs->ContainsKey("distance4_3")){
+		SmartDashboard::PutNumber("Tote4-3 Distance", prefs->GetDouble("distance4_3"));
+	} else {
+		SmartDashboard::PutNumber("Tote4-3 Distance", 14);
+	}
+
+	if (prefs->ContainsKey("distance3_2")){
+		SmartDashboard::PutNumber("Tote3-2 Distance", prefs->GetDouble("distance3_2"));
+	} else {
+		SmartDashboard::PutNumber("Tote3-2 Distance", 14);
+	}
+
+	if (prefs->ContainsKey("distance2_1")){
+		SmartDashboard::PutNumber("Tote2-1 Distance", prefs->GetDouble("distance2_1"));
+	} else {
+		SmartDashboard::PutNumber("Tote2-1 Distance", 14);
+	}
+
+
+
+	if (prefs->ContainsKey("tote4Max")){
+		SmartDashboard::PutNumber("Tote4-Max", prefs->GetDouble("tote4Max"));
+	} else {
+		SmartDashboard::PutNumber("Tote4-Max", 62);
+	}
+
+	if (prefs->ContainsKey("tote3Max")){
+		SmartDashboard::PutNumber("Tote3-Max", prefs->GetDouble("tote3Max"));
+	} else {
+		SmartDashboard::PutNumber("Tote3-Max", 52);
+	}
+
+	if (prefs->ContainsKey("tote2Max")){
+		SmartDashboard::PutNumber("Tote2-Max", prefs->GetDouble("tote2Max"));
+	} else {
+		SmartDashboard::PutNumber("Tote2-Max", 43);
+	}
+
+	if (prefs->ContainsKey("tote1Max")){
+		SmartDashboard::PutNumber("Tote1-Max", prefs->GetDouble("tote1Max"));
+	} else {
+		SmartDashboard::PutNumber("Tote1-Max", 39);
+	}*/
 }
 
 void CompleteElevator::InitDefaultCommand()
@@ -35,6 +81,16 @@ void CompleteElevator::SetMode() {
 	if( mode > 2)
 		mode = 0;
 
+	SetLED();
+}
+
+void CompleteElevator::SetMode(int Mode) {
+	if(Mode >=0 && Mode <= 2)
+		mode = Mode;
+	SetLED();
+}
+
+void CompleteElevator::SetLED(){
 	if(mode == 0)
 		RobotMap::i2c->Write(2, 0);
 	else if(mode == 1)
@@ -43,10 +99,6 @@ void CompleteElevator::SetMode() {
 		RobotMap::i2c->Write(4, 0);
 }
 
-void CompleteElevator::SetMode(int Mode) {
-	if(Mode >=0 && Mode <= 2)
-		mode = Mode;
-}
 void CompleteElevator::MoveElevator(float trigger){
 	//float setpoint1 = toteElevator1PID->GetSetpoint();
 	//float setpoint2 = toteElevator2PID->GetSetpoint();
@@ -83,7 +135,16 @@ void CompleteElevator::MoveElevator(float trigger){
 	} else if (mode == 2) { // yellow tote mode
 		distance4_3 = SmartDashboard::GetNumber("Tote4-3 Distance");
 		distance3_2 = SmartDashboard::GetNumber("Tote3-2 Distance");
-		distance2_1 = 1;
+		distance2_1 = 0.5;
+
+		if (trigger < 0){
+			offset = -2;
+		} else if (trigger > 0){
+			offset = 0;
+		}
+
+		distance4_3 += offset;
+		distance3_2 += offset;
 	}
 
 
