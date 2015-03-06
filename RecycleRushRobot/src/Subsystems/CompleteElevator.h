@@ -11,6 +11,8 @@ private:
 	// for methods that implement subsystem capabilities
 
 	int mode;
+	int lightMode;
+	int squeeze;
 public:
 	CompleteElevator();
 	void InitDefaultCommand();
@@ -18,6 +20,11 @@ public:
 	void SetMode();
 	void SetMode(int);
 	void SetLED();
+	void CycleLightMode();
+	void Raise1Level();
+	void CompleteLower();
+	void ToggleSqueezeMode();
+	void CancelSqueeze();
 
 	PIDController*     toteElevator1PID;
 	PIDController*     toteElevator2PID;
@@ -33,6 +40,7 @@ public:
 	float tote3Max;
 	float tote2Max;
 	float tote1Max;
+	float totalMax;
 
 	double armPos;
 	double armMin;

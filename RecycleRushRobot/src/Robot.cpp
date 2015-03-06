@@ -34,11 +34,11 @@ void Robot::RobotInit() {
 
 	CameraInit();
 
-	SmartDashboard::PutNumber("AutoDelay", 3);
-	SmartDashboard::PutNumber("AutoDriveTime", 4.5);
+	SmartDashboard::PutNumber("AutoDelay", 0.5);
+	SmartDashboard::PutNumber("AutoDriveTime", 2.6);
 	SmartDashboard::PutNumber("AutoRotateDirection", 90);
-	SmartDashboard::PutNumber("AutoBinUpTime", 2);
-	SmartDashboard::PutNumber("AutoBinDownTime", 2.5);
+	SmartDashboard::PutNumber("AutoBinUpTime", 1);
+	SmartDashboard::PutNumber("AutoBinDownTime", 1.4);
 	SmartDashboard::PutNumber("AutoFinalBackup", 1);
 	SmartDashboard::PutNumber("AutoTote3UpTimed", 5);
 	SmartDashboard::PutNumber("AutoTote3DownTimed", 5);
@@ -255,6 +255,7 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	LOG("Robot::AutonomousInit");
+
 	int selected = (int)autoChooser->GetSelected();
 
 	if (selected == 1){
@@ -262,6 +263,7 @@ void Robot::AutonomousInit() {
 		//just the tote pickup
 	}
 	else if (selected == 2){
+		completeElevator->SetMode(1);
 		autonomousCommand = new AutoBinMove();
 	}
 	else if (selected == 3){
@@ -293,9 +295,8 @@ void Robot::TeleopInit() {
 	if (autonomousCommand != NULL)
 		autonomousCommand->Cancel();
 
+	completeElevator->SetLED();
 	//Robot::driveTrain->outputLED();
-
-	completeElevator->SetMode(0);
 
 	//toteElevator1->Enable();
 	//toteElevator2->Enable();

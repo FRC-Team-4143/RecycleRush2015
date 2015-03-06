@@ -22,8 +22,8 @@
 	#define INPUT_MIN -180
 	#define INPUT_MAX  180
 
-	#define OUTPUT_MIN -0.5
-	#define OUTPUT_MAX  0.5
+	#define OUTPUT_MIN -0.75
+	#define OUTPUT_MAX  0.75
 #else
 	#define P 0.1
 	#define I 0

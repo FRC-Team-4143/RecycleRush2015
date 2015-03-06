@@ -20,9 +20,8 @@ CompleteElevator::CompleteElevator() :
 	lastTimeStamp = 0;
 	mode = 0;
 	offset = 0;
-
-	SmartDashboard::PutNumber("Raise1Level-distance", 10);
-
+	lightMode = 0;
+	squeeze = 0;
 
 	/*
 	 * Set numbers on smartdashboard based on preferences
@@ -76,27 +75,68 @@ void CompleteElevator::InitDefaultCommand()
 {
 	SetDefaultCommand(new CompleteElevatorDefaultCommand());
 }
+
+void CompleteElevator::CycleLightMode(){
+	lightMode++;
+	if (lightMode > 10){
+		lightMode = 0;
+	}
+	RobotMap::i2c->Write(lightMode, 0);
+}
+
+void CompleteElevator::ToggleSqueezeMode(){
+	if (squeeze == 0 && (mode == 0 || mode == 2)){
+		offset = -6;
+		squeeze = 1;
+		SetLED();
+	} else {
+		CancelSqueeze();
+	}
+}
+
 void CompleteElevator::SetMode() {
 	mode ++;
-	if( mode > 2)
+	if( mode > 3)
 		mode = 0;
 
 	SetLED();
 }
 
 void CompleteElevator::SetMode(int Mode) {
-	if(Mode >=0 && Mode <= 2)
+	if(Mode >=0 && Mode <= 3)
 		mode = Mode;
 	SetLED();
 }
 
 void CompleteElevator::SetLED(){
-	if(mode == 0)
+	if(mode == 0 && squeeze == 0)
 		RobotMap::i2c->Write(2, 0);
+	else if (mode == 0)
+		RobotMap::i2c->Write(5, 0);
 	else if(mode == 1)
 		RobotMap::i2c->Write(3, 0);
-	else if(mode == 2)
+	else if(mode == 2 && squeeze == 0)
 		RobotMap::i2c->Write(4, 0);
+	else if (mode == 2)
+		RobotMap::i2c->Write(7, 0);
+	else if (mode == 3)
+		RobotMap::i2c->Write(6, 0);
+}
+
+void CompleteElevator::CancelSqueeze(){
+	squeeze = 0;
+	offset = 0;
+	SetLED();
+}
+
+void CompleteElevator::Raise1Level(){
+	setpoint += 18*30;
+	CancelSqueeze();
+}
+
+void CompleteElevator::CompleteLower(){
+	setpoint = 0;
+	CancelSqueeze();
 }
 
 void CompleteElevator::MoveElevator(float trigger){
@@ -110,42 +150,62 @@ void CompleteElevator::MoveElevator(float trigger){
 	interval = std::min(0.2f, interval);
 	interval = std::max(0.0f, interval);
 
-
-	setpoint = std::max((float)MIN, setpoint + (trigger*SPEED*interval));
-
 	armPos = armEncoder->GetDistance();
 
 	if (mode == 0){  //tote stacking mode
-		distance4_3 = SmartDashboard::GetNumber("Tote4-3 Distance");
-		distance3_2 = SmartDashboard::GetNumber("Tote3-2 Distance");
-		distance2_1 = SmartDashboard::GetNumber("Tote2-1 Distance");
-		tote4Max = 62;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
-		tote3Max = 52;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+		distance4_3 = 18;//SmartDashboard::GetNumber("Tote4-3 Distance");
+		distance3_2 = 18;//SmartDashboard::GetNumber("Tote3-2 Distance");
+		distance2_1 = 18;//SmartDashboard::GetNumber("Tote2-1 Distance");
+		tote4Max = 63;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote3Max = 53;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
 		tote2Max = 43;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
-		tote1Max = 39;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
-
-	} else if (mode == 1) {  //barrel mode
-		distance4_3 = 1;
-		distance3_2 = 1;
-		distance2_1 = 1;
-		tote4Max = 62;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
-		tote3Max = 62;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
-		tote2Max = 62;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
-		tote1Max = 62;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
-	} else if (mode == 2) { // yellow tote mode
-		distance4_3 = SmartDashboard::GetNumber("Tote4-3 Distance");
-		distance3_2 = SmartDashboard::GetNumber("Tote3-2 Distance");
-		distance2_1 = 0.5;
-
+		tote1Max = 33;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
+		totalMax = 93;
+		/*
 		if (trigger < 0){
-			offset = -2;
+			offset = -6;
 		} else if (trigger > 0){
 			offset = 0;
-		}
+		}*/
+		distance4_3 += offset;
+		distance3_2 += offset;
+		distance2_1 += offset;
+
+
+	} else if (mode == 1) {  //barrel mode
+		distance4_3 = 0;
+		distance3_2 = 0;
+		distance2_1 = 0;
+		tote4Max = 63;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote3Max = 63;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+		tote2Max = 63;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
+		tote1Max = 63;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
+		totalMax = 63;
+	} else if (mode == 2) { // yellow tote mode
+		distance4_3 = 18;//SmartDashboard::GetNumber("Tote4-3 Distance");
+		distance3_2 = 18;//SmartDashboard::GetNumber("Tote3-2 Distance");
+		distance2_1 = 0.5;
+		tote4Max = 63;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote3Max = 53;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+		tote2Max = 43;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
+		tote1Max = 43;//(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
+		totalMax = 83;
 
 		distance4_3 += offset;
 		distance3_2 += offset;
+
+	} else if (mode == 3){
+		distance4_3 = 30;//SmartDashboard::GetNumber("Tote4-3 Distance");
+		distance3_2 = 18;//SmartDashboard::GetNumber("Tote3-2 Distance");
+		distance2_1 = 0;
+		tote4Max = 63;//(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote3Max = 53;//(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+		tote2Max = 53;//(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
+		tote1Max = 53;
+		totalMax = 73;
 	}
+
+	setpoint = std::min(totalMax, std::max((float)MIN, setpoint + (trigger*SPEED*interval)));
 
 
 	if (armPos >= 0){

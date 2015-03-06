@@ -1,38 +1,38 @@
-#include "Raise1Level.h"
+#include "ToggleSqueezeMode.h"
 #include "Robot.h"
 
-Raise1Level::Raise1Level()
+ToggleSqueezeMode::ToggleSqueezeMode()
 {
 	Requires(Robot::completeElevator);
 }
 
 // Called just before this Command runs the first time
-void Raise1Level::Initialize()
+void ToggleSqueezeMode::Initialize()
 {
-Robot::completeElevator->Raise1Level();
+	Robot::completeElevator->ToggleSqueezeMode();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void Raise1Level::Execute()
+void ToggleSqueezeMode::Execute()
 {
 
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool Raise1Level::IsFinished()
+bool ToggleSqueezeMode::IsFinished()
 {
 	return true;
 }
 
 // Called once after isFinished returns true
-void Raise1Level::End()
+void ToggleSqueezeMode::End()
 {
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void Raise1Level::Interrupted()
+void ToggleSqueezeMode::Interrupted()
 {
 
 }
