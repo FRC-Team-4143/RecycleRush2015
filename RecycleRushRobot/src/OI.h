@@ -45,6 +45,9 @@ private:
 	Command* runCamera;
 	Command* switchMode;
 	Command* raise1Level;
+	Command* cycleLightMode;
+	Command* completeLower;
+	Command* toggleSqueezeMode;
 
 	// Declare joystick buttons
 	// TODO

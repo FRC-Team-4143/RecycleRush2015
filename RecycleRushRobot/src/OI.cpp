@@ -23,6 +23,9 @@
 #include "Commands/RunCamera.h"
 #include "Commands/SwitchMode.h"
 #include "Commands/Raise1Level.h"
+#include "Commands/CycleLightMode.h"
+#include "Commands/CompleteLower.h"
+#include "Commands/ToggleSqueezeMode.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -80,6 +83,9 @@ OI::OI() {
 	//runCamera = new RunCamera(0);
 	switchMode = new SwitchMode();
 	raise1Level = new Raise1Level();
+	cycleLightMode = new CycleLightMode();
+	completeLower = new CompleteLower();
+	toggleSqueezeMode = new ToggleSqueezeMode();
 
 
 	// Define joystick button mappings
@@ -103,7 +109,10 @@ OI::OI() {
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(clawRoutine);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(runCamera);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchMode);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(cycleLightMode);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(raise1Level);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhenPressed(completeLower);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhenPressed(toggleSqueezeMode);
 
 	// Add SmartDashboard controls
 	//SmartDashboard::PutNumber("Tote4-3 distance", prefs->GetDouble("distance4_3"));
