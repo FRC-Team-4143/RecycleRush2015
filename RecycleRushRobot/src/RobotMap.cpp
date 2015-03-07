@@ -248,7 +248,7 @@ void RobotMap::Init() {
 	binArmPos = new Encoder(BINARM_POS_A, BINARM_POS_B, BINARM_POS_REV);
 	binArmPos->Reset();
 	binArmPID      = new PIDController(0.05, 0, 0.0, 0, binArmPos, binArmMotor, PERIOD);
-	binArmPID->SetOutputRange(-0.5, 0.5);
+	binArmPID->SetOutputRange(-1, 1);
 	binArmPID->SetAbsoluteTolerance(ELEVATOR_TOLERANCE);
 
 	//binElevatorMotor = new Victor(TOTE2_MOTOR);

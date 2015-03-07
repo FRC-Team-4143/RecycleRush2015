@@ -16,12 +16,16 @@ void ArmOut::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void ArmOut::Execute()
 {
-
+/*
 	if (RobotMap::binArmPos >= 0){
 		RobotMap::binArmMotor->Set(1);
 	} else {
 		RobotMap::binArmMotor->Set(0);
 	}
+*/
+float current = RobotMap::binArmPos->Get();
+float setpoint = current + 15;
+RobotMap::binArmPID->SetSetpoint(std::min((float)(30*30), setpoint));
 
 }
 
@@ -34,12 +38,12 @@ bool ArmOut::IsFinished()
 // Called once after isFinished returns true
 void ArmOut::End()
 {
-	RobotMap::binArmMotor->Set(0);
+	//RobotMap::binArmMotor->Set(0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void ArmOut::Interrupted()
 {
-	RobotMap::binArmMotor->Set(0);
+	//RobotMap::binArmMotor->Set(0);
 }
