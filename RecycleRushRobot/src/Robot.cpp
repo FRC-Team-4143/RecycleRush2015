@@ -34,14 +34,14 @@ void Robot::RobotInit() {
 
 	CameraInit();
 
-	SmartDashboard::PutNumber("AutoDelay", 0.5);
-	SmartDashboard::PutNumber("AutoDriveTime", 2.6);
+	SmartDashboard::PutNumber("AutoDelay", 0);
+	SmartDashboard::PutNumber("AutoDriveTime", 2.5);
 	SmartDashboard::PutNumber("AutoRotateDirection", 90);
 	SmartDashboard::PutNumber("AutoBinUpTime", 1);
 	SmartDashboard::PutNumber("AutoBinDownTime", 1.4);
-	SmartDashboard::PutNumber("AutoFinalBackup", 1);
-	SmartDashboard::PutNumber("AutoTote3UpTimed", 5);
-	SmartDashboard::PutNumber("AutoTote3DownTimed", 5);
+	SmartDashboard::PutNumber("AutoFinalBackup", 0);
+	SmartDashboard::PutNumber("AutoToteUpTime", 0.5);
+	SmartDashboard::PutNumber("AutoToteDownTime", 0);
 
 	autoChooser = new SendableChooser();
 	autoChooser->AddDefault("Tote", (void*) 1);
@@ -233,7 +233,7 @@ void Robot::RobotInit() {
 	completeElevator->toteElevator2PID->Enable();
 	completeElevator->toteElevator3PID->Enable();
 	completeElevator->toteElevator4PID->Enable();
-	RobotMap::binArmPID->Enable();
+	//RobotMap::binArmPID->Enable();
 }
 
 // ---------------------------------------------------------

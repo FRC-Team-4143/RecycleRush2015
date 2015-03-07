@@ -113,8 +113,8 @@ OI::OI() {
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchMode);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(cycleLightMode);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(raise1Level);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhenPressed(completeLower);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhenPressed(toggleSqueezeMode);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhenPressed(completeLower);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhenPressed(toggleSqueezeMode);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(placeStack);
 
 	// Add SmartDashboard controls
