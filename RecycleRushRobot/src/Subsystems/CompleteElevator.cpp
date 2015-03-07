@@ -139,6 +139,15 @@ void CompleteElevator::CompleteLower(){
 	CancelSqueeze();
 }
 
+void CompleteElevator::PlaceStack(){
+	if (mode == 0){
+		if (squeeze == 0){
+			ToggleSqueezeMode();
+		}
+		setpoint = 40*30;
+	}
+}
+
 void CompleteElevator::MoveElevator(float trigger){
 	//float setpoint1 = toteElevator1PID->GetSetpoint();
 	//float setpoint2 = toteElevator2PID->GetSetpoint();

@@ -26,6 +26,7 @@
 #include "Commands/CycleLightMode.h"
 #include "Commands/CompleteLower.h"
 #include "Commands/ToggleSqueezeMode.h"
+#include "Commands/PlaceStack.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -86,6 +87,7 @@ OI::OI() {
 	cycleLightMode = new CycleLightMode();
 	completeLower = new CompleteLower();
 	toggleSqueezeMode = new ToggleSqueezeMode();
+	placeStack = new PlaceStack();
 
 
 	// Define joystick button mappings
@@ -113,6 +115,7 @@ OI::OI() {
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(raise1Level);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhenPressed(completeLower);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhenPressed(toggleSqueezeMode);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(placeStack);
 
 	// Add SmartDashboard controls
 	//SmartDashboard::PutNumber("Tote4-3 distance", prefs->GetDouble("distance4_3"));

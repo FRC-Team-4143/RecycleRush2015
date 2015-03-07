@@ -48,6 +48,7 @@ private:
 	Command* cycleLightMode;
 	Command* completeLower;
 	Command* toggleSqueezeMode;
+	Command* placeStack;
 
 	// Declare joystick buttons
 	// TODO
