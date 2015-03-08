@@ -6,7 +6,7 @@
 #include "Tote3DownTimed.h"
 Auto3Tote::Auto3Tote() {
 	// TODO - Use AddSequential and AddParallel here
-	//AddSequential (new Sleep(SmartDashboard::GetNumber("AutoDelay")));  //no delay we're going to need the time
+	//AddSequential (new Sleep(SmartDashboard::GetNumber("AutoDelay")));  /////no delay we're going to need the time
 	AddSequential (new Tote3UpTimed (SmartDashboard::GetNumber("AutoToteUpTime")));
 	AddSequential (new Drive (-0.75, 0, 0, true, 1));
 	AddParallel (new Tote3UpTimed (SmartDashboard::GetNumber("AutoToteUpTime")));
