@@ -3,6 +3,7 @@
 #include "Robot.h"
 #include "RobotMap.h"
 #include "Modules/BinElevatorMoveFactory.h"
+#include "Modules/CommandListParser.h"
 #include "Modules/DriveTrainSettings.h"
 #include "Modules/PIDParameters.h"
 #include "Commands/AutoBinMove.h"
@@ -10,6 +11,12 @@
 #include "Commands/AutoToteAndBin.h"
 #include "Commands/AutoToteMove.h"
 #include "Commands/Auto3Tote.h"
+#include "Commands/ScriptCommand.h"
+#include "Commands/ScriptDrive.h"
+#include "Commands/ScriptElevate.h"
+#include "Commands/ScriptMode.h"
+#include "Commands/ScriptRotateBy.h"
+#include "Commands/ScriptSleep.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -34,6 +41,9 @@ void Robot::RobotInit() {
 
 	CameraInit();
 
+	ScriptInit();
+	SmartDashboard::PutString("ScriptCommand", "S(0.5) E(1.0, 0.75) D(-0.75, 0.0, 0.0, 2.6) R(90, 2.0) E(-1.0, 1.0) D(-0.4, 0, 0, 0.5) M(0)");
+
 	SmartDashboard::PutNumber("AutoDelay", 0);
 	SmartDashboard::PutNumber("AutoDriveTime", 2.5);
 	SmartDashboard::PutNumber("AutoRotateDirection", 90);
@@ -50,6 +60,7 @@ void Robot::RobotInit() {
 	autoChooser->AddObject("BackIntoAutozone", (void*) 4);
 	autoChooser->AddObject("DoNothingAuto", (void*) 5);
 	autoChooser->AddObject("Auto3Tote", (void*) 6);
+	autoChooser->AddObject("Script Command", (void*) 7);
 
 	SmartDashboard::PutData("AutonomousChooser", autoChooser);
 
@@ -258,30 +269,34 @@ void Robot::AutonomousInit() {
 	LOG("Robot::AutonomousInit");
 
 	int selected = (int)autoChooser->GetSelected();
-
-	if (selected == 1){
+	switch (selected) {
+	case 1:
 		autonomousCommand = new AutoToteMove();
-		//just the tote pickup
-	}
-	else if (selected == 2){
+		break;
+	case 2:
 		completeElevator->SetMode(1);
 		autonomousCommand = new AutoBinMove();
-	}
-	else if (selected == 3){
-	autonomousCommand = new AutoToteAndBin();
-	}
-	else if (selected == 4){
+		break;
+	case 3:
+		autonomousCommand = new AutoToteAndBin();
+		break;
+	case 4:
 		autonomousCommand = new AutoBackup();
-	}
-	else if (selected == 5){
+		break;
+	case 5:
 		autonomousCommand = new AutodoNothingAuto();
-	}
-	else if (selected == 6){
+		break;
+	case 6:
 		autonomousCommand = new Auto3Tote();
+		break;
+	case 7:
+		autonomousCommand = new ScriptCommand("ScriptCommand");
+		break;
 	}
+
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
-	}
+}
 
 void Robot::AutonomousPeriodic() {
 	Scheduler::GetInstance()->Run();
@@ -327,6 +342,55 @@ void Robot::CameraInit() {
 void Robot::PreferencesInit() {
 	LOG("Robot::PreferencesInit");
 	Preferences::GetInstance();
+}
+
+void Robot::ScriptInit() {
+	std::cout << "Robot::ScriptInit" << std::endl;
+
+	CommandListParser& parser(CommandListParser::GetInstance());
+
+	parser.AddCommand(CommandParseInfo("Drive", { "D" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(4);
+		auto x = parameters[0];
+		auto y = parameters[1];
+		auto z = parameters[2];
+		auto timeout = parameters[3];
+		Command* command = new ScriptDrive("Drive", x, y, z, timeout);
+		if (0 == timeout) timeout = 4;
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("Elevate", { "E" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(2);
+		auto axis = parameters[0];
+		auto timeout = parameters[1];
+		Command* command = new ScriptElevate("Elevate", axis, timeout);
+		if (0 == timeout) timeout = 4;
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("Mode", { "M" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(1);
+		auto mode = parameters[0];
+		Command* command = new ScriptMode("Mode", mode);
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("RotateBy", { "RB", "R" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(2);
+		auto angle = parameters[0];
+		auto timeout = parameters[1];
+		if (0 == timeout) timeout = 4;
+		Command* command = new ScriptRotateBy("RotateBy", angle, timeout);
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("Sleep", { "S" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(1);
+		auto timeout = parameters[0];
+		Command* command = new ScriptSleep("Sleep", timeout);
+		fCreateCommand(command, 0);
+	}));
 }
 
 START_ROBOT_CLASS(Robot);

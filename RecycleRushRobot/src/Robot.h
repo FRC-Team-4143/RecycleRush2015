@@ -54,6 +54,7 @@ public:
 protected:
 	void CameraInit();
 	void PreferencesInit();
+	void ScriptInit();
 };
 
 #endif

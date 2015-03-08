@@ -160,8 +160,8 @@ void DriveTrain::Crab(float twist, float y, float x) {
      double maxspeed = speedarray[0];
      for(int i = 1; i < length; i++)
      {
-          if(speedarray[i] > maxspeed)
-                maxspeed = speedarray[i];
+		if (speedarray[i] > maxspeed)
+			maxspeed = speedarray[i];
      }
 
 	//Set ratios based on maximum wheel speed
@@ -180,24 +180,23 @@ void DriveTrain::Crab(float twist, float y, float x) {
 		RRRatio = RR;
     }
     //if(y > 0.049 && y < .051)
-    if (fabs(x) < 0.3 && fabs(y) < 0.3 && fabs(twist) < 0.3)
-	{
+    const float DEAD_ZONE = 0.15;
+    if (fabs(x) < DEAD_ZONE && fabs(y) < DEAD_ZONE && fabs(twist) < DEAD_ZONE) {
 		FLRatio = 0.0;
 		FRRatio = 0.0;
 		RLRatio = 0.0;
 		RRRatio = 0.0;
 	} else {
-		FLRatio *= fabs(FLRatio);
-		FRRatio *= fabs(FRRatio);
-		RLRatio *= fabs(RLRatio);
-		RRRatio *= fabs(RRRatio);
+		//FLRatio *= fabs(FLRatio);
+		//FRRatio *= fabs(FRRatio);
+		//RLRatio *= fabs(RLRatio);
+		//RRRatio *= fabs(RRRatio);
 
 		FLRatio *= 0.8;
 		FRRatio *= 0.8;
 		RLRatio *= 0.8;
 		RRRatio *= 0.8;
 	}
-
 
 	//Set drive speeds
 	SetDriveSpeed(FLRatio, -FRRatio, RLRatio, -RRRatio);
