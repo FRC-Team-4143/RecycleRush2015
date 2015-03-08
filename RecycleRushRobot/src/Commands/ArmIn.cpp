@@ -17,11 +17,15 @@ void ArmIn::Initialize()
 void ArmIn::Execute()
 {
 
-	if (RobotMap::binArmPos->GetDistance() <= 32*30){//inches * counts per inch
+	//if (RobotMap::binArmPos->GetDistance() <= 32*30){//inches * counts per inch
 		RobotMap::binArmMotor->Set(-1);
-	} else {
-		RobotMap::binArmMotor->Set(0);
-	}
+	//} else {
+	//	RobotMap::binArmMotor->Set(0);
+	//}
+
+//float current = RobotMap::binArmPos->Get();
+//float setpoint = current - 15;
+////RobotMap::binArmPID->SetSetpoint(std::max((float)0, setpoint));
 
 }
 

@@ -52,7 +52,7 @@ Encoder*         RobotMap::binArmPos = nullptr;
 PIDController*	 RobotMap::binArmPID = nullptr;
 
 #define CONTINUOUS true
-#define P 1.0
+#define P 0.8
 #define I 0.0
 #define D 0.1
 #define F 0.0
@@ -248,7 +248,7 @@ void RobotMap::Init() {
 	binArmPos = new Encoder(BINARM_POS_A, BINARM_POS_B, BINARM_POS_REV);
 	binArmPos->Reset();
 	binArmPID      = new PIDController(0.05, 0, 0.0, 0, binArmPos, binArmMotor, PERIOD);
-	binArmPID->SetOutputRange(-0.5, 0.5);
+	binArmPID->SetOutputRange(-1, 1);
 	binArmPID->SetAbsoluteTolerance(ELEVATOR_TOLERANCE);
 
 	//binElevatorMotor = new Victor(TOTE2_MOTOR);

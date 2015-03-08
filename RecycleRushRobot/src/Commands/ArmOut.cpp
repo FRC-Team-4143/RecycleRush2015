@@ -17,11 +17,15 @@ void ArmOut::Initialize()
 void ArmOut::Execute()
 {
 
-	if (RobotMap::binArmPos >= 0){
+	//if (RobotMap::binArmPos >= 0){
 		RobotMap::binArmMotor->Set(1);
-	} else {
-		RobotMap::binArmMotor->Set(0);
-	}
+	//} else {
+	//	RobotMap::binArmMotor->Set(0);
+	//}
+
+//float current = RobotMap::binArmPos->Get();
+//float setpoint = current + 15;
+//RobotMap::binArmPID->SetSetpoint(std::min((float)(30*30), setpoint));
 
 }
 
