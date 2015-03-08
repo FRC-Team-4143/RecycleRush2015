@@ -350,7 +350,7 @@ void Robot::ScriptInit() {
 
 	CommandListParser& parser(CommandListParser::GetInstance());
 
-	parser.AddCommand(CommandParseInfo("Drive", { "D" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+	parser.AddCommand(CommandParseInfo("Drive", { "D", "d" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(4);
 		auto x = parameters[0];
 		auto y = parameters[1];
@@ -361,7 +361,7 @@ void Robot::ScriptInit() {
 		fCreateCommand(command, 0);
 	}));
 
-	parser.AddCommand(CommandParseInfo("Elevate", { "E" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+	parser.AddCommand(CommandParseInfo("Elevate", { "E", "e" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(2);
 		auto axis = parameters[0];
 		auto timeout = parameters[1];
@@ -370,14 +370,14 @@ void Robot::ScriptInit() {
 		fCreateCommand(command, 0);
 	}));
 
-	parser.AddCommand(CommandParseInfo("Mode", { "M" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+	parser.AddCommand(CommandParseInfo("Mode", { "M", "m" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(1);
 		auto mode = parameters[0];
 		Command* command = new ScriptMode("Mode", mode);
 		fCreateCommand(command, 0);
 	}));
 
-	parser.AddCommand(CommandParseInfo("RotateBy", { "RB", "R" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+	parser.AddCommand(CommandParseInfo("RotateBy", { "RB", "R", "rb", "r" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(2);
 		auto angle = parameters[0];
 		auto timeout = parameters[1];
@@ -386,7 +386,7 @@ void Robot::ScriptInit() {
 		fCreateCommand(command, 0);
 	}));
 
-	parser.AddCommand(CommandParseInfo("Sleep", { "S" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+	parser.AddCommand(CommandParseInfo("Sleep", { "S", "s" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(1);
 		auto timeout = parameters[0];
 		Command* command = new ScriptSleep("Sleep", timeout);
