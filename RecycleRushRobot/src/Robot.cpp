@@ -43,6 +43,7 @@ void Robot::RobotInit() {
 
 	ScriptInit();
 	SmartDashboard::PutString("ScriptCommand", "S(0.5) E(1.0, 0.75) D(-0.75, 0.0, 0.0, 2.6) R(90, 2.0) E(-1.0, 1.0) D(-0.4, 0, 0, 0.5) M(0)");
+	SmartDashboard::PutString("ScriptValid", "");
 
 	SmartDashboard::PutNumber("AutoDelay", 0);
 	SmartDashboard::PutNumber("AutoDriveTime", 2.5);

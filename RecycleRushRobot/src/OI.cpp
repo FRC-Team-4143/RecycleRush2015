@@ -27,6 +27,7 @@
 #include "Commands/CompleteLower.h"
 #include "Commands/ToggleSqueezeMode.h"
 #include "Commands/PlaceStack.h"
+#include "Commands/ScriptValidate.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -152,6 +153,8 @@ OI::OI() {
 	//SmartDashboard::PutNumber("pdp current channel reading", RobotMap::pdp->GetCurrent(0));
 
 	//SmartDashboard::PutData("Run Camera", runCamera);
+
+	SmartDashboard::PutData("Validate Script", new ScriptValidate());
 }
 
 bool OI::GetButtonB(){
