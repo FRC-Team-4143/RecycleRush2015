@@ -46,7 +46,7 @@ void Robot::RobotInit() {
 	SmartDashboard::PutString("ScriptValid", "");
 
 	SmartDashboard::PutNumber("AutoDelay", 0);
-	SmartDashboard::PutNumber("AutoDriveTime", 2.5);
+	SmartDashboard::PutNumber("AutoDriveTime", 1.7);
 	SmartDashboard::PutNumber("AutoRotateDirection", 90);
 	SmartDashboard::PutNumber("AutoBinUpTime", 1);
 	SmartDashboard::PutNumber("AutoBinDownTime", 1.4);
