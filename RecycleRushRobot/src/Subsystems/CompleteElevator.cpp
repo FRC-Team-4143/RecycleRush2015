@@ -107,8 +107,10 @@ void CompleteElevator::SetLED(){
 		RobotMap::i2c->Write(4, 0);
 	else if (mode == 2)
 		RobotMap::i2c->Write(7, 0);
-	else if (mode == 3)
+	else if (mode == 3 && squeeze == 0)
 		RobotMap::i2c->Write(6, 0);
+	else if (mode == 3)
+		RobotMap::i2c->Write(8, 0);
 }
 
 void CompleteElevator::ToggleSqueezeMode(){
@@ -207,9 +209,9 @@ void CompleteElevator::MoveElevator(float trigger){
 		distance2_1 = 18;
 
 		tote4Max = 63; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
-		tote3Max = 57 + 5; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
-		tote2Max = 47 + 7; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
-		tote1Max = 35 + 8;
+		tote3Max = 57 + 4; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+		tote2Max = 47 + 9; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
+		tote1Max = 35 + 10;
 		totalMax = tote4Max + tote1Max;
 
 		distance4_3 += offset;
