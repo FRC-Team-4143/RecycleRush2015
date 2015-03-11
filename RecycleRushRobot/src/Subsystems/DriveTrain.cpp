@@ -9,6 +9,10 @@
 #define MAXTURNS 100
 #endif
 
+const float TWISTSCALE = .5;
+
+const float DEAD_ZONE = 0.15;
+
 DriveTrain::DriveTrain(): Subsystem("DriveTrain") {
 	LOG("DriveTrain::DriveTrain");
 
@@ -31,6 +35,10 @@ DriveTrain::DriveTrain(): Subsystem("DriveTrain") {
 	rearRightDrive  = RobotMap::driveTrainRearRightDrive;
 	rearRightPos    = RobotMap::driveTrainRearRightPos;
 	rearRightSteer  = RobotMap::driveTrainRearRightSteer;
+
+	lastx = 0.0;
+	lasty = 0.0;
+	lasttwist = 0.0;
 
 	FLInv = 1;
 	FRInv = 1;
@@ -104,6 +112,7 @@ void DriveTrain::doneunwind(){
 
 void DriveTrain::Crab(float twist, float y, float x) {
   // stop PID loop if wires wrap.
+
   if(unwinding ||
   	abs(frontRightPos->getturns()) > MAXTURNS ||
   	abs(rearRightPos->getturns()) > MAXTURNS ||
@@ -114,7 +123,26 @@ void DriveTrain::Crab(float twist, float y, float x) {
 		return;
 	}
 
-	if(y == 0.0 && x == 0.0 && twist == 0.0) y = .05; // default wheel position
+  	  // this stores the direction of joystick when all axis last crossed into the deadzone
+  	  // and keeps the wheels pointed that direction
+  	  // this .1 should be the same as the deadzone in oi.cpp
+	if(y == 0.0 && x == 0.0 && twist == 0.0) {
+		if( fabs(lasty) > .1 || fabs(lastx) >.1 || fabs(lasttwist) > .1) {
+			y = std::min(std::max(lasty, -DEAD_ZONE), DEAD_ZONE);
+			x = std::min(std::max(lastx, -DEAD_ZONE), DEAD_ZONE);
+			twist = std::min(std::max(lasttwist, -DEAD_ZONE), DEAD_ZONE);
+		} else {
+			y = .05; // default wheel position
+		}
+	}
+	lastx = x;
+	lasty = y;
+	lasttwist = twist;
+
+	// scale for operator control
+	x *= 1.0;
+	y *= 1.0;
+	twist *= TWISTSCALE;
 	
 	float FWD = y;
 	float STR = x;
@@ -180,26 +208,18 @@ void DriveTrain::Crab(float twist, float y, float x) {
 		RRRatio = RR;
     }
     //if(y > 0.049 && y < .051)
-    const float DEAD_ZONE = 0.15;
-    if (fabs(x) < DEAD_ZONE && fabs(y) < DEAD_ZONE && fabs(twist) < DEAD_ZONE) {
+
+    if (fabs(x) <= DEAD_ZONE && fabs(y) <= DEAD_ZONE && fabs(twist) <= DEAD_ZONE) {
 		FLRatio = 0.0;
 		FRRatio = 0.0;
 		RLRatio = 0.0;
 		RRRatio = 0.0;
-	} else {
-		//FLRatio *= fabs(FLRatio);
-		//FRRatio *= fabs(FRRatio);
-		//RLRatio *= fabs(RLRatio);
-		//RRRatio *= fabs(RRRatio);
-
-		FLRatio *= 0.8;
-		FRRatio *= 0.8;
-		RLRatio *= 0.8;
-		RRRatio *= 0.8;
-	}
+    }
 
 	//Set drive speeds
 	SetDriveSpeed(FLRatio, -FRRatio, RLRatio, -RRRatio);
+
+
 }
 
 void DriveTrain::Steer(float radian, float speed, float a) {

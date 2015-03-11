@@ -214,7 +214,6 @@ void CompleteElevator::MoveElevator(float trigger){
 		tote1Max = 35 + 10;
 		totalMax = tote4Max + tote1Max;
 
-		distance4_3 += offset;
 		distance3_2 += offset;
 		distance2_1 += offset;
 	}

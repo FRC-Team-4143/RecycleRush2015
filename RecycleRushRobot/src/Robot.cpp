@@ -17,6 +17,7 @@
 #include "Commands/ScriptMode.h"
 #include "Commands/ScriptRotateBy.h"
 #include "Commands/ScriptSleep.h"
+#include "Commands/Raise1Level.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -393,6 +394,12 @@ void Robot::ScriptInit() {
 		parameters.resize(1);
 		auto timeout = parameters[0];
 		Command* command = new ScriptSleep("Sleep", timeout);
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("Raise1level", { "RL", "rl" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(0);
+		Command* command = new Raise1Level();
 		fCreateCommand(command, 0);
 	}));
 }

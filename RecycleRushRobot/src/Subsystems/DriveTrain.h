@@ -117,6 +117,10 @@ private:
 	float RLSOTimer;
 	float RRSOTimer;
 
+	float lastx;
+	float lasty;
+	float lasttwist;
+
 	bool DriveBackFlag;
 
 public:
