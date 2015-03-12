@@ -4,6 +4,8 @@
 #include <WPILib.h>
 #include <math.h>
 #include "../Modules/AnalogChannelVolt.h"
+#include "../Subsystems/GyroSub.h"
+#include "../Subsystems/MouseSubsystem.h"
 
 class DriveTrain: public Subsystem {
 private:
@@ -144,6 +146,9 @@ public:
 	AnalogChannelVolt* rearRightPos;
 	SpeedController*   rearRightSteer;
 
+	MouseSubsystem* 	mouseSubsystem;
+	GyroSub*			gyroSub;
+
 	DriveTrain();
 	void SetWheelbase(float w, float x, float y);
 	void SetMaxSpeed(float MaxSpeed);
@@ -161,6 +166,8 @@ public:
 	bool unwind();
 	void doneunwind();
 	bool unwindwheel(AnalogChannelVolt*, PIDController*);
+	void GyroCrab(float desiredangle, float y, float x);
+	void FieldCentricCrab(float twist, float y, float x);
 };
 
 #endif

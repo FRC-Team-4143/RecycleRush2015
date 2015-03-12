@@ -2,6 +2,7 @@
 #include "../Logger.h"
 #include "../RobotMap.h"
 #include "../Commands/CrabDrive.h"
+#include "../Robot.h"
 
 #ifdef TESTSWERVE
 #define MAXTURNS 5
@@ -35,6 +36,10 @@ DriveTrain::DriveTrain(): Subsystem("DriveTrain") {
 	rearRightDrive  = RobotMap::driveTrainRearRightDrive;
 	rearRightPos    = RobotMap::driveTrainRearRightPos;
 	rearRightSteer  = RobotMap::driveTrainRearRightSteer;
+
+	mouseSubsystem 	= Robot::mouseSubsystem;
+	gyroSub 		= Robot::gyroSub;
+
 
 	lastx = 0.0;
 	lasty = 0.0;
@@ -110,6 +115,29 @@ void DriveTrain::doneunwind(){
 	unwinding = 0;
 }
 
+
+// keeps controls consistent regardless of rotation of robot
+void DriveTrain::FieldCentricCrab(float twist, float y, float x) {
+	float FWD = y;
+	float STR = x;
+
+	robotangle = gyroSub->PIDGet()*pi/180;
+
+	FWD = y*cos(robotangle) + x*sin(robotangle);
+	STR = -y*sin(robotangle) + x*cos(robotangle);
+
+	Crab(twist, FWD, STR);
+}
+
+
+// attempts to keep robot square to the field as it drives
+void DriveTrain::GyroCrab(float desiredangle, float y, float x) {
+	robotangle = gyroSub->PIDGet();
+
+	float twist = std::min(1.0, std::max(-1.0, (robotangle - desiredangle) * .1));
+	Crab(twist, y, x);
+}
+
 void DriveTrain::Crab(float twist, float y, float x) {
   // stop PID loop if wires wrap.
 
@@ -125,7 +153,7 @@ void DriveTrain::Crab(float twist, float y, float x) {
 
   	  // this stores the direction of joystick when all axis last crossed into the deadzone
   	  // and keeps the wheels pointed that direction
-  	  // this .1 should be the same as the deadzone in oi.cpp
+  	  // this .1 should be kept the same as the deadzone in oi.cpp
 	if(y == 0.0 && x == 0.0 && twist == 0.0) {
 		if( fabs(lasty) > .1 || fabs(lastx) >.1 || fabs(lasttwist) > .1) {
 			y = std::min(std::max(lasty, -DEAD_ZONE), DEAD_ZONE);
@@ -147,8 +175,8 @@ void DriveTrain::Crab(float twist, float y, float x) {
 	float FWD = y;
 	float STR = x;
 
-	FWD = y*cos(robotangle) + x*sin(robotangle);
-	STR = -y*sin(robotangle) + x*cos(robotangle);
+//	FWD = y*cos(robotangle) + x*sin(robotangle);
+//	STR = -y*sin(robotangle) + x*cos(robotangle);
 
 //	radius = sqrt(pow(2*Y,2)+pow(X,2));
 	radius = sqrt(pow(Y,2)+pow(X,2));
