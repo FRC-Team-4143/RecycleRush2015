@@ -147,7 +147,6 @@ public:
 	SpeedController*   rearRightSteer;
 
 	MouseSubsystem* 	mouseSubsystem;
-	GyroSub*			gyroSub;
 
 	DriveTrain();
 	void SetWheelbase(float w, float x, float y);

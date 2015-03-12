@@ -38,7 +38,6 @@ DriveTrain::DriveTrain(): Subsystem("DriveTrain") {
 	rearRightSteer  = RobotMap::driveTrainRearRightSteer;
 
 	mouseSubsystem 	= Robot::mouseSubsystem;
-	gyroSub 		= Robot::gyroSub;
 
 
 	lastx = 0.0;
@@ -121,7 +120,7 @@ void DriveTrain::FieldCentricCrab(float twist, float y, float x) {
 	float FWD = y;
 	float STR = x;
 
-	robotangle = gyroSub->PIDGet()*pi/180;
+	robotangle = (Robot::gyroSub->PIDGet())*pi/180;
 
 	FWD = y*cos(robotangle) + x*sin(robotangle);
 	STR = -y*sin(robotangle) + x*cos(robotangle);
@@ -132,9 +131,11 @@ void DriveTrain::FieldCentricCrab(float twist, float y, float x) {
 
 // attempts to keep robot square to the field as it drives
 void DriveTrain::GyroCrab(float desiredangle, float y, float x) {
-	robotangle = gyroSub->PIDGet();
+	robotangle = Robot::gyroSub->PIDGet();
+	//std::cout << "robotangle " << robotangle << std::endl;
 
-	float twist = std::min(1.0, std::max(-1.0, (robotangle - desiredangle) * .1));
+	float twist = std::min(1.0, std::max(-1.0, (desiredangle - robotangle) * .1));
+	//std::cout << "twist " << twist << std::endl;
 	Crab(twist, y, x);
 }
 

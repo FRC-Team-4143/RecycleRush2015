@@ -18,6 +18,8 @@ void CrabDrive::Execute() {
 	float z = Robot::oi->GetJoystickZ();
 	//std::cout << "X " << x << ", Y " << y << ", Z " << z << std::endl;
 	Robot::driveTrain->Crab(z, -y, x);
+	//Robot::driveTrain->GyroCrab(0, -y, x);
+	//Robot::driveTrain->FieldCentricCrab(z,-y,x);
 }
 
 // Make this return true when this Command no longer needs to run Execute.
