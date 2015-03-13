@@ -14,6 +14,9 @@ const float TWISTSCALE = .5;
 
 const float DEAD_ZONE = 0.15;
 
+#define GYROP  .05
+#define GYROMAX  .75
+
 DriveTrain::DriveTrain(): Subsystem("DriveTrain") {
 	LOG("DriveTrain::DriveTrain");
 
@@ -36,9 +39,6 @@ DriveTrain::DriveTrain(): Subsystem("DriveTrain") {
 	rearRightDrive  = RobotMap::driveTrainRearRightDrive;
 	rearRightPos    = RobotMap::driveTrainRearRightPos;
 	rearRightSteer  = RobotMap::driveTrainRearRightSteer;
-
-	mouseSubsystem 	= Robot::mouseSubsystem;
-
 
 	lastx = 0.0;
 	lasty = 0.0;
@@ -134,7 +134,7 @@ void DriveTrain::GyroCrab(float desiredangle, float y, float x) {
 	robotangle = Robot::gyroSub->PIDGet();
 	//std::cout << "robotangle " << robotangle << std::endl;
 
-	float twist = std::min(1.0, std::max(-1.0, (desiredangle - robotangle) * .1));
+	float twist = std::min(GYROMAX, std::max(-GYROMAX, (desiredangle - robotangle) * GYROP));
 	//std::cout << "twist " << twist << std::endl;
 	Crab(twist, y, x);
 }

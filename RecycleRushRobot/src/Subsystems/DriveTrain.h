@@ -146,8 +146,6 @@ public:
 	AnalogChannelVolt* rearRightPos;
 	SpeedController*   rearRightSteer;
 
-	MouseSubsystem* 	mouseSubsystem;
-
 	DriveTrain();
 	void SetWheelbase(float w, float x, float y);
 	void SetMaxSpeed(float MaxSpeed);

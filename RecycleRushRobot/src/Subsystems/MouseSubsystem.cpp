@@ -13,8 +13,11 @@
 // to
 //     SUBSYSTEM=="input", GROUP="input", MODE="666"
 
-//#define DEFAULT_MOUSE_FILE "/dev/input/event0"   // this is works if mouse is only thing plugged into USB
-#define DEFAULT_MOUSE_FILE "/dev/input/by_id/usb-Logitech_Gaming_Mouse_G402_8D93106A5252-event-mouse"
+#define DEFAULT_MOUSE_FILE "/dev/input/event0"   // this is works if mouse is only thing plugged into USB
+//#define DEFAULT_MOUSE_FILE "/dev/input/by-id/usb-Logitech_Gaming_Mouse_G402_8D93106A5252-event-mouse"
+
+//#define MOUSEDPI  250
+#define MOUSEDPI 800
 
 MouseSubsystem::MouseSubsystem()
 :	MouseSubsystem(DEFAULT_MOUSE_FILE)
@@ -40,10 +43,11 @@ void MouseSubsystem::EnableDebug(bool debug) {
 	_debug = debug;
 }
 
+// return position in inches if mouse dpi is set right
 void MouseSubsystem::GetPosition(double& x, double& y) {
 	std::unique_lock<std::recursive_mutex> lock(_mutex);
-	x = _x;
-	y = _y;
+	x = _x/MOUSEDPI;
+	y = _y/MOUSEDPI;
 }
 
 void MouseSubsystem::Reset() {

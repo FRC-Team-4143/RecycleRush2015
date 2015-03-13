@@ -20,6 +20,7 @@
 #include "Commands/Raise1Level.h"
 #include "Commands/ToggleSqueezeMode.h"
 #include "Commands/SetHeight.h"
+#include "Commands/ScriptMouseDrive.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -43,10 +44,10 @@ void Robot::RobotInit() {
 
 	RobotMap::Init();
 
-	CameraInit();
+	//CameraInit();
 
 	ScriptInit();
-	SmartDashboard::PutString("ScriptCommand", "S(0.5) E(1.0, 0.75) D(-0.75, 0.0, 0.0, 2.6) R(90, 2.0) E(-1.0, 1.0) D(-0.4, 0, 0, 0.5) M(0)");
+	SmartDashboard::PutString("ScriptCommand", "S(0.5)");
 	SmartDashboard::PutString("ScriptValid", "");
 
 	SmartDashboard::PutNumber("AutoDelay", 0);
@@ -363,7 +364,17 @@ void Robot::ScriptInit() {
 		auto z = parameters[2];
 		auto timeout = parameters[3];
 		Command* command = new ScriptDrive("Drive", x, y, z, timeout);
-		if (0 == timeout) timeout = 4;
+		//if (0 == timeout) timeout = 4;
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("DriveMouse", { "DM", "dm" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(4);
+		auto x = parameters[0];
+		auto y = parameters[1];
+		auto maxspeed = parameters[2];
+		auto timeout = parameters[3];
+		Command* command = new ScriptMouseDrive("DriveMouse", x, y, maxspeed, timeout);
 		fCreateCommand(command, 0);
 	}));
 
@@ -372,7 +383,7 @@ void Robot::ScriptInit() {
 		auto axis = parameters[0];
 		auto timeout = parameters[1];
 		Command* command = new ScriptElevate("Elevate", axis, timeout);
-		if (0 == timeout) timeout = 4;
+		//if (0 == timeout) timeout = 4;
 		fCreateCommand(command, 0);
 	}));
 
