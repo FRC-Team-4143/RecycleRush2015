@@ -19,7 +19,7 @@ void ScriptDrive::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void ScriptDrive::Execute()
 {
-	Robot::driveTrain->Crab(_z, _x, _y);
+	Robot::driveTrain->GyroCrab(_z, _x, _y);
 }
 
 // Make this return true when this Command no longer needs to run execute()
