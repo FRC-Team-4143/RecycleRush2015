@@ -24,6 +24,7 @@ public:
 
 	double GetHeading();
 	bool IsCalibrating();
+	void ResetGyro();
 
 private:
 	// Put everything in private except methods that implement subsystem capabilities.
