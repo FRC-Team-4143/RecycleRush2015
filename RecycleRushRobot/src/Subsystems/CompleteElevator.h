@@ -26,6 +26,7 @@ public:
 	void ToggleSqueezeMode();
 	void CancelSqueeze();
 	void PlaceStack();
+	void SetHeight(float);
 
 	PIDController*     toteElevator1PID;
 	PIDController*     toteElevator2PID;

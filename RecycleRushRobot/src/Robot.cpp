@@ -18,6 +18,8 @@
 #include "Commands/ScriptRotateBy.h"
 #include "Commands/ScriptSleep.h"
 #include "Commands/Raise1Level.h"
+#include "Commands/ToggleSqueezeMode.h"
+#include "Commands/SetHeight.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -402,6 +404,21 @@ void Robot::ScriptInit() {
 		Command* command = new Raise1Level();
 		fCreateCommand(command, 0);
 	}));
+
+	parser.AddCommand(CommandParseInfo("Squeeze", { "SQ", "sq" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(0);
+		Command* command = new ToggleSqueezeMode();
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("SetHeight", { "SH", "sh" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(2);
+		auto height = parameters[0];
+		auto timeout = parameters[1];
+		Command* command = new SetHeight(height, timeout);
+		fCreateCommand(command, 0);
+	}));
+
 }
 
 START_ROBOT_CLASS(Robot);

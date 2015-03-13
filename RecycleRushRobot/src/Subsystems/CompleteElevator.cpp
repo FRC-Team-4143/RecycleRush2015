@@ -6,6 +6,7 @@
 #define COUNTS_PER_REV (float)120
 #define INCHES_PER_REV (float)4
 #define MIN (float)0
+#define MULT (COUNTS_PER_REV/INCHES_PER_REV)
 
 CompleteElevator::CompleteElevator()
 : Subsystem("CompleteElevator")
@@ -96,6 +97,12 @@ void CompleteElevator::SetMode(int Mode) {
 	SetLED();
 }
 
+void CompleteElevator::SetHeight(float height) {
+	setpoint = height*MULT;
+
+	MoveElevator(0);
+}
+
 void CompleteElevator::SetLED(){
 	if (mode == 0 && squeeze == 0)
 		RobotMap::i2c->Write(2, 0);
@@ -121,22 +128,26 @@ void CompleteElevator::ToggleSqueezeMode(){
 	} else {
 		CancelSqueeze();
 	}
+	MoveElevator(0);
 }
 
 void CompleteElevator::CancelSqueeze(){
 	squeeze = 0;
 	offset = 0;
 	SetLED();
+	MoveElevator(0);
 }
 
 void CompleteElevator::Raise1Level(){
 	setpoint += 18*30;
 	CancelSqueeze();
+	MoveElevator(0);
 }
 
 void CompleteElevator::CompleteLower(){
 	setpoint = 0;
 	CancelSqueeze();
+	MoveElevator(0);
 }
 
 void CompleteElevator::PlaceStack(){
@@ -144,8 +155,9 @@ void CompleteElevator::PlaceStack(){
 		if (squeeze == 0) {
 			ToggleSqueezeMode();
 		}
-		setpoint = 40*30;
+		setpoint = 40*MULT;
 	}
+	MoveElevator(0);
 }
 
 void CompleteElevator::MoveElevator(float trigger){
@@ -218,7 +230,7 @@ void CompleteElevator::MoveElevator(float trigger){
 		distance2_1 += offset;
 	}
 
-	setpoint = std::min(totalMax * 30, std::max((float)MIN, setpoint + (trigger*SPEED*interval)));
+	setpoint = std::min(totalMax * MULT, std::max((float)MIN, setpoint + (trigger*SPEED*interval)));
 
 	if (armPos >= 0) {
 		armMin = 0;
@@ -226,10 +238,10 @@ void CompleteElevator::MoveElevator(float trigger){
 		armMin = 330;
 	}
 
-	toteElevator4PID->SetSetpoint(std::min(tote4Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint)));
-	toteElevator3PID->SetSetpoint(std::min(tote3Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint-(float)(distance4_3)*COUNTS_PER_REV/INCHES_PER_REV)));
-	toteElevator2PID->SetSetpoint(std::min(tote2Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint-(float)((distance3_2 +distance4_3)*COUNTS_PER_REV/INCHES_PER_REV))));
-	toteElevator1PID->SetSetpoint(std::min(tote1Max*COUNTS_PER_REV/INCHES_PER_REV,std::max((float)MIN, setpoint-(float)((distance2_1+distance3_2 +distance4_3)*COUNTS_PER_REV/INCHES_PER_REV))));
+	toteElevator4PID->SetSetpoint(std::min(tote4Max*MULT,std::max((float)MIN, setpoint)));
+	toteElevator3PID->SetSetpoint(std::min(tote3Max*MULT,std::max((float)MIN, setpoint-(float)(distance4_3)*MULT)));
+	toteElevator2PID->SetSetpoint(std::min(tote2Max*MULT,std::max((float)MIN, setpoint-(float)((distance3_2 +distance4_3)*MULT))));
+	toteElevator1PID->SetSetpoint(std::min(tote1Max*MULT,std::max((float)MIN, setpoint-(float)((distance2_1+distance3_2 +distance4_3)*MULT))));
 
 	lastTimeStamp = now;
 }
