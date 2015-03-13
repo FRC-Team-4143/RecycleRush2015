@@ -49,6 +49,7 @@ private:
 	Command* completeLower;
 	Command* toggleSqueezeMode;
 	Command* placeStack;
+	Command* gyroCrab;
 
 	// Declare joystick buttons
 	// TODO

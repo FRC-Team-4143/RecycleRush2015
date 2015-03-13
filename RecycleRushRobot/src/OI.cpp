@@ -28,6 +28,7 @@
 #include "Commands/ToggleSqueezeMode.h"
 #include "Commands/PlaceStack.h"
 #include "Commands/ScriptValidate.h"
+#include "Commands/GyroCrab.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -49,6 +50,8 @@ const uint32_t JOYSTICK_BUTTON_LB    = 5;
 const uint32_t JOYSTICK_BUTTON_RB    = 6;
 const uint32_t JOYSTICK_BUTTON_BACK  = 7;
 const uint32_t JOYSTICK_BUTTON_START = 8;
+const uint32_t JOYSTICK_BUTTON_LEFT  = 9;
+const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
 
 OI::OI() {
 	LOG("OI::OI");
@@ -89,6 +92,7 @@ OI::OI() {
 	completeLower = new CompleteLower();
 	toggleSqueezeMode = new ToggleSqueezeMode();
 	placeStack = new PlaceStack();
+	gyroCrab = new GyroCrab();
 
 
 	// Define joystick button mappings
@@ -117,6 +121,7 @@ OI::OI() {
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhenPressed(completeLower);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhenPressed(toggleSqueezeMode);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(placeStack);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RIGHT))->WhileHeld(gyroCrab);
 
 	// Add SmartDashboard controls
 	//SmartDashboard::PutNumber("Tote4-3 distance", prefs->GetDouble("distance4_3"));
