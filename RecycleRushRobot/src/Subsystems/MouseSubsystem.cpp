@@ -8,7 +8,13 @@
 #include <condition_variable>
 #include <iostream>
 
-#define DEFAULT_MOUSE_FILE "/dev/input/event1"
+// to get correct permissions change this line in /etc/udev/rules.d/localextra.rules on roborio
+//     SUBSYSTEM=="input", GROUP="input", MODE="660"
+// to
+//     SUBSYSTEM=="input", GROUP="input", MODE="666"
+
+//#define DEFAULT_MOUSE_FILE "/dev/input/event0"   // this is works if mouse is only thing plugged into USB
+#define DEFAULT_MOUSE_FILE "/dev/input/by_id/usb-Logitech_Gaming_Mouse_G402_8D93106A5252-event-mouse"
 
 MouseSubsystem::MouseSubsystem()
 :	MouseSubsystem(DEFAULT_MOUSE_FILE)
