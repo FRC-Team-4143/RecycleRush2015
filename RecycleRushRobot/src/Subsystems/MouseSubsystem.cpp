@@ -16,8 +16,8 @@
 #define DEFAULT_MOUSE_FILE "/dev/input/event0"   // this is works if mouse is only thing plugged into USB
 //#define DEFAULT_MOUSE_FILE "/dev/input/by-id/usb-Logitech_Gaming_Mouse_G402_8D93106A5252-event-mouse"
 
-//#define MOUSEDPI  250
-#define MOUSEDPI 800
+#define MOUSEDPI  240
+//#define MOUSEDPI 800
 
 MouseSubsystem::MouseSubsystem()
 :	MouseSubsystem(DEFAULT_MOUSE_FILE)
