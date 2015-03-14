@@ -17,6 +17,8 @@
 #include "Subsystems/Pneumatics.h"
 #include "OI.h"
 
+#define USE_BINARMSUB 1
+
 class Robot : public IterativeRobot {
 public:
 	Command *autonomousCommand;
