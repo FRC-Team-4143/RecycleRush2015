@@ -96,7 +96,10 @@ void Robot::RobotInit() {
 	//camera = new CameraSub();
 	mouseSubsystem = new MouseSubsystem();
 	//mouseSubsystem->EnableDebug(true);
+
 	visionBridge = new VisionBridgeSub();
+	visionBridge->EnableDebug(true);
+
 	pneumatics = new Pneumatics();
 
 	#define TOTE_EL1_BOTTOM     0
