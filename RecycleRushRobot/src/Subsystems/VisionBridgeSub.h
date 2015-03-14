@@ -32,9 +32,10 @@ private:
 	bool _debug;
 	std::thread _listeningThread;
 
-	void SetPosition(double position);
-	void DebugOutput(double position);
+	void DebugOutput(std::string packet);
 	void Listen();
+	void ParsePacket(std::string packet);
+	void SetPosition(double position);
 };
 
 #endif
