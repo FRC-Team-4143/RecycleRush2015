@@ -2,42 +2,38 @@
 #define BINARMSUB_H
 
 #include <WPILib.h>
-#include <Commands/PIDSubsystem.h>
-#include "Modules/PIDParameters.h"
+#include <Commands/Subsystem.h>
 
 //
 // The BinArmSub subsystem represents an arm that moves the bin hook in and out.
 //
-// @author FRC 4143
-//
-class BinArmSub: public PIDSubsystem {
+class BinArmSub: public Subsystem {
 public:
-	BinArmSub(SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams);
+	BinArmSub(SpeedController* motor, Encoder* encoder);
 
 	// Subsystem methods
 	virtual void InitDefaultCommand();
 
-	// PIDSubsystem methods
-	virtual double ReturnPIDInput();
-	virtual void UsePIDOutput(double output);
-
+	void SetArmDimensions(double minInches, double startInches, double maxInches);
 	void SetEncoderDimensions(int countsPerRotation, double inchesPerRotation);
-	void SetArmDimensions(double minInches, double startupInches, double maxInches);
 
-	void FullyRetract();
-	void FullyExtend();
-	void MoveRel(double inches);
-	void MoveTo(double inches);
+	double GetPositionInches() const;
+	void Move(double speed);
+	void ResetEncoder();
+	void Stop();
 
 protected:
-	SpeedController* myMotor() { return _motor; }
-	Encoder* myEncoder() { return _encoder; }
+	SpeedController* myMotor() const { return _motor; }
+	Encoder* myEncoder() const { return _encoder; }
 
-	void GoToPosition(double position);
 	double CountToInches(double count) const;
 	double InchesToCount(double inches) const;
+	double GetPositionCount() const;
 	double MinCount() const;
 	double MaxCount() const;
+	double MinInches() const { return _minInches; }
+	double MaxInches() const { return _maxInches; }
+	double StartInches() const { return _startInches; }
 
 private:
 	SpeedController* _motor;
@@ -46,7 +42,7 @@ private:
 	int _countsPerRotation;
 	double _inchesPerRotation;
 	double _minInches;
-	double _startupInches;
+	double _startInches;
 	double _maxInches;
 };
 
