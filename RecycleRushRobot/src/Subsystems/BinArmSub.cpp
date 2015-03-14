@@ -53,13 +53,17 @@ double BinArmSub::GetPositionInches() const {
 }
 
 void BinArmSub::Move(double speed) {
+	std::cout << GetName() << "::Move(" << speed << ")" << std::endl;
+	DebugOutputState();
 	if (speed > 0) {
 		if (GetPositionCount() >= MaxCount()) {
+			std::cout << GetName() << "::Move at max" << std::endl;
 			speed = 0;
 		}
 	}
 	else if (speed < 0) {
 		if (GetPositionCount() <= MinCount()) {
+			std::cout << GetName() << "::Move at min" << std::endl;
 			speed = 0;
 		}
 	}
@@ -72,6 +76,10 @@ void BinArmSub::ResetEncoder() {
 
 void BinArmSub::Stop() {
 	myMotor()->Set(0);
+}
+
+void BinArmSub::DebugOutputState() {
+	std::cout << "[DEBUG] " << GetName() << " minCount=" << MinCount() << ", maxCount=" << MaxCount() << ", curr=" << GetPositionCount() << std::endl;
 }
 
 // ==========================================================================
