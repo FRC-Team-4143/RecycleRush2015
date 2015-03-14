@@ -21,6 +21,7 @@
 #include "Commands/ToggleSqueezeMode.h"
 #include "Commands/SetHeight.h"
 #include "Commands/ScriptMouseDrive.h"
+#include "Commands/ScriptCamDrive.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -386,6 +387,16 @@ void Robot::ScriptInit() {
 		auto maxspeed = parameters[2];
 		auto timeout = parameters[3];
 		Command* command = new ScriptMouseDrive("DriveMouse", x, y, maxspeed, timeout);
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("DriveCam", { "DC", "dc" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(4);
+		auto x = parameters[0];
+		auto y = parameters[1];
+		auto maxspeed = parameters[2];
+		auto timeout = parameters[3];
+		Command* command = new ScriptCamDrive("DriveCam", x, y, maxspeed, timeout);
 		fCreateCommand(command, 0);
 	}));
 
