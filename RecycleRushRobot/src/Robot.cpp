@@ -85,6 +85,9 @@ void Robot::RobotInit() {
 	// -----------------------
 #if USE_BINARMSUB
 	binArm = new BinArmSub(RobotMap::binArmMotor, RobotMap::binArmPos, true);
+	//binArm->SetArmDimensions(0, 0, 29);
+	//binArm->SetEncoderDimensions(120, 2.2);
+	//binArm->EnableDebug(true);
 #endif
 	driveTrain = new DriveTrain();
 	completeElevator = new CompleteElevator();

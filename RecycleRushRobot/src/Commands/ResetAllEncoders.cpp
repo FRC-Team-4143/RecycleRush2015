@@ -23,7 +23,7 @@ void ResetAllEncoders::Initialize()
 	RobotMap::toteElevator4PID->SetSetpoint(0);
 
 	Robot::completeElevator->setpoint = 0;
-	//RobotMap::binArmPos->Reset();
+	RobotMap::binArmPos->Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run

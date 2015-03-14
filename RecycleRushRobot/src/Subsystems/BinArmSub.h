@@ -17,6 +17,7 @@ public:
 	void SetArmDimensions(double minInches, double startInches, double maxInches);
 	void SetEncoderDimensions(int countsPerRotation, double inchesPerRotation);
 
+	void EnableDebug(bool debug);
 	double GetPositionInches() const;
 	void Move(double speed);
 	void ResetEncoder();
@@ -46,6 +47,7 @@ private:
 	double _startInches;
 	double _maxInches;
 	bool _invertMotor;
+	bool _debug;
 };
 
 #endif

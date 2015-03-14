@@ -3,10 +3,10 @@
 // ==========================================================================
 
 const int DEFAULT_COUNTS_PER_ROTATION = 120;
-const int DEFAULT_INCHES_PER_ROTATION = 4;
+const double DEFAULT_INCHES_PER_ROTATION = 2.2;
 const int DEFAULT_MIN_INCHES = 0;
 const int DEFAULT_START_INCHES = 0;
-const int DEFAULT_MAX_INCHES = 30;
+const int DEFAULT_MAX_INCHES = 29;
 
 // ==========================================================================
 
@@ -15,7 +15,8 @@ BinArmSub::BinArmSub(SpeedController* motor, Encoder* encoder, bool invertMotor)
   _motor(motor), _encoder(encoder),
   _countsPerRotation(DEFAULT_COUNTS_PER_ROTATION), _inchesPerRotation(DEFAULT_INCHES_PER_ROTATION),
   _minInches(DEFAULT_MIN_INCHES), _startInches(DEFAULT_START_INCHES), _maxInches(DEFAULT_MAX_INCHES),
-  _invertMotor(invertMotor)
+  _invertMotor(invertMotor),
+  _debug(false)
 {
 	std::cout << GetName() << "::ctor" << std::endl;
 }
@@ -44,6 +45,10 @@ void BinArmSub::SetEncoderDimensions(int countsPerRotation, double inchesPerRota
 	_inchesPerRotation = inchesPerRotation;
 }
 
+void BinArmSub::EnableDebug(bool debug) {
+	_debug = debug;
+}
+
 // ==========================================================================
 // Put methods for controlling this subsystem here.
 // Call these from Commands.
@@ -54,17 +59,17 @@ double BinArmSub::GetPositionInches() const {
 }
 
 void BinArmSub::Move(double speed) {
-	std::cout << GetName() << "::Move(" << speed << ")" << std::endl;
-	DebugOutputState();
+	if (_debug) std::cout << "[DEBUG] " << GetName() << "::Move(" << speed << ")" << std::endl;
+	if (_debug) DebugOutputState();
 	if (speed > 0) {
 		if (GetPositionCount() >= MaxCount()) {
-			std::cout << GetName() << "::Move at max" << std::endl;
+			if (_debug) std::cout << "[DEBUG] " << GetName() << "::Move at max" << std::endl;
 			speed = 0;
 		}
 	}
 	else if (speed < 0) {
 		if (GetPositionCount() <= MinCount()) {
-			std::cout << GetName() << "::Move at min" << std::endl;
+			if (_debug) std::cout << "[DEBUG] " << GetName() << "::Move at min" << std::endl;
 			speed = 0;
 		}
 	}
