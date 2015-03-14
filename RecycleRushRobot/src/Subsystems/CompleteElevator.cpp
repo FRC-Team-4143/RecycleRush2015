@@ -2,7 +2,7 @@
 #include "../RobotMap.h"
 #include "../Commands/CompleteElevatorDefaultCommand.h"
 
-#define SPEED (float)200
+#define SPEED (float)(200*1.8)
 #define COUNTS_PER_REV (float)120
 #define INCHES_PER_REV (float)4
 #define MIN (float)0
