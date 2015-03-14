@@ -35,6 +35,7 @@ ElevatorGroupSub* Robot::toteElevatorGroup = nullptr;
 ElevatorSelectorSub* Robot::elevatorSelector = nullptr;
 //CameraSub* Robot::camera = nullptr;
 MouseSubsystem* Robot::mouseSubsystem = nullptr;
+VisionBridgeSub* Robot::visionBridge = nullptr;
 Pneumatics* Robot::pneumatics = nullptr;
 
 void Robot::RobotInit() {
@@ -95,6 +96,7 @@ void Robot::RobotInit() {
 	//camera = new CameraSub();
 	mouseSubsystem = new MouseSubsystem();
 	//mouseSubsystem->EnableDebug(true);
+	visionBridge = new VisionBridgeSub();
 	pneumatics = new Pneumatics();
 
 	#define TOTE_EL1_BOTTOM     0

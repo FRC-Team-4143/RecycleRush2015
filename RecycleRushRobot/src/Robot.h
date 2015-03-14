@@ -12,6 +12,7 @@
 #include "Subsystems/ElevatorSelectorSub.h"
 #include "Subsystems/GyroSub.h"
 #include "Subsystems/MouseSubsystem.h"
+#include "Subsystems/VisionBridgeSub.h"
 #include "Subsystems/CompleteElevator.h"
 #include "Subsystems/CameraSub.h"
 #include "Subsystems/Pneumatics.h"
@@ -37,6 +38,7 @@ public:
 	static CompleteElevator* completeElevator;
 	//static CameraSub* camera;
 	static MouseSubsystem* mouseSubsystem;
+	static VisionBridgeSub* visionBridge;
 	static Pneumatics* pneumatics;
 
 	virtual void RobotInit();
