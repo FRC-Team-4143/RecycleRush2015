@@ -21,6 +21,7 @@ public:
 	void Move(double speed);
 	void ResetEncoder();
 	void Stop();
+	void DebugOutputState();
 
 protected:
 	SpeedController* myMotor() const { return _motor; }
