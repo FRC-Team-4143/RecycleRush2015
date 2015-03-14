@@ -3,7 +3,7 @@
 
 // ==========================================================================
 
-BinDownTimed::BinDownTimed(double seconds) : Command("Bin Up Timed") {
+BinDownTimed::BinDownTimed(double seconds) : Command("Bin Down Timed") {
 	std::cout << "BinDownTimed::ctor" << std::endl;
 
 	Requires(Robot::completeElevator);
