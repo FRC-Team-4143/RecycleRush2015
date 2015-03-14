@@ -56,17 +56,17 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("AutoBinUpTime", 1);
 	SmartDashboard::PutNumber("AutoBinDownTime", 1.4);
 	SmartDashboard::PutNumber("AutoFinalBackup", 0);
-	SmartDashboard::PutNumber("AutoToteUpTime", 0.5);
+	SmartDashboard::PutNumber("AutoToteUpTime", 0.7);
 	SmartDashboard::PutNumber("AutoToteDownTime", 0);
 
 	autoChooser = new SendableChooser();
 	autoChooser->AddDefault("Tote", (void*) 1);
 	autoChooser->AddObject("Bin", (void*) 2);
-	autoChooser->AddObject("ToteAndBin", (void*) 3);
-	autoChooser->AddObject("BackIntoAutozone", (void*) 4);
-	autoChooser->AddObject("DoNothingAuto", (void*) 5);
-	autoChooser->AddObject("Auto3Tote", (void*) 6);
-	autoChooser->AddObject("Script Command", (void*) 7);
+	autoChooser->AddObject("BackIntoAutozone", (void*) 3);
+	autoChooser->AddObject("DoNothingAuto", (void*) 4);
+	autoChooser->AddObject("Script Command", (void*) 5);
+	//autoChooser->AddObject("ToteAndBin", (void*) 6);
+	//autoChooser->AddObject("Auto3Tote", (void*) 7);
 
 	SmartDashboard::PutData("AutonomousChooser", autoChooser);
 
@@ -289,19 +289,19 @@ void Robot::AutonomousInit() {
 		autonomousCommand = new AutoBinMove();
 		break;
 	case 3:
-		autonomousCommand = new AutoToteAndBin();
-		break;
-	case 4:
 		autonomousCommand = new AutoBackup();
 		break;
-	case 5:
+	case 4:
 		autonomousCommand = new AutodoNothingAuto();
 		break;
+	case 5:
+		autonomousCommand = new ScriptCommand("ScriptCommand");
+		break;
 	case 6:
-		autonomousCommand = new Auto3Tote();
+		autonomousCommand = new AutoToteAndBin();
 		break;
 	case 7:
-		autonomousCommand = new ScriptCommand("ScriptCommand");
+		autonomousCommand = new Auto3Tote();
 		break;
 	}
 
