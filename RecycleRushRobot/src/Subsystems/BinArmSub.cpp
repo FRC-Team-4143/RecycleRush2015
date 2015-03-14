@@ -10,11 +10,12 @@ const int DEFAULT_MAX_INCHES = 30;
 
 // ==========================================================================
 
-BinArmSub::BinArmSub(SpeedController* motor, Encoder* encoder)
+BinArmSub::BinArmSub(SpeedController* motor, Encoder* encoder, bool invertMotor)
 : Subsystem("BinArm"),
   _motor(motor), _encoder(encoder),
   _countsPerRotation(DEFAULT_COUNTS_PER_ROTATION), _inchesPerRotation(DEFAULT_INCHES_PER_ROTATION),
-  _minInches(DEFAULT_MIN_INCHES), _startInches(DEFAULT_START_INCHES), _maxInches(DEFAULT_MAX_INCHES)
+  _minInches(DEFAULT_MIN_INCHES), _startInches(DEFAULT_START_INCHES), _maxInches(DEFAULT_MAX_INCHES),
+  _invertMotor(invertMotor)
 {
 	std::cout << GetName() << "::ctor" << std::endl;
 }
@@ -67,7 +68,7 @@ void BinArmSub::Move(double speed) {
 			speed = 0;
 		}
 	}
-	myMotor()->Set(speed);
+	myMotor()->Set(_invertMotor ? -speed : speed);
 }
 
 void BinArmSub::ResetEncoder() {

@@ -9,7 +9,7 @@
 //
 class BinArmSub: public Subsystem {
 public:
-	BinArmSub(SpeedController* motor, Encoder* encoder);
+	BinArmSub(SpeedController* motor, Encoder* encoder, bool invertMotor = false);
 
 	// Subsystem methods
 	virtual void InitDefaultCommand();
@@ -45,6 +45,7 @@ private:
 	double _minInches;
 	double _startInches;
 	double _maxInches;
+	bool _invertMotor;
 };
 
 #endif

@@ -84,7 +84,7 @@ void Robot::RobotInit() {
 	// Initialize subsystems.
 	// -----------------------
 #if USE_BINARMSUB
-	binArm = new BinArmSub(RobotMap::binArmMotor, RobotMap::binArmPos);
+	binArm = new BinArmSub(RobotMap::binArmMotor, RobotMap::binArmPos, true);
 #endif
 	driveTrain = new DriveTrain();
 	completeElevator = new CompleteElevator();

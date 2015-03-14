@@ -109,8 +109,8 @@ OI::OI() {
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(Tote3Up);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(Tote3Down);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(binArmIn);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(binArmOut);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(binArmOut);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(binArmIn);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(switchCamera);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(testSolenoidForward);
 	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(testSolenoidReverse);
