@@ -13,7 +13,6 @@ public:
 	virtual void Interrupted();
 
 private:
-	float AxisToInches(float axisValue);
 };
 
 #endif

@@ -1,14 +1,19 @@
 #include "BinArmSub.h"
-#include "../Logger.h"
-#include "../Commands/BinArmMove.h"
 
 // ==========================================================================
 
-BinArmSub::BinArmSub(SpeedController* motor, Encoder* encoder, const PIDParameters& pidParams)
-: PIDSubsystem("BinArm", pidParams.P, pidParams.I, pidParams.D, pidParams.F),
+const int DEFAULT_COUNTS_PER_ROTATION = 120;
+const int DEFAULT_INCHES_PER_ROTATION = 4;
+const int DEFAULT_START_INCHES = 0;
+const int DEFAULT_MAX_INCHES = 30;
+
+// ==========================================================================
+
+BinArmSub::BinArmSub(SpeedController* motor, Encoder* encoder)
+: Subsystem("BinArm"),
   _motor(motor), _encoder(encoder),
-  _countsPerRotation(0), _inchesPerRotation(0),
-  _minInches(0), _startupInches(0), _maxInches(0)
+  _countsPerRotation(DEFAULT_COUNTS_PER_ROTATION), _inchesPerRotation(DEFAULT_INCHES_PER_ROTATION),
+  _startInches(DEFAULT_START_INCHES), _maxInches(DEFAULT_MAX_INCHES)
 {
 	std::cout << GetName() << "::ctor" << std::endl;
 }
@@ -19,37 +24,22 @@ BinArmSub::BinArmSub(SpeedController* motor, Encoder* encoder, const PIDParamete
 
 void BinArmSub::InitDefaultCommand() {
 	std::cout << GetName() << "::InitDefaultCommand" << std::endl;
-
-	SetDefaultCommand(new BinArmMove());
-}
-
-// ==========================================================================
-// PIDSubsystem methods
-// ==========================================================================
-
-double BinArmSub::ReturnPIDInput() {
-	return myEncoder()->PIDGet();
-}
-
-// ==========================================================================
-
-void BinArmSub::UsePIDOutput(double output) {
-	myMotor()->Set(output);
+	//SetDefaultCommand(new BinArmMove());
 }
 
 // ==========================================================================
 // Methods for configuring the elevator
 // ==========================================================================
 
+void BinArmSub::SetArmDimensions(double minInches, double startInches, double maxInches) {
+	_minInches = minInches;
+	_startInches = startInches;
+	_maxInches = maxInches;
+}
+
 void BinArmSub::SetEncoderDimensions(int countsPerRotation, double inchesPerRotation) {
 	_countsPerRotation = countsPerRotation;
 	_inchesPerRotation = inchesPerRotation;
-}
-
-void BinArmSub::SetArmDimensions(double minInches, double startupInches, double maxInches) {
-	_minInches = minInches;
-	_startupInches = startupInches;
-	_maxInches = maxInches;
 }
 
 // ==========================================================================
@@ -57,31 +47,35 @@ void BinArmSub::SetArmDimensions(double minInches, double startupInches, double 
 // Call these from Commands.
 // ==========================================================================
 
-void BinArmSub::FullyRetract() {
-	MoveTo(_minInches);
+double BinArmSub::GetPositionInches() const {
+	return MinInches() + CountToInches(GetPositionCount() - MinCount());
 }
 
-void BinArmSub::FullyExtend() {
-	MoveTo(_maxInches);
+void BinArmSub::Move(double speed) {
+	if (speed > 0) {
+		if (GetPositionInches() >= MaxInches()) {
+			speed = 0;
+		}
+	}
+	else if (speed < 0) {
+		if (GetPositionInches() <= MinInches()) {
+			speed = 0;
+		}
+	}
+	myMotor()->Set(speed);
 }
 
-void BinArmSub::MoveRel(double inches) {
-	GoToPosition(GetSetpoint() + InchesToCount(inches));
+void BinArmSub::ResetEncoder() {
+	myEncoder()->Reset();
 }
 
-void BinArmSub::MoveTo(double inches) {
-	GoToPosition(MinCount() + InchesToCount(inches));
+void BinArmSub::Stop() {
+	myMotor()->Set(0);
 }
 
 // ==========================================================================
 // Internal methods
 // ==========================================================================
-
-void BinArmSub::GoToPosition(double position) {
-	position = std::min(position, MinCount());
-	position = std::max(position, MaxCount());
-	SetSetpoint(position);
-}
 
 double BinArmSub::CountToInches(double count) const {
 	return count / _countsPerRotation * _inchesPerRotation;
@@ -91,10 +85,14 @@ double BinArmSub::InchesToCount(double inches) const {
 	return inches / _inchesPerRotation * _countsPerRotation;
 }
 
+double BinArmSub::GetPositionCount() const {
+	return myEncoder()->Get();
+}
+
 double BinArmSub::MinCount() const {
-	return -InchesToCount(_startupInches - _minInches);
+	return -InchesToCount(StartInches() - MinInches());
 }
 
 double BinArmSub::MaxCount() const {
-	return InchesToCount(_maxInches - _startupInches);
+	return InchesToCount(MaxInches() - StartInches());
 }

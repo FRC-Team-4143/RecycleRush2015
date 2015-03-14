@@ -20,8 +20,7 @@ void BinArmMove::Initialize() {
 
 void BinArmMove::Execute() {
 	auto axisValue = Robot::oi->GetBinArmAxisValue();
-	auto inches = AxisToInches(axisValue);
-	Robot::binArm->MoveRel(inches);
+	Robot::binArm->Move(axisValue);
 }
 
 // ==========================================================================
@@ -42,13 +41,6 @@ void BinArmMove::End() {
 
 void BinArmMove::Interrupted() {
 	End();
-}
-
-// ==========================================================================
-
-float BinArmMove::AxisToInches(float axisValue) {
-	// Do any necessary scaling here
-	return axisValue;
 }
 
 // ==========================================================================
