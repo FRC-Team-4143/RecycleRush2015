@@ -11,6 +11,7 @@
 #include "Commands/AutoToteAndBin.h"
 #include "Commands/AutoToteMove.h"
 #include "Commands/Auto3Tote.h"
+#include "Commands/ScriptBinArmMoveTo.h"
 #include "Commands/ScriptCommand.h"
 #include "Commands/ScriptDrive.h"
 #include "Commands/ScriptElevate.h"
@@ -368,6 +369,15 @@ void Robot::ScriptInit() {
 	std::cout << "Robot::ScriptInit" << std::endl;
 
 	CommandListParser& parser(CommandListParser::GetInstance());
+
+	parser.AddCommand(CommandParseInfo("ArmTo", { "AT", "at" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(2);
+		auto inches = parameters[0];
+		auto timeout = parameters[1];
+		if (0 == timeout) timeout = 5;
+		Command* command = new ScriptBinArmMoveTo("ArmTo", inches, timeout);
+		fCreateCommand(command, 0);
+	}));
 
 	parser.AddCommand(CommandParseInfo("Drive", { "D", "d" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(4);
