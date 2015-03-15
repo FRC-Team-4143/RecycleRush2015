@@ -74,12 +74,12 @@ void VisionBridgeSub::Listen() {
 		close(sockListener);
 		return;
 	}
-	std::cout << GetName() << " Bound" << std::endl;
+	std::cout << GetName() << " Bound socket" << std::endl;
 
 	for (;;) {
-		if (_debug) std::cout << "[DEBUG] " << GetName() << "Waiting on port." << std::endl;
+		//if (_debug) std::cout << "[DEBUG] " << GetName() << " Waiting on port" << std::endl;
 		int recvlen = recvfrom(sockListener, buf, sizeof(buf) - 1, 0, S_CAST(sockaddr*, S_CAST(void*, &clientAddr)), &sockAddrSize);
-		if (_debug) std::cout << "[DEBUG] " << GetName() << "Received " << recvlen << " bytes." << std::endl;
+		//if (_debug) std::cout << "[DEBUG] " << GetName() << " Received " << recvlen << " bytes" << std::endl;
 		if (recvlen > 0) {
 			buf[recvlen] = 0;
 			ParsePacket(buf);
