@@ -23,6 +23,7 @@
 #include "Commands/SetHeight.h"
 #include "Commands/ScriptMouseDrive.h"
 #include "Commands/ScriptCamDrive.h"
+#include "Commands/ScriptGyroDrive.h"
 
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
@@ -61,6 +62,8 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("AutoFinalBackup", 0);
 	SmartDashboard::PutNumber("AutoToteUpTime", 0.7);
 	SmartDashboard::PutNumber("AutoToteDownTime", 0);
+
+	SmartDashboard::PutNumber("vision P", .004);
 
 	autoChooser = new SendableChooser();
 	autoChooser->AddDefault("Tote", (void*) 1);
@@ -410,6 +413,15 @@ void Robot::ScriptInit() {
 		fCreateCommand(command, 0);
 	}));
 
+	parser.AddCommand(CommandParseInfo("DriveGyro", { "DG", "dg" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(4);
+		auto x = parameters[0];
+		auto y = parameters[1];
+		auto maxspeed = parameters[2];
+		auto timeout = parameters[3];
+		Command* command = new ScriptGyroDrive("DriveGyro", x, y, maxspeed, timeout);
+		fCreateCommand(command, 0);
+	}));
 	parser.AddCommand(CommandParseInfo("Elevate", { "E", "e" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(2);
 		auto axis = parameters[0];

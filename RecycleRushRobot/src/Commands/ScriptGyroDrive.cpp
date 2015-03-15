@@ -1,8 +1,8 @@
-#include "ScriptDrive.h"
+#include "ScriptGyroDrive.h"
 #include "../Robot.h"
 #include <iostream>
 
-ScriptDrive::ScriptDrive(const char* name, float x, float y, float z, float seconds)
+ScriptGyroDrive::ScriptGyroDrive(const char* name, float x, float y, float z, float seconds)
 : Command(name), _x(x), _y(y), _z(z), _seconds(seconds)
 {
 	std::cout << GetName() << "::ctor(" << x << ", " << y << ", " << z << ", " << seconds << ")" << std::endl;
@@ -10,26 +10,26 @@ ScriptDrive::ScriptDrive(const char* name, float x, float y, float z, float seco
 }
 
 // Called just before this Command runs the first time
-void ScriptDrive::Initialize()
+void ScriptGyroDrive::Initialize()
 {
 	std::cout << GetName() << "::Initialize" << std::endl;
 	SetTimeout(_seconds);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ScriptDrive::Execute()
+void ScriptGyroDrive::Execute()
 {
-	Robot::driveTrain->Crab(_z, _x, _y);
+	Robot::driveTrain->GyroCrab(_z, _x, _y);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ScriptDrive::IsFinished()
+bool ScriptGyroDrive::IsFinished()
 {
 	return IsTimedOut();
 }
 
 // Called once after isFinished returns true
-void ScriptDrive::End()
+void ScriptGyroDrive::End()
 {
 	std::cout << GetName() << "::End" << std::endl;
 	Robot::driveTrain->Crab(0, 0, 0);
@@ -37,7 +37,7 @@ void ScriptDrive::End()
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ScriptDrive::Interrupted()
+void ScriptGyroDrive::Interrupted()
 {
 	std::cout << GetName() << "::Interrupted" << std::endl;
 	Robot::driveTrain->Crab(0, 0, 0);

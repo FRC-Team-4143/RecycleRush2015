@@ -21,6 +21,7 @@ private:
 	double _seconds;
 	double _angle;
 	double _offset;
+	double _p;
 };
 
 #endif

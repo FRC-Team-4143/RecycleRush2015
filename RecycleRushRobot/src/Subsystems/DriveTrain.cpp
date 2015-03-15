@@ -14,7 +14,8 @@ const float TWISTSCALE = .5;
 
 const float DEAD_ZONE = 0.15;
 
-#define GYROP  .05
+//#define GYROP  .05
+#define GYROP	.075
 #define GYROMAX  .75
 
 DriveTrain::DriveTrain(): Subsystem("DriveTrain") {

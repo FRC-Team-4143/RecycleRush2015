@@ -2,8 +2,7 @@
 #include "../Robot.h"
 #include <iostream>
 
-#define P			.01
-#define TOLERANCE   10.0
+#define TOLERANCE   30.0
 
 ScriptCamDrive::ScriptCamDrive(const char* name, double x, double y, double maxspeed, double seconds)
 : Command(name), _x(x), _y(y), _maxspeed(maxspeed), _seconds(seconds)
@@ -21,15 +20,17 @@ void ScriptCamDrive::Initialize()
 	_angle /= 90.;
 	_angle = floor(_angle + .5); // round
 	_angle *= 90.;
+	_p = SmartDashboard::GetNumber("vision P");
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ScriptCamDrive::Execute()
 {
 	_offset = Robot::visionBridge->GetPosition();
-	Robot::driveTrain->GyroCrab(_angle,
-			std::min(_maxspeed, std::max(-_maxspeed, _x)),
-			std::min(_maxspeed, std::max(-_maxspeed, (_offset) * P)));
+	if(fabs(_offset) <= TOLERANCE)
+		_offset = 0;
+	Robot::driveTrain->GyroCrab(_angle, _x,
+			std::min(_maxspeed, std::max(-_maxspeed, (_offset) * _p)));
 }
 
 // Make this return true when this Command no longer needs to run execute()
