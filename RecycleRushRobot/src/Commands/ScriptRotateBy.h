@@ -10,6 +10,7 @@ class ScriptRotateBy: public Command, public PIDOutput
 {
 public:
 	ScriptRotateBy(const char* name, float rotateByDegrees, float timeoutSeconds);
+	virtual ~ScriptRotateBy();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

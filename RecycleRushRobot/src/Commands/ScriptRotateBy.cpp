@@ -35,6 +35,18 @@ ScriptRotateBy::ScriptRotateBy(const char* name, float rotateByDegrees, float ti
 
 // ==========================================================================
 
+ScriptRotateBy::~ScriptRotateBy() {
+	if (_pidCtrl != nullptr) {
+		if (_pidCtrl->IsEnabled()) {
+			_pidCtrl->Disable();
+		}
+		delete _pidCtrl;
+		_pidCtrl = nullptr;
+	}
+}
+
+// ==========================================================================
+
 void ScriptRotateBy::Initialize()
 {
 	std::cout << GetName() << "::Initialize" << std::endl;
