@@ -135,12 +135,11 @@ void DriveTrain::GyroCrab(float desiredangle, float y, float x) {
 	//std::cout << "robotangle " << robotangle << std::endl;
 
 	float twist = desiredangle - robotangle;
-	while( twist > 180.0 || twist < -180.0){
-		if( twist > 180.0)
-			twist -= 360.0;
-		else if (twist < -180.0)
-			twist += 360.0;
-	}
+	while( twist > 180.0)
+		twist -= 360.0;
+	while( twist < -180.0)
+		twist += 360.0;
+
 	twist = std::min(GYROMAX, std::max(-GYROMAX, twist * GYROP));
 	//std::cout << "twist " << twist << std::endl;
 	Crab(twist, y, x);

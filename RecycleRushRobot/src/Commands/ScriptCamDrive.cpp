@@ -35,7 +35,7 @@ void ScriptCamDrive::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool ScriptCamDrive::IsFinished()
 {
-	if (fabs(_offset) <= TOLERANCE)
+	if (_x == 0.0 && fabs(_offset) <= TOLERANCE)
 		return true;
 	return IsTimedOut();
 }
