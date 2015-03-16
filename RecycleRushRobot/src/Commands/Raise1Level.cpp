@@ -9,7 +9,7 @@ Raise1Level::Raise1Level()
 // Called just before this Command runs the first time
 void Raise1Level::Initialize()
 {
-Robot::completeElevator->Raise1Level();
+	Robot::completeElevator->Raise1Level();
 }
 
 // Called repeatedly when this Command is scheduled to run

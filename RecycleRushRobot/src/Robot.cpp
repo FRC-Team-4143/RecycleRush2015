@@ -63,6 +63,7 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("AutoToteUpTime", 0.7);
 	SmartDashboard::PutNumber("AutoToteDownTime", 0);
 
+	SmartDashboard::PutNumber("vision center", -30.0);
 	SmartDashboard::PutNumber("vision P", .004);
 	SmartDashboard::PutNumber("vision tol", 30);
 

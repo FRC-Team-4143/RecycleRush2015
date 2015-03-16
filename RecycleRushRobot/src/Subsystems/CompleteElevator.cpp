@@ -139,9 +139,30 @@ void CompleteElevator::CancelSqueeze(){
 }
 
 void CompleteElevator::Raise1Level(){
-	setpoint += 18*30;
-	CancelSqueeze();
-	MoveElevator(0);
+	if( mode == 0) {
+		if( setpoint <= 19*MULT)
+			setpoint = 20*MULT;
+		else if ( setpoint <= 39 * MULT)
+			setpoint = 40 * MULT;
+		else if ( setpoint <= 59 * MULT)
+			setpoint = 60 * MULT;
+		else
+			setpoint += 20*MULT;
+	}
+	else if( mode == 1) { // barrel mode go to step height
+		setpoint = 11*MULT;
+	}
+	else { // barrel and tote modes
+		if( setpoint <= 29*MULT)
+			setpoint = 30*MULT;
+		else if ( setpoint <= 49 * MULT)
+			setpoint = 50 * MULT;
+		else if ( setpoint <= 69 * MULT)
+			setpoint = 70 * MULT;
+		else
+			setpoint += 20*MULT;
+	}
+	CancelSqueeze(); // also calls move elevator
 }
 
 void CompleteElevator::CompleteLower(){
@@ -243,8 +264,8 @@ void CompleteElevator::MoveElevator(float trigger){
 
 		tote4Max = 63; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
 		tote3Max = 57 + 4; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
-		tote2Max = 47 + 9; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
-		tote1Max = 47 + 9 + .5; //(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
+		tote2Max = tote3Max - 4; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
+		tote1Max = tote2Max; //(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
 		totalMax = tote4Max + tote1Max;
 
 		distance4_3 += offset;
@@ -258,12 +279,15 @@ void CompleteElevator::MoveElevator(float trigger){
 		tote4Max = 63; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
 		tote3Max = 57 + 4; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
 		tote2Max = 47 + 9; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
-		tote1Max = 35 + 10;
+		tote1Max = tote2Max - 4;
 		totalMax = tote4Max + tote1Max;
 
 		distance3_2 += offset;
 		distance2_1 += offset;
 	}
+
+	if((mode == 2 || mode == 3 ) && setpoint > 50 * MULT && armEncoder->GetDistance() > 50)
+		trigger = std::max((float)0.0, trigger); // don't go up too far if arm isn't back in barrel modes
 
 	// double check these are never negative
 	distance4_3 = std::max((float)MIN, distance4_3);

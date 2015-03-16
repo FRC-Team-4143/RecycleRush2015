@@ -22,12 +22,14 @@ void ScriptCamDrive::Initialize()
 	_angle *= 90.;
 	_p = SmartDashboard::GetNumber("vision P");
 	_tol = SmartDashboard::GetNumber("vision tol");
+	_center = SmartDashboard::GetNumber("vision center");
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ScriptCamDrive::Execute()
 {
 	_offset = Robot::visionBridge->GetPosition();
+	_offset -= _center;
 	if(fabs(_offset) <= TOLERANCE)
 		_offset = 0;
 	Robot::driveTrain->GyroCrab(_angle, _x,

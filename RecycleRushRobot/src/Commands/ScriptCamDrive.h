@@ -23,6 +23,7 @@ private:
 	double _offset;
 	double _p;
 	double _tol;
+	double _center;
 };
 
 #endif
