@@ -287,7 +287,7 @@ void CompleteElevator::MoveElevator(float trigger){
 	}
 
 	if((mode == 2 || mode == 3 ) && setpoint > 50 * MULT && armEncoder->GetDistance() > 50)
-		trigger = std::max((float)0.0, trigger); // don't go up too far if arm isn't back in barrel modes
+		trigger = std::min((float)0.0, trigger); // don't go up too far if arm isn't back in barrel modes
 
 	// double check these are never negative
 	distance4_3 = std::max((float)MIN, distance4_3);
