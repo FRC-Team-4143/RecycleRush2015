@@ -64,6 +64,8 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("AutoToteDownTime", 0);
 
 	SmartDashboard::PutNumber("vision P", .004);
+	SmartDashboard::PutNumber("vision tol", 30);
+
 
 	autoChooser = new SendableChooser();
 	autoChooser->AddDefault("Tote", (void*) 1);

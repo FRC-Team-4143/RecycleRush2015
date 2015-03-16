@@ -21,6 +21,7 @@ void ScriptCamDrive::Initialize()
 	_angle = floor(_angle + .5); // round
 	_angle *= 90.;
 	_p = SmartDashboard::GetNumber("vision P");
+	_tol = SmartDashboard::GetNumber("vision tol");
 }
 
 // Called repeatedly when this Command is scheduled to run

@@ -22,6 +22,7 @@ private:
 	double _angle;
 	double _offset;
 	double _p;
+	double _tol;
 };
 
 #endif
