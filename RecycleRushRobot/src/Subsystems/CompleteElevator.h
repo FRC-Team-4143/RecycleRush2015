@@ -34,9 +34,9 @@ public:
 	PIDController*     toteElevator4PID;
 	Encoder*		   armEncoder;
 
-	double distance4_3;
-	double distance3_2;
-	double distance2_1;
+	float distance4_3;
+	float distance3_2;
+	float distance2_1;
 
 	float tote4Max;
 	float tote3Max;
@@ -44,8 +44,8 @@ public:
 	float tote1Max;
 	float totalMax;
 
-	double armPos;
-	double armMin;
+	float armPos;
+	float armMin;
 
 	float lastTimeStamp;
 
