@@ -160,7 +160,7 @@ void CompleteElevator::Raise1Level(){
 		else if ( setpoint <= 69 * MULT)
 			setpoint = 70 * MULT;
 		else
-			setpoint += 20*MULT;
+			; //setpoint += 20*MULT;
 	}
 	CancelSqueeze(); // also calls move elevator
 }
