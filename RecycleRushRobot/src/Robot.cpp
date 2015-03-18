@@ -19,6 +19,7 @@
 #include "Commands/ScriptRotateBy.h"
 #include "Commands/ScriptSleep.h"
 #include "Commands/Raise1Level.h"
+#include "Commands/ResetGyro.h"
 #include "Commands/ToggleSqueezeMode.h"
 #include "Commands/SetHeight.h"
 #include "Commands/ScriptMouseDrive.h"
@@ -63,9 +64,9 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("AutoToteUpTime", 0.7);
 	SmartDashboard::PutNumber("AutoToteDownTime", 0);
 
-	SmartDashboard::PutNumber("vision center", -30.0);
+	SmartDashboard::PutNumber("vision center", 0.0);
 	SmartDashboard::PutNumber("vision P", .004);
-	SmartDashboard::PutNumber("vision tol", 30);
+	SmartDashboard::PutNumber("vision tol", 15);
 
 
 	autoChooser = new SendableChooser();
@@ -431,6 +432,12 @@ void Robot::ScriptInit() {
 		auto timeout = parameters[1];
 		Command* command = new ScriptElevate("Elevate", axis, timeout);
 		//if (0 == timeout) timeout = 4;
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("GyroReset", { "GR", "gr" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(0);
+		Command* command = new ResetGyro();
 		fCreateCommand(command, 0);
 	}));
 

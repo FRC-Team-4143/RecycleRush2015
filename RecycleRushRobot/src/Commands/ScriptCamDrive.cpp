@@ -30,7 +30,7 @@ void ScriptCamDrive::Execute()
 {
 	_offset = Robot::visionBridge->GetPosition();
 	_offset -= _center;
-	if(fabs(_offset) <= TOLERANCE)
+	if(fabs(_offset) <= _tol)
 		_offset = 0;
 	Robot::driveTrain->GyroCrab(_angle, _x,
 			std::min(_maxspeed, std::max(-_maxspeed, (_offset) * _p)));
@@ -39,7 +39,7 @@ void ScriptCamDrive::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool ScriptCamDrive::IsFinished()
 {
-	if (_x == 0.0 && fabs(_offset) <= TOLERANCE)
+	if (_x == 0.0 && fabs(_offset) <= _tol)
 		return true;
 	return IsTimedOut();
 }
