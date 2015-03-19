@@ -6,7 +6,12 @@ const int DEFAULT_COUNTS_PER_ROTATION = 120;
 const double DEFAULT_INCHES_PER_ROTATION = 2.2;
 const int DEFAULT_MIN_INCHES = 0;
 const int DEFAULT_START_INCHES = 0;
+
+//short arm
 const int DEFAULT_MAX_INCHES = 29;
+
+//long arm
+//const int DEFAULT_MAX_INCHES = 68;
 
 // ==========================================================================
 

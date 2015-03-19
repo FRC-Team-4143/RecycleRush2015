@@ -296,6 +296,8 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	LOG("Robot::AutonomousInit");
 
+	RobotMap::imu->ZeroYaw();
+
 	int selected = (int)autoChooser->GetSelected();
 	switch (selected) {
 	case 1:
