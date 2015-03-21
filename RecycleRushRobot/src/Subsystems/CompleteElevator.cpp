@@ -86,13 +86,13 @@ void CompleteElevator::CycleLightMode(){
 void CompleteElevator::SetMode() {
 	mode ++;
 	if (mode > 3)
-		mode = 0;
+		mode = 1;
 
 	SetLED();
 }
 
 void CompleteElevator::SetMode(int Mode) {
-	if (Mode >=0 && Mode <= 3)
+	if (Mode >=0 && Mode <= 4)
 		mode = Mode;
 	SetLED();
 }
@@ -118,6 +118,8 @@ void CompleteElevator::SetLED(){
 		RobotMap::i2c->Write(6, 0);
 	else if (mode == 3)
 		RobotMap::i2c->Write(8, 0);
+	else if (mode == 4)
+		RobotMap::i2c->Write(0, 0);
 }
 
 void CompleteElevator::ToggleSqueezeMode(){
@@ -260,7 +262,7 @@ void CompleteElevator::MoveElevator(float trigger){
 #else
 		distance4_3 = 30; //SmartDashboard::GetNumber("Tote4-3 Distance");
 		distance3_2 = 20; //SmartDashboard::GetNumber("Tote3-2 Distance");
-		distance2_1 = 0.5;
+		distance2_1 = 0;
 
 		tote4Max = 63; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
 		tote3Max = 57 + 4; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
@@ -268,6 +270,7 @@ void CompleteElevator::MoveElevator(float trigger){
 		tote1Max = tote2Max; //(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
 		totalMax = tote4Max + tote1Max;
 
+		distance4_3 += offset;
 		distance3_2 += offset;
 #endif
 	} else if (mode == 3) {
@@ -283,6 +286,16 @@ void CompleteElevator::MoveElevator(float trigger){
 
 		distance3_2 += offset;
 		distance2_1 += offset;
+	} else if (mode == 4){
+		distance4_3 = 30;
+		distance3_2 = 0;
+		distance2_1 = 0;
+
+		tote4Max = 63;
+		tote3Max = 57 + 4;
+		tote2Max = 57 + 4;
+		tote1Max = 57 + 4;
+		totalMax = tote4Max + tote1Max;
 	}
 
 	if((mode == 2 || mode == 3 ) && setpoint > tote4Max * MULT && armEncoder->GetDistance() > 50)
