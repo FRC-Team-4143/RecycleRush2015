@@ -67,13 +67,13 @@ void BinArmSub::Move(double speed) {
 	if (_debug) std::cout << "[DEBUG] " << GetName() << "::Move(" << speed << ")" << std::endl;
 	if (_debug) DebugOutputState();
 	if (speed > 0) {
-		if (GetPositionCount() >= MaxCount()) {
+		if (GetPositionCount() >= MaxCount() && SmartDashboard::GetBoolean("short stick")) {
 			if (_debug) std::cout << "[DEBUG] " << GetName() << "::Move at max" << std::endl;
 			speed = 0;
 		}
 	}
 	else if (speed < 0) {
-		if (GetPositionCount() <= MinCount()) {
+		if (GetPositionCount() <= MinCount() && SmartDashboard::GetBoolean("short stick")) {
 			if (_debug) std::cout << "[DEBUG] " << GetName() << "::Move at min" << std::endl;
 			speed = 0;
 		}

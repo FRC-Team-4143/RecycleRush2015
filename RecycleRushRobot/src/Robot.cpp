@@ -68,6 +68,8 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("vision P", .004);
 	SmartDashboard::PutNumber("vision tol", 15);
 
+	SmartDashboard::PutBoolean("short stick", true);
+
 
 	autoChooser = new SendableChooser();
 	autoChooser->AddDefault("Tote", (void*) 1);
