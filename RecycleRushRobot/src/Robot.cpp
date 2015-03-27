@@ -68,6 +68,8 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("vision P", .004);
 	SmartDashboard::PutNumber("vision tol", 15);
 
+	SmartDashboard::PutBoolean("short stick", true);
+
 
 	autoChooser = new SendableChooser();
 	autoChooser->AddDefault("Tote", (void*) 1);
@@ -295,6 +297,8 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	LOG("Robot::AutonomousInit");
+
+	RobotMap::imu->ZeroYaw();
 
 	int selected = (int)autoChooser->GetSelected();
 	switch (selected) {
