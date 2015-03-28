@@ -11,6 +11,7 @@
 #include "Commands/AutoToteAndBin.h"
 #include "Commands/AutoToteMove.h"
 #include "Commands/Auto3Tote.h"
+#include "Commands/ScriptBinArmMoveRel.h"
 #include "Commands/ScriptBinArmMoveTo.h"
 #include "Commands/ScriptCommand.h"
 #include "Commands/ScriptDrive.h"
@@ -81,7 +82,6 @@ void Robot::RobotInit() {
 	//autoChooser->AddObject("Auto3Tote", (void*) 7);
 
 	SmartDashboard::PutData("AutonomousChooser", autoChooser);
-
 
 	// List all preferences
 	auto prefs = Preferences::GetInstance();
@@ -163,7 +163,7 @@ void Robot::RobotInit() {
 	#define P 0.1
 	#define I 0
 	#define D P / 16
-	PIDParameters pidParams(P, I, D, 0); // TODO - Get parameters from Preferences? From SmartDashboard?
+	//PIDParameters pidParams(P, I, D, 0); // TODO - Get parameters from Preferences? From SmartDashboard?
 
 	// ---------------
 	// Create bin arm
@@ -387,6 +387,15 @@ void Robot::ScriptInit() {
 		auto timeout = parameters[1];
 		if (0 == timeout) timeout = 5;
 		Command* command = new ScriptBinArmMoveTo("ArmTo", inches, timeout);
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("ArmRel", { "AR", "ar" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(2);
+		auto inches = parameters[0];
+		auto timeout = parameters[1];
+		if (0 == timeout) timeout = 5;
+		Command* command = new ScriptBinArmMoveRel("ArmRel", inches, timeout);
 		fCreateCommand(command, 0);
 	}));
 
