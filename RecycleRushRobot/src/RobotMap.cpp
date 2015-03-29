@@ -4,7 +4,13 @@
 #include <LiveWindow/LiveWindow.h>
 
 SerialPort* RobotMap::serialPort = nullptr;
+
+#ifdef USE_NAVX
+KauaiNavX::AHRS* RobotMap::imu = nullptr;
+#else
 IMUAdvanced* RobotMap::imu = nullptr;
+#endif
+
 PowerDistributionPanel* RobotMap::pdp = nullptr;
 I2C* RobotMap::i2c = nullptr;
 DoubleSolenoid* RobotMap::testSolenoid = nullptr;
@@ -28,8 +34,6 @@ PIDController*     RobotMap::driveTrainRearRight = nullptr;
 SpeedController*   RobotMap::driveTrainRearRightDrive = nullptr;
 AnalogChannelVolt* RobotMap::driveTrainRearRightPos = nullptr;
 SpeedController*   RobotMap::driveTrainRearRightSteer = nullptr;
-
-
 
 SpeedController* RobotMap::toteElevator1Motor = nullptr;
 Encoder*         RobotMap::toteElevator1Pos = nullptr;
@@ -159,9 +163,14 @@ void RobotMap::Init() {
 
 	LiveWindow* lw = LiveWindow::GetInstance();
 
+#ifdef USE_NAVX
 	serialPort = new SerialPort(57600, SerialPort::kUSB);
-	//serialPort = new SerialPort(57600, SerialPort::kOnboard);
+	imu = new KauaiNavX::AHRS(serialPort, 100);
+#else
+	serialPort = new SerialPort(57600, SerialPort::kOnboard);
 	imu = new IMUAdvanced(serialPort, 100);
+#endif
+
 	pdp = new PowerDistributionPanel();
 	i2c = new I2C((I2C::Port) 1, 0x04);
 

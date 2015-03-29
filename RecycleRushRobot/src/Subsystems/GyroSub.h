@@ -4,7 +4,6 @@
 #include <WPILib.h>
 #include <Commands/Subsystem.h>
 #include <PIDSource.h>
-#include "../Modules/IMUAdvanced.h"
 #include "../RobotMap.h"
 
 //
@@ -26,9 +25,18 @@ public:
 	bool IsCalibrating();
 	void ResetGyro();
 
+#ifdef USE_NAVX
+	float GetDisplacementX();
+	float GetDisplacementY();
+#endif
+
 private:
 	// Put everything in private except methods that implement subsystem capabilities.
+#ifdef USE_NAVX
+	KauaiNavX::AHRS* theGyro() { return RobotMap::imu; }
+#else
 	IMUAdvanced* theGyro() { return RobotMap::imu; }
+#endif
 };
 
 #endif
