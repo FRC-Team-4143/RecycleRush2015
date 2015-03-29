@@ -3,7 +3,14 @@
 
 #include <WPILib.h>
 #include "Modules/AnalogChannelVolt.h"
+
+#define USE_NAVX
+
+#ifdef USE_NAVX
+#include "Modules/NavX/AHRS.h"
+#else
 #include "Modules/IMUAdvanced.h"
+#endif
 
 // The RobotMap is a mapping from the ports sensors and actuators are wired into
 // to a variable name. This provides flexibility changing wiring, makes checking
@@ -13,7 +20,11 @@
 class RobotMap {
 public:
     static SerialPort* serialPort;
-	static IMUAdvanced* imu;
+#ifdef USE_NAVX
+    static KauaiNavX::AHRS* imu;
+#else
+    static IMUAdvanced* imu;
+#endif
     static PowerDistributionPanel* pdp;
     static I2C* i2c;
     static DoubleSolenoid* testSolenoid;

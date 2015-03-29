@@ -34,6 +34,11 @@ void UpdateSmartDashboard::Execute() {
 	SmartDashboard::PutNumber("Gyro-Calibrating", Robot::gyroSub->IsCalibrating());
 	SmartDashboard::PutNumber("Gyro-Yaw", Robot::gyroSub->PIDGet());
 
+#ifdef USE_NAVX
+	SmartDashboard::PutNumber("Gyro-DispX", Robot::gyroSub->GetDisplacementX());
+	SmartDashboard::PutNumber("Gyro-DispY", Robot::gyroSub->GetDisplacementY());
+#endif
+
 	//double x, y;
 	//Robot::mouseSubsystem->GetPosition(x, y);
 	//SmartDashboard::PutNumber("mouse X", x);

@@ -45,3 +45,16 @@ void GyroSub::ResetGyro() {
 }
 
 // ==========================================================================
+#ifdef USE_NAVX
+float GyroSub::GetDisplacementX() {
+	return theGyro()->GetDisplacementX();
+}
+#endif
+// ==========================================================================
+#ifdef USE_NAVX
+float GyroSub::GetDisplacementY() {
+	return theGyro()->GetDisplacementY();
+}
+#endif
+
+// ==========================================================================
