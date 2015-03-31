@@ -19,7 +19,7 @@ void ScriptDrive::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void ScriptDrive::Execute()
 {
-	Robot::driveTrain->Crab(_z, _x, _y);
+	Robot::driveTrain->Crab(_z, _x, _y, false);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -32,7 +32,7 @@ bool ScriptDrive::IsFinished()
 void ScriptDrive::End()
 {
 	std::cout << GetName() << "::End" << std::endl;
-	Robot::driveTrain->Crab(0, 0, 0);
+	Robot::driveTrain->Crab(0, 0, 0, false);
 }
 
 // Called when another command which requires one or more of the same
@@ -40,5 +40,5 @@ void ScriptDrive::End()
 void ScriptDrive::Interrupted()
 {
 	std::cout << GetName() << "::Interrupted" << std::endl;
-	Robot::driveTrain->Crab(0, 0, 0);
+	Robot::driveTrain->Crab(0, 0, 0, false);
 }

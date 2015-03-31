@@ -25,6 +25,7 @@
 #include "Commands/SetHeight.h"
 #include "Commands/ScriptMouseDrive.h"
 #include "Commands/ScriptCamDrive.h"
+#include "Commands/ScriptDisplacementDrive.h"
 #include "Commands/ScriptGyroDrive.h"
 
 OI* Robot::oi = nullptr;
@@ -427,6 +428,17 @@ void Robot::ScriptInit() {
 		auto maxspeed = parameters[2];
 		auto timeout = parameters[3];
 		Command* command = new ScriptCamDrive("DriveCam", x, y, maxspeed, timeout);
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("DriveDisplacement", { "DD", "dd" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(4);
+		auto deltaX = parameters[0];
+		auto deltaY = parameters[1];
+		auto maxspeed = parameters[2];
+		auto timeoutSeconds = parameters[3];
+		if (0 == timeoutSeconds) timeoutSeconds = 5;
+		Command* command = new ScriptDisplacementDrive("DriveCam", deltaX, deltaY, maxspeed, timeoutSeconds);
 		fCreateCommand(command, 0);
 	}));
 

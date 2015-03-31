@@ -17,9 +17,9 @@ void CrabDrive::Execute() {
 	float y = Robot::oi->GetJoystickY();
 	float z = Robot::oi->GetJoystickZ();
 	//std::cout << "X " << x << ", Y " << y << ", Z " << z << std::endl;
-	Robot::driveTrain->Crab(z, -y, x);
-	//Robot::driveTrain->GyroCrab(0, -y, x);
-	//Robot::driveTrain->FieldCentricCrab(z,-y,x);
+	Robot::driveTrain->Crab(z, -y, x, true);
+	//Robot::driveTrain->GyroCrab(0, -y, x, true);
+	//Robot::driveTrain->FieldCentricCrab(z,-y,x, true);
 }
 
 // Make this return true when this Command no longer needs to run Execute.

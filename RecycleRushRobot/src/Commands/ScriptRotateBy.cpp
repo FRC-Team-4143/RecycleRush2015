@@ -102,7 +102,7 @@ void ScriptRotateBy::Interrupted()
 
 void ScriptRotateBy::PIDWrite(float output) {
 	std::cout << GetName() << "::PIDWrite(" << output << ")" << std::endl;
-	Robot::driveTrain->Crab(output, 0.0, 0.0);
+	Robot::driveTrain->Crab(output, 0.0, 0.0, false);
 }
 
 // ==========================================================================
