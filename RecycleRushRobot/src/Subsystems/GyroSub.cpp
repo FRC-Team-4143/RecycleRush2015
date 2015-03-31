@@ -42,6 +42,9 @@ bool GyroSub::IsCalibrating() {
 
 void GyroSub::ResetGyro() {
 	theGyro()->ZeroYaw();
+#ifdef USE_NAVX
+	theGyro()->ResetDisplacement();
+#endif
 }
 
 // ==========================================================================
