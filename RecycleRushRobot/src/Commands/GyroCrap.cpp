@@ -22,7 +22,7 @@ void GyroCrab::Initialize() {
 void GyroCrab::Execute() {
 	float x = Robot::oi->GetJoystickX();
 	float y = Robot::oi->GetJoystickY();
-	Robot::driveTrain->GyroCrab(angle, -y, x);
+	Robot::driveTrain->GyroCrab(angle, -y, x, true);
 }
 
 // Make this return true when this Command no longer needs to run Execute.

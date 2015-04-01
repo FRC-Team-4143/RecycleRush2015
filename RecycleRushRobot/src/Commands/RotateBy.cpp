@@ -115,7 +115,7 @@ void RotateBy::PIDWrite(float output) {
 	std::ostringstream ss;
 	ss << GetName() << ": PIDWrite(" << output << ")";
 	LOG(ss.str());
-	Robot::driveTrain->Crab(output, 0.0, 0.0);
+	Robot::driveTrain->Crab(output, 0.0, 0.0, false);
 }
 
 // ==========================================================================

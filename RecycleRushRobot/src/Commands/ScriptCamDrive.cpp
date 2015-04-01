@@ -33,7 +33,7 @@ void ScriptCamDrive::Execute()
 	if(fabs(_offset) <= _tol)
 		_offset = 0;
 	Robot::driveTrain->GyroCrab(_angle, _x,
-			std::min(_maxspeed, std::max(-_maxspeed, (_offset) * _p)));
+			std::min(_maxspeed, std::max(-_maxspeed, (_offset) * _p)), false);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -48,7 +48,7 @@ bool ScriptCamDrive::IsFinished()
 void ScriptCamDrive::End()
 {
 	std::cout << GetName() << "::End" << std::endl;
-	Robot::driveTrain->Crab(0, 0, 0);
+	Robot::driveTrain->Crab(0, 0, 0, false);
 }
 
 // Called when another command which requires one or more of the same
@@ -56,5 +56,5 @@ void ScriptCamDrive::End()
 void ScriptCamDrive::Interrupted()
 {
 	std::cout << GetName() << "::Interrupted" << std::endl;
-	Robot::driveTrain->Crab(0, 0, 0);
+	Robot::driveTrain->Crab(0, 0, 0, false);
 }

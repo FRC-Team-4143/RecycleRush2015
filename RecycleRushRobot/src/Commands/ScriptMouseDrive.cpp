@@ -34,7 +34,7 @@ void ScriptMouseDrive::Execute()
 	_currentY *= -1.0;
 	Robot::driveTrain->GyroCrab(_angle,
 			std::min(_maxspeed, std::max(-_maxspeed, (_currentX - _x) * P)),
-			std::min(_maxspeed, std::max(-_maxspeed, (_currentY - _y) * P)));
+			std::min(_maxspeed, std::max(-_maxspeed, (_currentY - _y) * P)), false);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -49,7 +49,7 @@ bool ScriptMouseDrive::IsFinished()
 void ScriptMouseDrive::End()
 {
 	std::cout << GetName() << "::End" << std::endl;
-	Robot::driveTrain->Crab(0, 0, 0);
+	Robot::driveTrain->Crab(0, 0, 0, false);
 }
 
 // Called when another command which requires one or more of the same
@@ -57,5 +57,5 @@ void ScriptMouseDrive::End()
 void ScriptMouseDrive::Interrupted()
 {
 	std::cout << GetName() << "::Interrupted" << std::endl;
-	Robot::driveTrain->Crab(0, 0, 0);
+	Robot::driveTrain->Crab(0, 0, 0, false);
 }

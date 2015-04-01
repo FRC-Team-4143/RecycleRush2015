@@ -12,7 +12,7 @@
 
 const float TWISTSCALE = .5;
 
-const float DEAD_ZONE = 0.15;
+const float DEAD_ZONE = 0.1;
 
 //#define GYROP  .05
 #define GYROP	.075
@@ -115,9 +115,8 @@ void DriveTrain::doneunwind(){
 	unwinding = 0;
 }
 
-
 // keeps controls consistent regardless of rotation of robot
-void DriveTrain::FieldCentricCrab(float twist, float y, float x) {
+void DriveTrain::FieldCentricCrab(float twist, float y, float x, bool operatorControl) {
 	float FWD = y;
 	float STR = x;
 
@@ -126,12 +125,11 @@ void DriveTrain::FieldCentricCrab(float twist, float y, float x) {
 	FWD = y*cos(robotangle) + x*sin(robotangle);
 	STR = -y*sin(robotangle) + x*cos(robotangle);
 
-	Crab(twist, FWD, STR);
+	Crab(twist, FWD, STR, operatorControl);
 }
 
-
 // attempts to keep robot square to the field as it drives
-void DriveTrain::GyroCrab(float desiredangle, float y, float x) {
+void DriveTrain::GyroCrab(float desiredangle, float y, float x, bool operatorControl) {
 	robotangle = Robot::gyroSub->PIDGet();
 	//std::cout << "robotangle " << robotangle << std::endl;
 
@@ -143,10 +141,10 @@ void DriveTrain::GyroCrab(float desiredangle, float y, float x) {
 
 	twist = std::min(GYROMAX, std::max(-GYROMAX, twist * GYROP));
 	//std::cout << "twist " << twist << std::endl;
-	Crab(twist, y, x);
+	Crab(twist, y, x, operatorControl);
 }
 
-void DriveTrain::Crab(float twist, float y, float x) {
+void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
   // stop PID loop if wires wrap.
 
   if(unwinding ||
@@ -159,11 +157,11 @@ void DriveTrain::Crab(float twist, float y, float x) {
 		return;
 	}
 
-  	  // this stores the direction of joystick when all axis last crossed into the deadzone
-  	  // and keeps the wheels pointed that direction
-  	  // this .1 should be kept the same as the deadzone in oi.cpp
-	if(y == 0.0 && x == 0.0 && twist == 0.0) {
-		if( fabs(lasty) > .1 || fabs(lastx) >.1 || fabs(lasttwist) > .1) {
+	// this stores the direction of joystick when all axis last crossed into the deadzone
+	// and keeps the wheels pointed that direction
+	// this .1 should be kept the same as the deadzone in oi.cpp
+	if (operatorControl && x == 0.0 && y == 0.0 && twist == 0.0) {
+		if (fabs(lasty) > DEAD_ZONE || fabs(lastx) > DEAD_ZONE || fabs(lasttwist) > DEAD_ZONE) {
 			y = std::min(std::max(lasty, -DEAD_ZONE), DEAD_ZONE);
 			x = std::min(std::max(lastx, -DEAD_ZONE), DEAD_ZONE);
 			twist = std::min(std::max(lasttwist, -DEAD_ZONE), DEAD_ZONE);
@@ -175,10 +173,12 @@ void DriveTrain::Crab(float twist, float y, float x) {
 	lasty = y;
 	lasttwist = twist;
 
-	// scale for operator control
-	x *= 1.0;
-	y *= 1.0;
-	twist *= TWISTSCALE;
+	if (operatorControl) {
+		// scale for operator control
+		x *= 1.0;
+		y *= 1.0;
+		twist *= TWISTSCALE;
+	}
 	
 	float FWD = y;
 	float STR = x;
@@ -242,20 +242,18 @@ void DriveTrain::Crab(float twist, float y, float x) {
 		FRRatio = FR;
 		RLRatio = RL;
 		RRRatio = RR;
-    }
-    //if(y > 0.049 && y < .051)
+	}
+	//if(y > 0.049 && y < .051)
 
-    if (fabs(x) <= DEAD_ZONE && fabs(y) <= DEAD_ZONE && fabs(twist) <= DEAD_ZONE) {
+	if (operatorControl && fabs(x) <= DEAD_ZONE && fabs(y) <= DEAD_ZONE && fabs(twist) <= DEAD_ZONE) {
 		FLRatio = 0.0;
 		FRRatio = 0.0;
 		RLRatio = 0.0;
 		RRRatio = 0.0;
-    }
+	}
 
 	//Set drive speeds
 	SetDriveSpeed(FLRatio, -FRRatio, RLRatio, -RRRatio);
-
-
 }
 
 void DriveTrain::Steer(float radian, float speed, float a) {

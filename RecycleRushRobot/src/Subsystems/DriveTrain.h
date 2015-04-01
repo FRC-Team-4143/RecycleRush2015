@@ -154,7 +154,7 @@ public:
 	void outputLED();
 	void InitDefaultCommand();
 	void Steer(float radian, float speed, float a);
-	void Crab(float twist, float y, float x);
+	void Crab(float twist, float y, float x, bool operatorControl);
 	bool ResetTurns();
 	void Lock();
 	void SideLock();
@@ -163,8 +163,8 @@ public:
 	bool unwind();
 	void doneunwind();
 	bool unwindwheel(AnalogChannelVolt*, PIDController*);
-	void GyroCrab(float desiredangle, float y, float x);
-	void FieldCentricCrab(float twist, float y, float x);
+	void GyroCrab(float desiredangle, float y, float x, bool operatorControl);
+	void FieldCentricCrab(float twist, float y, float x, bool operatorControl);
 };
 
 #endif

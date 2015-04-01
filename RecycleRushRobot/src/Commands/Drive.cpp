@@ -28,7 +28,7 @@ void Drive::Initialize() {
 }
 // Called repeatedly when this Command is scheduled to run
 void Drive::Execute() {
-		Robot::driveTrain->Crab(TwistAngle, X, Y);
+		Robot::driveTrain->Crab(TwistAngle, X, Y, false);
 }
 // Make this return true when this Command no longer needs to run execute()
 bool Drive::IsFinished() {
@@ -37,11 +37,11 @@ bool Drive::IsFinished() {
 // Called once after isFinished returns true
 void Drive::End() {
 	if(Stop)
-		Robot::driveTrain->Crab(0,0,0);
+		Robot::driveTrain->Crab(0, 0, 0, false);
 }
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void Drive::Interrupted() {
 	if(Stop)
-		Robot::driveTrain->Crab(0,0,0);
+		Robot::driveTrain->Crab(0, 0, 0, false);
 }

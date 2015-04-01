@@ -165,7 +165,7 @@ void RobotMap::Init() {
 
 #ifdef USE_NAVX
 	serialPort = new SerialPort(57600, SerialPort::kUSB);
-	imu = new KauaiNavX::AHRS(serialPort, 100);
+	imu = new KauaiNavX::AHRS(serialPort, 60);
 #else
 	serialPort = new SerialPort(57600, SerialPort::kOnboard);
 	imu = new IMUAdvanced(serialPort, 100);
