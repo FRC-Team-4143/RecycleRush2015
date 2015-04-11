@@ -383,20 +383,22 @@ void Robot::ScriptInit() {
 	CommandListParser& parser(CommandListParser::GetInstance());
 
 	parser.AddCommand(CommandParseInfo("ArmTo", { "AT", "at" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
-		parameters.resize(2);
+		parameters.resize(3);
 		auto inches = parameters[0];
 		auto timeout = parameters[1];
+		auto maxSpeed = parameters[2];
 		if (0 == timeout) timeout = 5;
-		Command* command = new ScriptBinArmMoveTo("ArmTo", inches, timeout);
+		Command* command = new ScriptBinArmMoveTo("ArmTo", inches, timeout, maxSpeed);
 		fCreateCommand(command, 0);
 	}));
 
 	parser.AddCommand(CommandParseInfo("ArmRel", { "AR", "ar" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
-		parameters.resize(2);
+		parameters.resize(3);
 		auto inches = parameters[0];
 		auto timeout = parameters[1];
+		auto maxSpeed = parameters[2];
 		if (0 == timeout) timeout = 5;
-		Command* command = new ScriptBinArmMoveRel("ArmRel", inches, timeout);
+		Command* command = new ScriptBinArmMoveRel("ArmRel", inches, timeout, maxSpeed);
 		fCreateCommand(command, 0);
 	}));
 

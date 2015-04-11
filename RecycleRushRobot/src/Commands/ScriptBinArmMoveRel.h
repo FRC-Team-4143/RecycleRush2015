@@ -9,7 +9,7 @@
 class ScriptBinArmMoveRel : public Command, public PIDSource, public PIDOutput
 {
 public:
-	ScriptBinArmMoveRel(const char* name, float relInches, float timeoutSeconds);
+	ScriptBinArmMoveRel(const char* name, float relInches, float timeoutSeconds, float maxSpeed);
 	virtual ~ScriptBinArmMoveRel();
 	void Initialize();
 	void Execute();

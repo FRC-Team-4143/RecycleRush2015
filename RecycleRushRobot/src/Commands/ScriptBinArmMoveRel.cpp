@@ -22,7 +22,7 @@
 
 // ==========================================================================
 
-ScriptBinArmMoveRel::ScriptBinArmMoveRel(const char* name, float relInches, float timeoutSeconds)
+ScriptBinArmMoveRel::ScriptBinArmMoveRel(const char* name, float relInches, float timeoutSeconds, float maxSpeed)
 : Command(name), _relInches(relInches), _timeoutSeconds(timeoutSeconds)
 {
 	std::cout << GetName() << "::ctor(" << relInches << ", " << timeoutSeconds << ")" << std::endl;
@@ -30,7 +30,7 @@ ScriptBinArmMoveRel::ScriptBinArmMoveRel(const char* name, float relInches, floa
 
 	_pidCtrl = new PIDController(P, I, D, F, this, this);
 	_pidCtrl->SetInputRange(INPUT_MIN, INPUT_MAX);
-	_pidCtrl->SetOutputRange(OUTPUT_MIN, OUTPUT_MAX);
+	_pidCtrl->SetOutputRange(maxSpeed > 0 ? -maxSpeed : OUTPUT_MIN, maxSpeed > 0 ? maxSpeed : OUTPUT_MAX);
 	_pidCtrl->SetContinuous(false);
 	_pidCtrl->SetAbsoluteTolerance(ABSOLUTE_TOLERANCE); // inches
 }
