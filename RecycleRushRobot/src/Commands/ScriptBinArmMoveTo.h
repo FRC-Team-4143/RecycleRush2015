@@ -9,7 +9,7 @@
 class ScriptBinArmMoveTo: public Command, public PIDSource, public PIDOutput
 {
 public:
-	ScriptBinArmMoveTo(const char* name, float inches, float timeoutSeconds);
+	ScriptBinArmMoveTo(const char* name, float inches, float timeoutSeconds, float maxSpeed);
 	virtual ~ScriptBinArmMoveTo();
 	void Initialize();
 	void Execute();
