@@ -301,7 +301,8 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	LOG("Robot::AutonomousInit");
 
-	if (_monitor.SuppressAutonomous()) {
+	if (_monitor.IsDoubleAutonomous()) {
+		std::cout << "Suppressing double autonomous." << std::endl;
 		return;
 	}
 	_monitor.OnAutonomousInit();

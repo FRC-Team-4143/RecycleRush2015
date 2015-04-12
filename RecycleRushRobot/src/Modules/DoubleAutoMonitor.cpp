@@ -6,8 +6,12 @@ DoubleAutoMonitor::DoubleAutoMonitor()
 {
 }
 
-bool DoubleAutoMonitor::SuppressAutonomous() const {
-	if (DriverStation::GetInstance()->IsFMSAttached()) {
+bool DoubleAutoMonitor::IsCompetition() {
+	return DriverStation::GetInstance()->IsFMSAttached();
+}
+
+bool DoubleAutoMonitor::IsDoubleAutonomous() const {
+	if (IsCompetition()) {
 		if (ActiveMode::Autonomous == _lastActiveMode) {
 			return true;
 		}

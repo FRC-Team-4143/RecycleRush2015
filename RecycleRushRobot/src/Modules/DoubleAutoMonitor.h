@@ -5,7 +5,7 @@ class DoubleAutoMonitor
 public:
 	DoubleAutoMonitor();
 
-	// Query SuppressAutonomous at the start of Robot::AutonomousInit to
+	// Query IsDoubleAutonomous at the start of Robot::AutonomousInit to
 	// determine whether to proceed. If proceeding, call OnAutonomousInit.
 
 	// Example:
@@ -16,7 +16,7 @@ public:
 	// }
 	//
 	// void Robot::AutonomousInit() {
-	//     if (monitor.SuppressAutonomous()) {
+	//     if (monitor.IsDoubleAutonomous()) {
 	//         return;
 	//     }
 	//     monitor.OnAutonomousInit();
@@ -28,7 +28,9 @@ public:
 	//     ....
 	// }
 
-	bool SuppressAutonomous() const;
+	static bool IsCompetition();
+
+	bool IsDoubleAutonomous() const;
 
 	void OnRobotInit();
 	void OnAutonomousInit();
