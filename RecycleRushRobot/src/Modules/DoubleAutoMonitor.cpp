@@ -11,10 +11,8 @@ bool DoubleAutoMonitor::IsCompetition() {
 }
 
 bool DoubleAutoMonitor::IsDoubleAutonomous() const {
-	if (IsCompetition()) {
-		if (ActiveMode::Autonomous == _lastActiveMode) {
-			return true;
-		}
+	if (ActiveMode::Autonomous == _lastActiveMode) {
+		return true;
 	}
 	return false;
 }

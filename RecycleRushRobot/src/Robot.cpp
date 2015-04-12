@@ -28,6 +28,8 @@
 #include "Commands/ScriptDisplacementDrive.h"
 #include "Commands/ScriptGyroDrive.h"
 
+#define USE_DOUBLEAUTOMONITOR 1
+
 OI* Robot::oi = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
 CompleteElevator* Robot::completeElevator = nullptr;
@@ -47,7 +49,9 @@ Pneumatics* Robot::pneumatics = nullptr;
 void Robot::RobotInit() {
 	LOG("Robot::RobotInit");
 
+#if USE_DOUBLEAUTOMONITOR
 	_monitor.OnRobotInit();
+#endif
 
 	PreferencesInit();
 
@@ -301,11 +305,13 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	LOG("Robot::AutonomousInit");
 
+#if USE_DOUBLEAUTOMONITOR
 	if (_monitor.IsDoubleAutonomous()) {
 		std::cout << "Suppressing double autonomous." << std::endl;
 		return;
 	}
 	_monitor.OnAutonomousInit();
+#endif
 
 	RobotMap::imu->ZeroYaw();
 
@@ -346,7 +352,9 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {
 	LOG("Robot::TeleopInit");
 
+#if USE_DOUBLEAUTOMONITOR
 	_monitor.OnTeleopInit();
+#endif
 
 	// This makes sure the autonomous command stops running when
 	// teleop starts running. To let autonomous continue until
