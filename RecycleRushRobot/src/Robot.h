@@ -5,6 +5,7 @@
 #include <WPILib.h>
 #include <Commands/Command.h>
 #include <LiveWindow/LiveWindow.h>
+#include "Modules/DoubleAutoMonitor.h"
 #include "Subsystems/BinArmSub.h"
 #include "Subsystems/DriveTrain.h"
 #include "Subsystems/ElevatorSub.h"
@@ -55,12 +56,12 @@ public:
 	virtual void TestInit();
 	virtual void TestPeriodic();
 
-
-
 protected:
 	void CameraInit();
 	void PreferencesInit();
 	void ScriptInit();
+
+	DoubleAutoMonitor _monitor;
 };
 
 #endif
