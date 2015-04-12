@@ -47,6 +47,8 @@ Pneumatics* Robot::pneumatics = nullptr;
 void Robot::RobotInit() {
 	LOG("Robot::RobotInit");
 
+	_monitor.OnRobotInit();
+
 	PreferencesInit();
 
 	RobotMap::Init();
@@ -299,6 +301,11 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 	LOG("Robot::AutonomousInit");
 
+	if (_monitor.SuppressAutonomous()) {
+		return;
+	}
+	_monitor.OnAutonomousInit();
+
 	RobotMap::imu->ZeroYaw();
 
 	int selected = (int)autoChooser->GetSelected();
@@ -337,6 +344,9 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
 	LOG("Robot::TeleopInit");
+
+	_monitor.OnTeleopInit();
+
 	// This makes sure the autonomous command stops running when
 	// teleop starts running. To let autonomous continue until
 	// interrupted by another command, remove the following
