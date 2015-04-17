@@ -1,4 +1,5 @@
 #include "CompleteElevator.h"
+#include "../Robot.h"
 #include "../RobotMap.h"
 #include "../Commands/CompleteElevatorDefaultCommand.h"
 
@@ -273,7 +274,7 @@ void CompleteElevator::MoveElevator(float trigger){
 		distance4_3 += offset;
 		distance3_2 += offset;
 #endif
-	} else if (mode == 3) {
+	} else if (mode == 3) { // rainbow mode
 		distance4_3 = 30; //SmartDashboard::GetNumber("Tote4-3 Distance");
 		distance3_2 = 20; //SmartDashboard::GetNumber("Tote3-2 Distance");
 		distance2_1 = 20;
@@ -284,6 +285,8 @@ void CompleteElevator::MoveElevator(float trigger){
 		tote1Max = tote2Max - 4;
 		totalMax = tote4Max + tote1Max;
 
+		if(Robot::oi->GetButtonY()) // supersqueeze mode
+			distance4_3 += offset;
 		distance3_2 += offset;
 		distance2_1 += offset;
 	} else if (mode == 4){

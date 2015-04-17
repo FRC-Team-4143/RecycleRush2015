@@ -165,8 +165,23 @@ OI::OI() {
 	SmartDashboard::PutData("Reset Gyro Yaw", new ResetGyro());
 }
 
+bool OI::GetButtonA(){
+	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_A);
+	return (value);
+}
+
 bool OI::GetButtonB(){
 	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_B);
+	return (value);
+}
+
+bool OI::GetButtonX(){
+	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_X);
+	return (value);
+}
+
+bool OI::GetButtonY(){
+	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_Y);
 	return (value);
 }
 

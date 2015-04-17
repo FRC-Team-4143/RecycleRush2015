@@ -7,7 +7,10 @@ class OI {
 public:
 	OI();
 
+	bool GetButtonA();
 	bool GetButtonB();
+	bool GetButtonX();
+	bool GetButtonY();
 
 	float GetJoystickX();
 	float GetJoystickY();
