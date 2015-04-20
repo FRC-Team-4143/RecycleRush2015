@@ -18,6 +18,7 @@
 #include "Commands/ScriptElevate.h"
 #include "Commands/ScriptMode.h"
 #include "Commands/ScriptRotateBy.h"
+#include "Commands/ScriptRotateByX.h"
 #include "Commands/ScriptSleep.h"
 #include "Commands/Raise1Level.h"
 #include "Commands/ResetGyro.h"
@@ -500,6 +501,18 @@ void Robot::ScriptInit() {
 		auto timeout = parameters[1];
 		if (0 == timeout) timeout = 4;
 		Command* command = new ScriptRotateBy("RotateBy", angle, timeout);
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("RotateByX", { "RBX", "rbx" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(5);
+		auto angle = parameters[0];
+		auto timeout = parameters[1];
+		auto stableTickThreshold = parameters[2];
+		auto maxSpeed = parameters[3];
+		auto p = parameters[4];
+		if (0 == timeout) timeout = 4;
+		Command* command = new ScriptRotateByX("RotateBy", angle, timeout, stableTickThreshold, maxSpeed, p);
 		fCreateCommand(command, 0);
 	}));
 
