@@ -6,16 +6,14 @@
 
 class Pneumatics: public Subsystem
 {
-private:
-
 public:
 	Pneumatics();
 	void InitDefaultCommand();
-	void forward();
-	void reverse();
-	void stop();
-
-	DoubleSolenoid* solenoid;
+	void Forward();
+	void Reverse();
+	void Stop();
+private:
+	DoubleSolenoid* theSolenoid;
 };
 
 #endif

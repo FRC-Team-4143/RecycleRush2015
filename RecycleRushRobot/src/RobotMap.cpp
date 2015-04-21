@@ -13,7 +13,7 @@ IMUAdvanced* RobotMap::imu = nullptr;
 
 PowerDistributionPanel* RobotMap::pdp = nullptr;
 I2C* RobotMap::i2c = nullptr;
-DoubleSolenoid* RobotMap::testSolenoid = nullptr;
+DoubleSolenoid* RobotMap::burglarSolenoid = nullptr;
 
 PIDController*     RobotMap::driveTrainFrontLeft = nullptr;
 SpeedController*   RobotMap::driveTrainFrontLeftDrive = nullptr;
@@ -176,7 +176,7 @@ void RobotMap::Init() {
 
 	lw->AddSensor("IMU", "Gyro", imu);
 
-	testSolenoid = new DoubleSolenoid(0, 1);
+	burglarSolenoid = new DoubleSolenoid(0, 1);
 
 //_______________________________________________________
 //			Drivetrain Motors and PIDControllers

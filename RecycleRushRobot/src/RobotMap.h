@@ -27,7 +27,7 @@ public:
 #endif
     static PowerDistributionPanel* pdp;
     static I2C* i2c;
-    static DoubleSolenoid* testSolenoid;
+    static DoubleSolenoid* burglarSolenoid;
 
 	static PIDController*     driveTrainFrontLeft;
 	static SpeedController*   driveTrainFrontLeftDrive;

@@ -13,6 +13,7 @@
 #include "Commands/Auto3Tote.h"
 #include "Commands/ScriptBinArmMoveRel.h"
 #include "Commands/ScriptBinArmMoveTo.h"
+#include "Commands/ScriptBinBurglar.h"
 #include "Commands/ScriptCommand.h"
 #include "Commands/ScriptDrive.h"
 #include "Commands/ScriptElevate.h"
@@ -419,6 +420,15 @@ void Robot::ScriptInit() {
 		auto maxSpeed = parameters[2];
 		if (0 == timeout) timeout = 5;
 		Command* command = new ScriptBinArmMoveRel("ArmRel", inches, timeout, maxSpeed);
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("BinBurglar", { "BB", "bb" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(2);
+		auto direction = parameters[0];
+		auto timeout = parameters[1];
+		Command* command = new ScriptBinBurglar("BinBurglar", direction, timeout);
+		if (0 == timeout) timeout = 3;
 		fCreateCommand(command, 0);
 	}));
 
