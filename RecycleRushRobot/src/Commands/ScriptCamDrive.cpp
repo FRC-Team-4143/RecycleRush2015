@@ -2,7 +2,7 @@
 #include "../Robot.h"
 #include <iostream>
 
-#define TOLERANCE   30.0
+#define TIME   10
 
 ScriptCamDrive::ScriptCamDrive(const char* name, double x, double y, double maxspeed, double seconds)
 : Command(name), _x(x), _y(y), _maxspeed(maxspeed), _seconds(seconds)
@@ -23,6 +23,7 @@ void ScriptCamDrive::Initialize()
 	_p = SmartDashboard::GetNumber("vision P");
 	_tol = SmartDashboard::GetNumber("vision tol");
 	_center = SmartDashboard::GetNumber("vision center");
+	_time = 0;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -34,12 +35,16 @@ void ScriptCamDrive::Execute()
 		_offset = 0;
 	Robot::driveTrain->GyroCrab(_angle, _x,
 			std::min(_maxspeed, std::max(-_maxspeed, (_offset) * _p)), false);
+	if(fabs(_offset) <= _tol)
+		_time++;
+	else
+		_time = 0;
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool ScriptCamDrive::IsFinished()
 {
-	if (_x == 0.0 && fabs(_offset) <= _tol)
+	if (_x == 0.0 && _time > TIME)    //fabs(_offset) <= _tol)
 		return true;
 	return IsTimedOut();
 }

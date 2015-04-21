@@ -24,6 +24,7 @@ private:
 	double _p;
 	double _tol;
 	double _center;
+	int    _time;
 };
 
 #endif
