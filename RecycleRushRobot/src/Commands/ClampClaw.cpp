@@ -1,38 +1,26 @@
 #include "ClampClaw.h"
 #include "../Robot.h"
 
-ClampClaw::ClampClaw()
-{
+ClampClaw::ClampClaw() {
 	Requires(Robot::pneumatics);
 }
 
-// Called just before this Command runs the first time
-void ClampClaw::Initialize()
-{
+void ClampClaw::Initialize() {
 
 }
 
-// Called repeatedly when this Command is scheduled to run
-void ClampClaw::Execute()
-{
-	Robot::pneumatics->forward();
+void ClampClaw::Execute() {
+	Robot::pneumatics->Forward();
 }
 
-// Make this return true when this Command no longer needs to run execute()
-bool ClampClaw::IsFinished()
-{
+bool ClampClaw::IsFinished() {
 	return false;
 }
 
-// Called once after isFinished returns true
-void ClampClaw::End()
-{
-	Robot::pneumatics->stop();
+void ClampClaw::End() {
+	Robot::pneumatics->Stop();
 }
 
-// Called when another command which requires one or more of the same
-// subsystems is scheduled to run
-void ClampClaw::Interrupted()
-{
-	Robot::pneumatics->stop();
+void ClampClaw::Interrupted() {
+	Robot::pneumatics->Stop();
 }

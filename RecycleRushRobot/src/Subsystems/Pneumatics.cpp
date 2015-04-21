@@ -1,25 +1,21 @@
 #include "Pneumatics.h"
 #include "../RobotMap.h"
 
-Pneumatics::Pneumatics() :
-		Subsystem("Pneumatics")
-{
-	solenoid = RobotMap::testSolenoid;
+Pneumatics::Pneumatics() : Subsystem("Pneumatics") {
+	theSolenoid = RobotMap::burglarSolenoid;
 }
 
-void Pneumatics::InitDefaultCommand()
-{
-
+void Pneumatics::InitDefaultCommand() {
 }
 
-void Pneumatics::forward(){
-	solenoid->Set(DoubleSolenoid::Value::kForward);
+void Pneumatics::Forward() {
+	theSolenoid->Set(DoubleSolenoid::Value::kForward);
 }
 
-void Pneumatics::reverse(){
-	solenoid->Set(DoubleSolenoid::Value::kReverse);
+void Pneumatics::Reverse() {
+	theSolenoid->Set(DoubleSolenoid::Value::kReverse);
 }
 
-void Pneumatics::stop(){
-	solenoid->Set(DoubleSolenoid::Value::kOff);
+void Pneumatics::Stop() {
+	theSolenoid->Set(DoubleSolenoid::Value::kOff);
 }
