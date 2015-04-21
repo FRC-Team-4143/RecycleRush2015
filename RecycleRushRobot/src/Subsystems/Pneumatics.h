@@ -12,8 +12,10 @@ public:
 	void Forward();
 	void Reverse();
 	void Stop();
+	void Hold();
 private:
 	DoubleSolenoid* theSolenoid;
+	DoubleSolenoid::Value theLastState;
 };
 
 #endif
