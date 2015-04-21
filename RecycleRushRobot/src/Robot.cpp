@@ -78,15 +78,15 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("vision P", .004);
 	SmartDashboard::PutNumber("vision tol", 15);
 
-	SmartDashboard::PutBoolean("short stick", true);
+	SmartDashboard::PutBoolean("short stick", false);
 
 
 	autoChooser = new SendableChooser();
-	autoChooser->AddDefault("Tote", (void*) 1);
+	autoChooser->AddObject("Tote", (void*) 1);
 	autoChooser->AddObject("Bin", (void*) 2);
 	autoChooser->AddObject("BackIntoAutozone", (void*) 3);
 	autoChooser->AddObject("DoNothingAuto", (void*) 4);
-	autoChooser->AddObject("Script Command", (void*) 5);
+	autoChooser->AddDefault("Script Command", (void*) 5);
 	//autoChooser->AddObject("ToteAndBin", (void*) 6);
 	//autoChooser->AddObject("Auto3Tote", (void*) 7);
 
