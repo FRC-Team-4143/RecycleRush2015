@@ -1,21 +1,31 @@
 #include "Pneumatics.h"
 #include "../RobotMap.h"
+#include "../Commands/PneumaStasis.h"
 
 Pneumatics::Pneumatics() : Subsystem("Pneumatics") {
 	theSolenoid = RobotMap::burglarSolenoid;
+	theLastState = DoubleSolenoid::Value::kOff;
 }
 
 void Pneumatics::InitDefaultCommand() {
+	SetDefaultCommand(new PneumaStasis("PneumaStasis"));
 }
 
 void Pneumatics::Forward() {
-	theSolenoid->Set(DoubleSolenoid::Value::kForward);
+	theLastState = DoubleSolenoid::Value::kForward;
+	theSolenoid->Set(theLastState);
 }
 
 void Pneumatics::Reverse() {
-	theSolenoid->Set(DoubleSolenoid::Value::kReverse);
+	theLastState = DoubleSolenoid::Value::kReverse;
+	theSolenoid->Set(theLastState);
 }
 
 void Pneumatics::Stop() {
-	theSolenoid->Set(DoubleSolenoid::Value::kOff);
+	theLastState = DoubleSolenoid::Value::kOff;
+	theSolenoid->Set(theLastState);
+}
+
+void Pneumatics::Hold() {
+	theSolenoid->Set(theLastState);
 }
