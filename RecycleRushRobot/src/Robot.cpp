@@ -75,7 +75,7 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("AutoToteDownTime", 0);
 
 	SmartDashboard::PutNumber("vision center", 0.0);
-	SmartDashboard::PutNumber("vision P", .004);
+	SmartDashboard::PutNumber("vision P", .003);
 	SmartDashboard::PutNumber("vision tol", 15);
 
 	SmartDashboard::PutBoolean("short stick", false);
