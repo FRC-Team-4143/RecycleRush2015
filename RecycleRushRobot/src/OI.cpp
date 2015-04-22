@@ -30,6 +30,9 @@
 #include "Commands/ScriptValidate.h"
 #include "Commands/GyroCrab.h"
 #include "Commands/ResetGyro.h"
+#include "Commands/BurglarUp.h"
+#include "Commands/BurglarDown.h"
+#include "Commands/BurglarOff.h"
 
 const uint32_t JOYSTICK_PORT_DRIVER = 0;
 const uint32_t JOYSTICK_PORT_PICKER = 1;
@@ -163,6 +166,10 @@ OI::OI() {
 	SmartDashboard::PutData("Validate Script", new ScriptValidate());
 
 	SmartDashboard::PutData("Reset Gyro Yaw", new ResetGyro());
+
+	SmartDashboard::PutData("Burglar Up", new BurglarUp());
+	SmartDashboard::PutData("Burglar Down", new BurglarDown());
+	SmartDashboard::PutData("Burglar Off", new BurglarOff());
 }
 
 bool OI::GetButtonA(){

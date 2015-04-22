@@ -29,7 +29,7 @@ ScriptBinArmMoveRel::ScriptBinArmMoveRel(const char* name, float relInches, floa
 	Requires(Robot::binArm);
 
 	_pidCtrl = new PIDController(P, I, D, F, this, this);
-	_pidCtrl->SetInputRange(INPUT_MIN, INPUT_MAX);
+	//_pidCtrl->SetInputRange(INPUT_MIN, INPUT_MAX);
 	_pidCtrl->SetOutputRange(maxSpeed > 0 ? -maxSpeed : OUTPUT_MIN, maxSpeed > 0 ? maxSpeed : OUTPUT_MAX);
 	_pidCtrl->SetContinuous(false);
 	_pidCtrl->SetAbsoluteTolerance(ABSOLUTE_TOLERANCE); // inches
@@ -121,8 +121,8 @@ void ScriptBinArmMoveRel::PIDWrite(float output) {
 
 float ScriptBinArmMoveRel::CalculateSetpoint() const {
 	auto inches = GetCurrentPosition() + _relInches;
-	inches = std::max<float>(inches, INPUT_MIN);
-	inches = std::min<float>(inches, INPUT_MAX);
+	//inches = std::max<float>(inches, INPUT_MIN);
+	//inches = std::min<float>(inches, INPUT_MAX);
 	return inches;
 }
 
