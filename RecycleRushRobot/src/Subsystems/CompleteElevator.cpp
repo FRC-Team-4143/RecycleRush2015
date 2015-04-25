@@ -222,8 +222,8 @@ void CompleteElevator::MoveElevator(float trigger){
 		distance3_2 = 20; //SmartDashboard::GetNumber("Tote3-2 Distance");
 		distance2_1 = 20; //SmartDashboard::GetNumber("Tote2-1 Distance");
 
-		tote4Max = 63; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
-		tote3Max = 63; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+		tote4Max = 62.5; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote3Max = 62.5; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
 		tote2Max = 53; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
 		tote1Max = 43; //(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
 		totalMax = tote4Max + tote1Max;
@@ -241,10 +241,10 @@ void CompleteElevator::MoveElevator(float trigger){
 		distance3_2 = 0;
 		distance2_1 = 0;
 
-		tote4Max = 63; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
-		tote3Max = 63; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
-		tote2Max = 63; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
-		tote1Max = 63; //(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
+		tote4Max = 62.5; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote3Max = 62.5; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
+		tote2Max = 62.5; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
+		tote1Max = 62.5; //(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
 		totalMax = tote4Max;
 	} else if (mode == 2) { // yellow tote mode
 #ifdef FOURFORKS
@@ -252,7 +252,7 @@ void CompleteElevator::MoveElevator(float trigger){
 		distance3_2 = 20; //SmartDashboard::GetNumber("Tote3-2 Distance");
 		distance2_1 = 0.5;
 
-		tote4Max = 63; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote4Max = 62.5; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
 		tote3Max = 53; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
 		tote2Max = 43; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
 		tote1Max = 43; //(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
@@ -265,7 +265,7 @@ void CompleteElevator::MoveElevator(float trigger){
 		distance3_2 = 20; //SmartDashboard::GetNumber("Tote3-2 Distance");
 		distance2_1 = 0;
 
-		tote4Max = 63; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote4Max = 62.5; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
 		tote3Max = 57 + 4; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
 		tote2Max = tote3Max - 4; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
 		tote1Max = tote2Max; //(float)(SmartDashboard::GetNumber("Tote1-Max"));//prefs->GetDouble("tote1Max"));
@@ -279,7 +279,7 @@ void CompleteElevator::MoveElevator(float trigger){
 		distance3_2 = 20; //SmartDashboard::GetNumber("Tote3-2 Distance");
 		distance2_1 = 20;
 
-		tote4Max = 63; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
+		tote4Max = 62.5; //(float)(SmartDashboard::GetNumber("Tote4-Max"));//prefs->GetDouble("tote4Max"));
 		tote3Max = 57 + 4; //(float)(SmartDashboard::GetNumber("Tote3-Max"));//prefs->GetDouble("tote3Max"));
 		tote2Max = 47 + 9; //(float)(SmartDashboard::GetNumber("Tote2-Max"));//prefs->GetDouble("tote2Max"));
 		tote1Max = tote2Max - 4;
@@ -294,7 +294,7 @@ void CompleteElevator::MoveElevator(float trigger){
 		distance3_2 = 0;
 		distance2_1 = 0;
 
-		tote4Max = 63;
+		tote4Max = 62.5;
 		tote3Max = 57 + 4;
 		tote2Max = 57 + 4;
 		tote1Max = 57 + 4;

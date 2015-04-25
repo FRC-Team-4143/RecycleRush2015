@@ -4,7 +4,7 @@
 #include <WPILib.h>
 #include "Modules/AnalogChannelVolt.h"
 
-#define USE_NAVX
+#undef USE_NAVX
 
 #ifdef USE_NAVX
 #include "Modules/NavX/AHRS.h"

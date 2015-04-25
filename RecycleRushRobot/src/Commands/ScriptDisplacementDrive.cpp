@@ -19,15 +19,19 @@ void ScriptDisplacementDrive::Initialize() {
 	_angle /= 90.;
 	_angle = floor(_angle + .5); // round
 	_angle *= 90.;
+#ifdef USE_NAVX
 	_startingX = Robot::gyroSub->GetDisplacementX();
 	_startingY = Robot::gyroSub->GetDisplacementY();
+#endif
 	_targetX = _startingX + _deltaX;
 	_targetY = _startingY + _deltaY;
 }
 
 void ScriptDisplacementDrive::Execute() {
+#ifdef USE_NAVX
 	_currentX = Robot::gyroSub->GetDisplacementX();
 	_currentY = Robot::gyroSub->GetDisplacementY();
+#endif
 	auto x = std::min(_maxspeed, std::max(-_maxspeed, (_targetX - _currentX) * P));
 	auto y = std::min(_maxspeed, std::max(-_maxspeed, (_targetY - _currentY) * P));
 	Robot::driveTrain->GyroCrab(_angle, x, y, false);
